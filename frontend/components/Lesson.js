@@ -1,23 +1,23 @@
-// A stateless react component, has an ordered list, each entry being a slide. 
-
-// Lesson.description
-
-
-// Lesson.slides is an array, each object is a slide. 
-// Lesson.slides.title
+import React from 'react';
+import LessonSlideListEntry from './LessonSlideListEntry';
 
 const Lesson = (props) => (
-  <div>
-    <h1>Title of the Lesson props.lesson.title</h1>
-    <p>A short description of the lesson to be filled in later with props.lesson.description</p>
-    <ol>
+  <div className="lesson">
+    <h1 className="lessonTitle">{props.lesson.title}</h1>
+    <p className="lessonDescription">{props.lesson.description}</p>
+    <ol className="lessonOrderedList">
       {props.slides.map((slide, i) => {
-        return <SlideListEntry
+        return <LessonSlideListEntry
           slide={slide}
           index={i}
           key={i}
+          onLessonSlideListEntryClick={props.onLessonSlideListEntryClick}
         />
-      })};
+      })}
     </ol>
   </div>
-)
+);
+
+export default Lesson;
+
+// Could split title and description into a div and have the list separate.
