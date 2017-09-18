@@ -1,5 +1,7 @@
+// HTML structure is very rudimentary. Should perhaps split title and description into a div and have the list separate.
+
 import React from 'react';
-import LessonSlideListEntry from './LessonSlideListEntry';
+import LessonSlideListEntry from './LessonSlideListEntry.js';
 
 const Lesson = (props) => (
   <div className="lesson">
@@ -17,6 +19,7 @@ const Lesson = (props) => (
     </ol>
   </div>
 );
+
 
 export default Lesson;
 
