@@ -22,5 +22,3 @@ const Lesson = (props) => (
 
 
 export default Lesson;
-
-// Could split title and description into a div and have the list separate.
