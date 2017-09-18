@@ -1,3 +1,5 @@
+
+
 function LessonPreview(props) {
   return (
     <div className="LessonPreview" onClick={props.onLessonPreviewClick(props)}>
@@ -10,3 +12,5 @@ function LessonPreview(props) {
     </div>
   )
 }
+
+export default LessonPreviewContainer;

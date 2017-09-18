@@ -1,3 +1,5 @@
+import LessonPreview from "./LessonPreview.jsx";
+
 function LessonPreviewContainer(props) {
   return (
     <div className="LessonPreviewContainer">
@@ -12,3 +14,5 @@ function LessonPreviewContainer(props) {
     </div>
   )
 }
+
+export default LessonPreviewContainer;
