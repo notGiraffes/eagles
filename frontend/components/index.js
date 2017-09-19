@@ -1,8 +1,11 @@
-class Car {
-  manufacturer(car) {
-    document.write(`I have a ${car}`)
-  }
-}
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-const bmw = new Car;
-bmw.manufacturer('bmw');
+ReactDOM.render((
+<BrowserRouter>
+  <Route path='/' component={ App }>
+  </Route>
+</BrowserRouter>
+), document.getElementById('App'));
