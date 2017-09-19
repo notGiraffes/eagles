@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class NavBar extends Component {
   constructor(props) {
@@ -8,6 +8,7 @@ class NavBar extends Component {
     this.state = {
       searchInput: ''
     }
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
   retrieveSearchInput(searchInput) {
@@ -25,10 +26,15 @@ class NavBar extends Component {
   render(props) {
     return (
       <div>
-        <ButtonToolbar>
+        <Form inline onSubmit={(event) => {
+              event.preventDefault();
+              this.handleSearchSubmit.call(this, event)
+              }}>
           <span>
-            <input type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/> 
-            <button onClick={this.handleSearchSubmit.bind(this)}>Search</button>      
+            <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
+              <Button onClick={this.handleSearchSubmit}>
+                <Link to='/'>Search</Link>
+              </Button>
           </span>
           <span>
             <Link to='/create'>
@@ -38,8 +44,8 @@ class NavBar extends Component {
               <Button>Home</Button>
             </Link>
           </span>
-        </ButtonToolbar>
         <hr/>
+      </Form>
       </div>
     );
   }
