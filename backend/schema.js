@@ -13,22 +13,7 @@ let userSchema = new Schema({
 });
 let user = mongoose.model('user', userSchema);
 
-//////////////////
 
-let tutorialSchema = new Schema({
-  name: { type: String, required: true },
-  lessons: [lessonSchema]
-});
-let tutorial = mongoose.model('tutorial', tutorialSchema);
-//////////////////
-
-
-let lessonSchema = new Schema({
-  name: {type: String, required: true},
-  description: String,
-  slides: [slideSchema]
-});
-let lesson = mongoose.model('lesson', lessonSchema);
 //////////////////
 
 let slideSchema = new Schema({
@@ -38,7 +23,24 @@ let slideSchema = new Schema({
   quizUrl: String
 })
 let slide = mongoose.model('slide', slideSchema);
-/////////////////
+
+//////////////////
+
+let lessonSchema = new Schema({
+  name: {type: String, required: true},
+  description: String,
+  slides: [slideSchema]
+});
+let lesson = mongoose.model('lesson', lessonSchema);
+
+//////////////////
+
+let tutorialSchema = new Schema({
+  name: { type: String, required: true },
+  lessons: [lessonSchema]
+});
+let tutorial = mongoose.model('tutorial', tutorialSchema);
+//////////////////
 
 
 

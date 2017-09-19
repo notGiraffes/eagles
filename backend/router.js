@@ -11,6 +11,11 @@ const express = require('express');
 const schema = require('./schema.js');
 const router = express.Router();
 
+router.use(function(req, res, next) {
+    //console.log('new log from router.use', req.method, req.body);// log each request to the console
+    next(); // continue doing what we were doing and go to the route
+});
+
 router.get('/',function(req, res) {
   res.end();
 });
@@ -18,21 +23,22 @@ router.get('/',function(req, res) {
 router.get('/tutorials', function(req, res) {
   schema.tutorial.find({})
   .then(function(tutorials) {
-    res.end(tutorials);
+    res.end(JSON.stringify(tutorials));
   })
 });
 
 router.get('/lessons', function(req, res) {
   schema.lesson.find({})
   .then(function(lessons) {
-    res.end(lessons);
+    res.end(JSON.stringify(lessons));
   })
 });
 
 router.get('/slides', function(req, res) {
   schema.slide.find({})
   .then(function(slides) {
-    res.end(slides);
+    console.log(slides);
+    res.end(JSON.stringify(slides));
   })
 });
 
@@ -43,6 +49,7 @@ router.post('/slides', function(req, res) {
   var slidequizUrl = req.body.quizUrl;
   schema.slide.create({ name: slidename, youTubeUrl:slideyouTubeUrl, text: slidetext, quizUrl: slidequizUrl})
   .then(result => {
+    console.log(result);
     res.end(`posted slide`);
   });
 });
@@ -65,3 +72,5 @@ router.post('/tutorials', function(req, res) {
     res.end(`posted tutorials`);
   });
 })
+
+module.exports = router;
