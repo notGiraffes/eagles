@@ -8,7 +8,16 @@ import lessons from '../testing/dummyData.js';
 class RouterWrapper extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      lessons: lessons
+    };
+    
+    this.getLessons = this.getLessons.bind(this);
   }
+
+  // componentDidMount() {
+  //   this.getLessons();
+  // }
 
   render() {
     return (
@@ -18,7 +27,7 @@ class RouterWrapper extends Component {
             <Route exact path='/'
               render={() => (
                 <LessonPreviewContainer 
-                  lessons= { lessons }
+                  lessons= { this.state.lessons }
                 /> 
               )}
             />
@@ -30,11 +39,13 @@ class RouterWrapper extends Component {
       </BrowserRouter>
     );
   }
+
+  getLessons() {
+    fetch('/lessons')
+    .then((res) => res.json())
+    .then((lessons) => this.setState({lessons}))
+    .catch((err) => console.log('Error getting lessons', err));
+  }
 }
 
 export default RouterWrapper;
-
-
-// {/* <Lesson
-// slides= { lessons[id].slides }
-// /> */}
