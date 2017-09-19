@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const LessonPreview = (props) => {
   return (
-    <Link to={'/lesson/' + props.lesson.id}>
+    <Link to={'/lesson/' + props.lesson._id}>
     <div className="LessonPreview">
       <div className="LessonTitle">
         {props.lesson.name || 'no name'}

@@ -8,10 +8,10 @@ class Lesson extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      specificLesson:'',
-      slides: '',
-      currentSlide: '',
-      index: ''
+      specificLesson: {},
+      slides: [],
+      currentSlide: null,
+      index: 0
     }
   }
 
@@ -19,13 +19,20 @@ class Lesson extends React.Component {
     return fetch('/lessons', { method: 'GET' })
       .then((response) => response.json())
       .then((lessonsDataJSON) => {
-        this.setState({
-          specificLesson: lessonDataJSON[this.props.params.id],
-          slides: lessonDataJSON[this.props.params.id].slides
-        });
+        console.log('got data: ', lessonsDataJSON);
+        console.log('params: ', this.props.match.params);
+        for (var i = 0; i < lessonsDataJSON.length; i++) {
+          if (lessonsDataJSON[i]._id === this.props.match.params.id) {
+            console.log('found match');
+            this.setState({
+              specificLesson: lessonsDataJSON[i],
+              slides: lessonsDataJSON[i].slides
+            });
+          }
+        }
       })
       .catch((error) => {
-        console.log('Disaster!!!');
+        console.log('Disaster!!!', error);
       })
   }
 
