@@ -4,7 +4,7 @@ function LessonPreview(props) {
   return (
     <div className="LessonPreview" onClick={props.onLessonPreviewClick(props)}>
       <div className="LessonTitle">
-        {props.lesson.title}
+        {props.lesson.name}
       </div>
       <div className="LessonDescription">
         {props.lesson.description} 
