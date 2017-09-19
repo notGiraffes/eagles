@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { ListGroupItem, Header, Button } from 'react-bootstrap';
 
 const LessonPreview = (props) => {
   return (
-    <Link to={'/lesson/' + props.lesson._id}>
     <div className="LessonPreview">
-      <div className="LessonTitle">
-        {props.lesson.name || 'no name'}
-      </div>
+      <ListGroupItem header={props.lesson.name || 'no name'}>
+      <Link to={'/lesson/' + props.lesson._id}>
+        <Button bsStyle="primary" bsSize="small">Visit</Button>
+      </Link>
       <div className="LessonDescription">
         {props.lesson.description || 'no description'} 
       </div>
+      </ListGroupItem>
     </div>
-    </Link>
   )
 }
 
