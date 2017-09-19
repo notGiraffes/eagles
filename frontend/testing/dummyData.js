@@ -6,10 +6,10 @@ var slide = {
 };
 
 var slides = [{
-  name: 'slide1',
-  youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-  text: "This is text for slide1",
-  quizUrl: "quiz for slide1"
+  "name": "slide1",
+  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  "text": "This is text for slide1",
+  "quizUrl": "quiz for slide1"
 },{
   name: 'slide2',
   youTubeUrl: "https://www.youtube.com/watch?v=4ZAEBxGipoA",
@@ -72,5 +72,6 @@ var tutorial = {
   name: 'tutorial1',
   lessons: lessons
 };
+
 
 export default lessons;
