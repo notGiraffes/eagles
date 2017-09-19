@@ -16,7 +16,7 @@ let user = mongoose.model('user', userSchema);
 
 let tutorialSchema = new Schema({
   name: { type: String, required: true },
-  lessons: [[]]
+  lessons: [lessonSchema]
 });
 let tutorial = mongoose.model('tutorial', tutorialSchema);
 //////////////////
@@ -24,10 +24,8 @@ let tutorial = mongoose.model('tutorial', tutorialSchema);
 
 let lessonSchema = new Schema({
   name: {type: String, required: true},
-  slides: [{
-    name: String,
-    value: String
-  }]
+  description: String,
+  slides: [slideSchema]
 });
 let lesson = mongoose.model('lesson', lessonSchema);
 //////////////////
