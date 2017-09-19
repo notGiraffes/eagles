@@ -20,10 +20,35 @@ class RouterWrapper extends Component {
     this.getLessons();
   }
 
+  getLessons() {
+    return fetch('/lessons')
+    .then((res) => res.json())
+    .then((lessons) => this.setState({lessons}))
+    .catch((err) => console.log('Error getting lessons', err));
+  }
+
+  queryDataBaseWithSearchInput(searchInput) {
+    this.getLessons()
+    .then((results) => {
+      console.log(this.state.lessons);
+      // var previousLessons = this.state.lessons;
+      var filteredLessons = this.state.lessons.filter((lesson) => { 
+        if (lesson.name === searchInput)  {
+          return lesson;
+        }
+      });
+      this.setState({
+        lessons: filteredLessons
+      });
+      console.log(this.state.lessons)
+    })
+  }
+
+
   render() {
     return (
       <BrowserRouter>
-        <App>
+        <App queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)}>
           <Switch>
             <Route exact path='/'
               render={() => (
@@ -42,13 +67,6 @@ class RouterWrapper extends Component {
         </App>
       </BrowserRouter>
     );
-  }
-
-  getLessons() {
-    fetch('/lessons')
-    .then((res) => res.json())
-    .then((lessons) => this.setState({lessons}))
-    .catch((err) => console.log('Error getting lessons', err));
   }
 }
 

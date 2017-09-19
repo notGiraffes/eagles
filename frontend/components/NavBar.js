@@ -19,8 +19,8 @@ class NavBar extends Component {
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    // Query server for info from database that matches this.state.searchInput
-      // Need to add keywords or some criteria to filter database by
+    // Pass querying function (which all filters) into here from app. 
+    this.props.queryDataBaseWithSearchInput(this.state.searchInput);
   }
 
   render(props) {
