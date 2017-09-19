@@ -6,10 +6,20 @@ class App extends Component {
     super(props);
   }
 
+  queryDataBaseWithSearchInput(lessonRetrievalFunction, searchInput) {
+    var lessonDatabase = lessonRetrievalFunction();
+    var filteredLessons = lessonDatabase.filter((lesson) => {
+      if (lesson.name === searchInput)  {
+        return lesson;
+      }
+    });
+    return filteredLessons;
+  }
+
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput} />
         { this.props.children || 'no children!' }
       </div>
     );
