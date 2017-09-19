@@ -73,14 +73,6 @@ var tutorial = {
   lessons: lessons
 };
 
-
-<<<<<<< HEAD
-export default lessons;
-=======
-
-
-
-
 var simpleslides = [{
   "name": "slide1",
   "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
@@ -242,10 +234,3 @@ var tutorial2 = {
   }]
 };
 
-
-
-
-
-
-
->>>>>>> merge
