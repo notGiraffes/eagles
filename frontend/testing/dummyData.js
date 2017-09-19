@@ -73,5 +73,164 @@ var tutorial = {
   lessons: lessons
 };
 
+var simpleslides = [{
+  "name": "slide1",
+  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  "text": "This is text for slide1",
+  "quizUrl": "quiz for slide1"
+},{
+  "name": "slide1",
+  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  "text": "This is text for slide1",
+  "quizUrl": "quiz for slide1"
+},{
+  "name": "slide1",
+  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  "text": "This is text for slide1",
+  "quizUrl": "quiz for slide1"
+}];
 
-export default lessons;
+var lesson1 = {
+  "_id" : ObjectId("59c135e4d913a303d07add9b"),
+  "name": "lesson1",
+  "description": "lesson1 description",
+  "slides": [{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  }]
+};
+
+var simplelessons = [{
+  "name": "lesson1",
+  "description": "lesson1 description",
+  "slides": [{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  }]
+},{
+  "name": "lesson1",
+  "description": "lesson1 description",
+  "slides": [{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  }]
+},{
+  "name": "lesson1",
+  "description": "lesson1 description",
+  "slides": [{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  },{
+    "name": "slide1",
+    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+    "text": "This is text for slide1",
+    "quizUrl": "quiz for slide1"
+  }]
+}];
+
+var tutorial2 = {
+  "_id" : ObjectId("59c13ad2d913a303d07adda0"),
+  "name":"tutorial2 test",
+  "lessons": [{
+    "name": "lesson1",
+    "description": "lesson1 description",
+    "slides": [{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    }]
+  },{
+    "name": "lesson1",
+    "description": "lesson1 description",
+    "slides": [{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    }]
+  },{
+    "name": "lesson1",
+    "description": "lesson1 description",
+    "slides": [{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    },{
+      "name": "slide1",
+      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+      "text": "This is text for slide1",
+      "quizUrl": "quiz for slide1"
+    }]
+  }]
+};
+
