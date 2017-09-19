@@ -1,3 +1,33 @@
+var slide = {
+  "name": "slide1",
+  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  "text": "This is text for slide1",
+  "quizUrl": "quiz for slide1"
+};
+
+var slides = [{
+  name: 'slide1',
+  youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+},{
+  name: 'slide2',
+  youTubeUrl: "https://www.youtube.com/watch?v=4ZAEBxGipoA",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+},{
+  name: 'slide2',
+  youTubeUrl: "https://www.youtube.com/watch?v=mFEoarLnnqM",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+}];
+
+var lesson = {
+  name: 'lesson1',
+  description: 'lesson1 description',
+  slides: slides
+};
+
 var lessons = [
   {
     name: "test1",
@@ -35,6 +65,12 @@ var lessons = [
       }
     ]
   }, 
-]
+];
 
-export default lessons;
+var tutorial = {
+  name: 'tutorial1',
+  lessons: lessons
+};
+
+
+
