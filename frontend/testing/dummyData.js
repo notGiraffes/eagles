@@ -83,7 +83,6 @@ var simpleslides = [{
 }];
 
 var lesson1 = {
-  "_id" : ObjectId("59c135e4d913a303d07add9b"),
   "name": "lesson1",
   "description": "lesson1 description",
   "slides": [{
