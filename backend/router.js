@@ -17,7 +17,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/',function(req, res) {
-  res.end();
+  res.end('router get worked');
 });
 
 router.get('/tutorials', function(req, res) {
@@ -35,10 +35,15 @@ router.get('/lessons', function(req, res) {
 });
 
 router.get('/slides', function(req, res) {
+  console.log('get request going throhg');
   schema.slide.find({})
   .then(function(slides) {
     console.log(slides);
-    res.end(JSON.stringify(slides));
+    res.status(200).send(slides);
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(400).send('did not work');
   })
 });
 
