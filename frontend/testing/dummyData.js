@@ -34,7 +34,7 @@ var lessons = [
     description: "test1 description",
     slides:[
       {
-        title: "testslide1",
+        name: "testslide1",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
@@ -46,7 +46,7 @@ var lessons = [
     description: "test2 description",
     slides:[
       {
-        title: "testslide2",
+        name: "testslide2",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
@@ -58,7 +58,7 @@ var lessons = [
     description: "test3 description",
     slides:[
       {
-        title: "testslide3",
+        name: "testslide3",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
