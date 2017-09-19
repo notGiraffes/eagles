@@ -10,6 +10,7 @@ const database = require('./database.js');
 const path = require('path');
 
 
+
 app.use(express.static('../frontend/public'));
 
 app.set('port', (process.env.PORT || 3000));
