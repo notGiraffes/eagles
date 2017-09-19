@@ -5,7 +5,7 @@ router in a separate file
 const bodyparser = require('body-parser');
 const express = require('express');
 const app = express();
-// const router = require('./router.js');
+const router = require('./router.js');
 // const database = require('./database.js');
 
 
