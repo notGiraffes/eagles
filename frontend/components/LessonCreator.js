@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';//use in functions
+import SlideCreator from './SlideCreator.js';
 
 class LessonCreator extends React.Component {
   constructor (props) {
@@ -46,6 +47,7 @@ class LessonCreator extends React.Component {
     });
   }
   changeCreateState (event) {
+    console.log('changingcreatestate')
     this.setState({
       creatingSlide: !this.state.creatingSlide
     })
@@ -60,6 +62,7 @@ class LessonCreator extends React.Component {
       return (
         <div className='LessonCreator'>
         LESSON CREATOR
+        <button type='button' onClick={this.changeCreateState.bind(this)}>Go To SlideCreator</button>
           <form onSubmit={this.onSubmit.bind(this)}>
             Enter Lesson name<input type='text' value={this.state.name} onChange={this.changeName.bind(this)}/>
             Enter Lesson createdBy<input type='text' value={this.state.createdBy} onChange={this.changeCreatedBy.bind(this)}/>
