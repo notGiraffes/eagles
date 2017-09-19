@@ -30,6 +30,7 @@ var lesson = {
 
 var lessons = [
   {
+    id: 0,
     name: "test1",
     description: "test1 description",
     slides:[
@@ -72,5 +73,4 @@ var tutorial = {
   lessons: lessons
 };
 
-
-
+export default lessons;
