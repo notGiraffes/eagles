@@ -13,6 +13,11 @@ app.use(express.static('../frontend/public'));
 
 app.set('port', (process.env.PORT || 3000));
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> merge
 // app.use('/', bodyparser.json());
 // app.use('/slides', bodyparser.json());
 // app.use('/lessons', bodyparser.json());
@@ -23,6 +28,10 @@ app.use(['/','/slides','/lessons','tutorials'], router);
 // app.use('/slides', router);
 // app.use('/lessons', router);
 // app.use('/tutorials', router);
+<<<<<<< HEAD
+=======
+
+>>>>>>> merge
 
 
 const server = app.listen(app.get('port'));
