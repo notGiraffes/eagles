@@ -146,4 +146,28 @@ router.put('/slides', function(req, res) {
   })
 })
 
+router.delete('/users', function(req, res) {
+  user.findByIdAndRemove(req.query._id, function(err, user) {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send(user._id + 'removed');
+  })
+})
+
+router.delete('/lessons', function(req, res) {
+  lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send(lesson._id + 'removed');
+  })
+})
+
+router.delete('/slides', function(req, res) {
+  slide.findByIdAndRemove(req.query._id, function(err, slide) {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send(slide._id + 'removed');
+  })
+})
+
 module.exports = router;
