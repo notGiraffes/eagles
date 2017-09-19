@@ -30,17 +30,9 @@ var lesson = {
 
 var lessons = [
   {
-    id: 0,
     name: "test1",
     description: "test1 description",
-    slides:[
-      {
-        name: "testslide1",
-        youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-        text: "This is about GraphQL basics. Throughout the video...",
-        quizUrl: "someURL"
-      }
-    ]
+    slides:[]
   },
   {
     name: "test2",

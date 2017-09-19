@@ -20,62 +20,93 @@ router.get('/',function(req, res) {
   res.end('router get worked');
 });
 
-router.get('/tutorials', function(req, res) {
-  schema.tutorial.find({})
-  .then(function(tutorials) {
-    res.end(JSON.stringify(tutorials));
+router.get('/users', function(req, res) {
+  schema.user.find({})
+  .then(function(users) {
+    res.status(200).send(users);
   })
-});
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+})
 
 router.get('/lessons', function(req, res) {
   schema.lesson.find({})
   .then(function(lessons) {
-    res.end(JSON.stringify(lessons));
+    res.status(200).send(lessons);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
   })
 });
 
 router.get('/slides', function(req, res) {
-  console.log('get request going throhg');
   schema.slide.find({})
   .then(function(slides) {
-    console.log(slides);
     res.status(200).send(slides);
   })
   .catch(function(err) {
-    console.log(err);
-    res.status(400).send('did not work');
+    res.status(400).send(err);
   })
 });
 
-router.post('/slides', function(req, res) {
-  var slidename = req.body.name;
-  var slideyouTubeUrl = req.body.youTubeUrl;
-  var slidetext = req.body.text;
-  var slidequizUrl = req.body.quizUrl;
-  schema.slide.create({ name: slidename, youTubeUrl:slideyouTubeUrl, text: slidetext, quizUrl: slidequizUrl})
+router.post('/users', function(req, res) {
+  var username = req.body.username;
+  var lessons = req.body.lessons;
+  var favorites = req.body.favorites;
+  var createdLessons = req.body.createdLessons;
+  schema.user.create({username: username, lessons: [], favorites: [], createdLessons: []})
   .then(result => {
     console.log(result);
-    res.end(`posted slide`);
-  });
-});
-
-router.post('/lessons', function(req, res) {
-  var lessonname = req.body.name;
-  var lessondescription = req.body.description;
-  var slides = req.body.slides;
-  schema.lesson.create({ name: lessonname, description: lessondescription, slides: slides })
-  .then(result => {
-    res.end(`posted lessons`);
-  });
+    res.status(200).send('posted user');
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
 })
 
-router.post('/tutorials', function(req, res) {
-  var tutorialname = req.body.name;
-  var lessons = req.body.lessons;
-  schema.tutorial.create({ name: tutorialname, lessons: lessons })
+router.post('/lessons', function(req, res) {
+  var name = req.body.name;
+  var createdBy = req.body.createdBy
+  var description = req.body.description;
+  var slides = req.body.slides;
+  schema.lesson.create({ name: name, createdBy: createdBy, description: description, slides: slides })
   .then(result => {
-    res.end(`posted tutorials`);
-  });
+    res.end(`posted lessons`);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+})
+
+router.post('/slides', function(req, res) {
+  var slidename = req.body.name;
+  var youTubeUrl = req.body.youTubeUrl;
+  var text = req.body.text;
+  var quizUrl = req.body.quizUrl;
+  var fromLesson = req.body.fromLesson
+  schema.slide.create({ name: slidename, youTubeUrl: youTubeUrl, text: text, quizUrl: quizUrl, fromLesson: fromLesson})
+  .then(result => {
+    res.status(200).send(`posted slide`);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+});
+
+router.put('/users', function(req, res) {
+  var username = req.body.username;
+  var lessons = req.body.lessons;
+  var favorites = req.body.favorites;
+  var createdLessons = req.body.createdLessons;
+  schema.user.create({username: username, lessons: [], favorites: [], createdLessons: []})
+  .then(result => {
+    console.log(result);
+    res.status(200).send('posted user');
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
 })
 
 module.exports = router;
