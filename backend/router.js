@@ -11,6 +11,11 @@ const express = require('express');
 const schema = require('./schema.js');
 const router = express.Router();
 
+router.use(function(req, res, next) {
+    //console.log('new log from router.use', req.method, req.body);// log each request to the console
+    next(); // continue doing what we were doing and go to the route
+});
+
 router.get('/',function(req, res) {
   res.end();
 });
@@ -18,29 +23,33 @@ router.get('/',function(req, res) {
 router.get('/tutorials', function(req, res) {
   schema.tutorial.find({})
   .then(function(tutorials) {
-    res.end(tutorials);
+    res.end(JSON.stringify(tutorials));
   })
 });
 
 router.get('/lessons', function(req, res) {
   schema.lesson.find({})
   .then(function(lessons) {
-    res.end(lessons);
+    res.end(JSON.stringify(lessons));
   })
 });
 
 router.get('/slides', function(req, res) {
   schema.slide.find({})
   .then(function(slides) {
-    res.end(slides);
+    console.log(slides);
+    res.end(JSON.stringify(slides));
   })
 });
 
-router.post('/slide', function(req, res) {
+router.post('/slides', function(req, res) {
   var slidename = req.body.name;
-  var slidevalue = req.body.value;
-  schema.slide.create({ name: slidename, value: slidevalue })
+  var slideyouTubeUrl = req.body.youTubeUrl;
+  var slidetext = req.body.text;
+  var slidequizUrl = req.body.quizUrl;
+  schema.slide.create({ name: slidename, youTubeUrl:slideyouTubeUrl, text: slidetext, quizUrl: slidequizUrl})
   .then(result => {
+    console.log(result);
     res.end(`posted slide`);
   });
 });
@@ -64,36 +73,4 @@ router.post('/tutorials', function(req, res) {
   });
 })
 
-// let Schema = mongoose.Schema;
-
-// let userSchema = new Schema({
-//   username: { type: String, required: true }
-// });
-// let user = mongoose.model('user', userSchema);
-
-// //////////////////
-
-// let tutorialSchema = new Schema({
-//   name: { type: String, required: true },
-//   lessons: [[]]
-// });
-// let tutorial = mongoose.model('tutorial', tutorialSchema);
-// //////////////////
-
-
-// let lessonSchema = new Schema({
-//   name: {type: String, required: true},
-//   slides: [{
-//     name: String,
-//     value: String
-//   }]
-// });
-// let lesson = mongoose.model('lesson', lessonSchema);
-// //////////////////
-
-
-// let slideSchema = new Schema({
-//   name: String,
-//   value: String
-// })
-// let slide = mongoose.model('slide', slideSchema);
+module.exports = router;
