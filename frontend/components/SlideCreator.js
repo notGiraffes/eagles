@@ -16,6 +16,7 @@ class SlideCreator extends React.Component {
     axios.post('/slides', this.state)
     .then(result => {
       console.log(result);
+      this.props.fetch(result);
     });
   }
 
@@ -53,6 +54,7 @@ class SlideCreator extends React.Component {
         Enter Slide quizUrl<input type='text'/ value={this.state.quizUrl} onChange={this.changeQuizUrl.bind(this)}/>
         <input type='submit' value='SubmitAll'/>
       </form>
+      <button type="button" onClick={this.props.changeCreateState}>Stop Creating</button>
     </div>
   }
 
