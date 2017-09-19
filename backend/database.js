@@ -8,6 +8,6 @@ learndb.on('error', console.error.bind(console, 'db:line7:Kai needs to fix somet
 learndb.once('open', function() {
   console.log('Nice job connecting to the server Kai');
 })
-mongoose.connect(`mongodb://localhost/learndb`);
+mongoose.connect('mongodb://test:test@ds139994.mlab.com:39994/eagles');
 
 module.exports = learndb;
