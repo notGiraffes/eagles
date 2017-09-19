@@ -34,6 +34,7 @@ var lessons = [
         quizUrl: "someURL"
       }
     ]
-  },
-  
+  }, 
 ]
+
+export default lessons;
