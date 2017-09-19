@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';//use in functions
 
-class LessonCreate extends React.Component {
+class LessonCreator extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      name: ''
-      createdBy: ''
-      description: ''
+      name: '',
+      createdBy: '',
+      description: '',
       slides: ''
     };
   }
@@ -41,7 +41,8 @@ class LessonCreate extends React.Component {
 
   render () {
     return (
-      <div className='lessonCreate'>
+      <div className='LessonCreator'>
+      LESSON CREATOR
         <form onSubmit={this.onSubmit.bind(this)}>
           Enter Lesson name<input type='text' value={this.state.name} onChange={this.changeName.bind(this)}/>
           Enter Lesson createdBy<input type='text' value={this.state.createdBy} onChange={this.changeCreatedBy.bind(this)}/>
@@ -54,4 +55,4 @@ class LessonCreate extends React.Component {
   }   
 }
 
-export default LessonCreate;
+export default LessonCreator;
