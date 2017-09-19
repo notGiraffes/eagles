@@ -19,7 +19,6 @@ class NavBar extends Component {
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    // Pass querying function (which all filters) into here from app. 
     this.props.queryDataBaseWithSearchInput(this.state.searchInput);
   }
 
