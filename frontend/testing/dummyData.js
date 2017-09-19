@@ -163,7 +163,6 @@ var simplelessons = [{
 }];
 
 var tutorial2 = {
-  "_id" : ObjectId("59c13ad2d913a303d07adda0"),
   "name":"tutorial2 test",
   "lessons": [{
     "name": "lesson1",

@@ -9,15 +9,15 @@ class RouterWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lessons: lessons
+      lessons: []
     };
     
     this.getLessons = this.getLessons.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.getLessons();
-  // }
+  componentDidMount() {
+    this.getLessons();
+  }
 
   render() {
     return (
