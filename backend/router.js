@@ -10,6 +10,9 @@ slide {name:, value:}  //object
 const express = require('express');
 const schema = require('./schema.js');
 const router = express.Router();
+var user = schema.user;
+var lesson = schema.lesson;
+var slide = schema.slide
 
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console
@@ -95,17 +98,51 @@ router.post('/slides', function(req, res) {
 });
 
 router.put('/users', function(req, res) {
-  var username = req.body.username;
-  var lessons = req.body.lessons;
-  var favorites = req.body.favorites;
-  var createdLessons = req.body.createdLessons;
-  schema.user.create({username: username, lessons: [], favorites: [], createdLessons: []})
-  .then(result => {
-    console.log(result);
-    res.status(200).send('posted user');
+  user.findById(req.query._id, function(err, user) {
+    if (err) res.status(400).send(err);
+
+    if (req.body.username) user.username = req.body.username;
+    if (req.body.lessons) user.lessons = req.body.lessons;
+    if (req.body.favorites) user.favorites = req.body.favorites;
+    if (req.body.createdLessons) user.createdLessons = req.body.createdLessons;
+
+    user.save(function (err) {
+      if (err) res.send(err);
+      res.send('user updated')
+    })
   })
-  .catch(function(err) {
-    res.status(400).send(err);
+})
+
+router.put('/lessons', function(req, res) {
+  lesson.findById(req.query._id, function(err, lesson) {
+    if (err) res.status(400).send(err);
+
+    if (req.body.name) lesson.name = req.body.name;
+    if (req.body.createdBy) lesson.createdBy = req.body.createdBy;
+    if (req.body.description) lesson.description = req.body.description;
+    if (req.body.slides) lesson.slides = req.body.slides;
+
+    lesson.save(function (err) {
+      if (err) res.send(err);
+      res.status(200).send(lesson);
+    })
+  })
+})
+
+router.put('/slides', function(req, res) {
+  slide.findById(req.query._id, function(err, slide) {
+    if (err) res.status(400).send(err);
+
+    if (req.body.name) slide.name = req.body.name;
+    if (req.body.youTubeUrl) slide.youTuleUrl = req.body.youTubeUrl;
+    if (req.body.text) slide.text = req.body.text;
+    if (req.body.quizUrl) slide.quizUrl = req.body.quizUrl;
+    if (req.body.fromLesson) slide.fromLesson = req.body.fromLesson;
+
+    lesson.save(function (err) {
+      if (err) res.send(err);
+      res.send('slide updated');
+    })
   })
 })
 
