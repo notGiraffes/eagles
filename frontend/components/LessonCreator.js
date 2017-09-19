@@ -23,7 +23,7 @@ class LessonCreator extends React.Component {
     };
     axios.post('/lessons', this.state)
     .then((result) => {
-      console.log(result);
+      console.log('result is',result);
     })
   }
   changeName (event) {
@@ -53,8 +53,10 @@ class LessonCreator extends React.Component {
     })
   }
   fetchSlideFromSlideCreator (slide) {
+    var slidedata = slide.config.data; 
+    console.log('this is the slide', slide.config.data);
     this.setState({
-      slides: this.state.slides.push(slide)
+      slides: this.state.slides.concat(slidedata)
     })
   }
   render () {
