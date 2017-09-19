@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LessonPreviewContainer from './LessonPreviewContainer.js';
-import Lessons from '../testing/dummyData.js';
+import RouterWrapper from './RouterWrapper';
 
 ReactDOM.render((
-<BrowserRouter>
-  <App>
-    <Switch>
-      <Route exact path='/'
-        render={() => (
-          <LessonPreviewContainer 
-            lessons= { Lessons }
-          /> 
-        )}
-       />
-    </Switch>
-  </App>
-</BrowserRouter>
+<RouterWrapper />
 ), document.getElementById('App'));

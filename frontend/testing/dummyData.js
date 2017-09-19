@@ -30,11 +30,12 @@ var lesson = {
 
 var lessons = [
   {
+    id: 0,
     name: "test1",
     description: "test1 description",
     slides:[
       {
-        title: "testslide1",
+        name: "testslide1",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
@@ -46,7 +47,7 @@ var lessons = [
     description: "test2 description",
     slides:[
       {
-        title: "testslide2",
+        name: "testslide2",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
@@ -58,7 +59,7 @@ var lessons = [
     description: "test3 description",
     slides:[
       {
-        title: "testslide3",
+        name: "testslide3",
         youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
         text: "This is about GraphQL basics. Throughout the video...",
         quizUrl: "someURL"
@@ -73,172 +74,4 @@ var tutorial = {
 };
 
 
-
-
-
-
-var simpleslides = [{
-  "name": "slide1",
-  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-  "text": "This is text for slide1",
-  "quizUrl": "quiz for slide1"
-},{
-  "name": "slide1",
-  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-  "text": "This is text for slide1",
-  "quizUrl": "quiz for slide1"
-},{
-  "name": "slide1",
-  "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-  "text": "This is text for slide1",
-  "quizUrl": "quiz for slide1"
-}];
-
-var lesson1 = {
-  "name": "lesson1",
-  "description": "lesson1 description",
-  "slides": [{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  }]
-};
-
-var simplelessons = [{
-  "name": "lesson1",
-  "description": "lesson1 description",
-  "slides": [{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  }]
-},{
-  "name": "lesson1",
-  "description": "lesson1 description",
-  "slides": [{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  }]
-},{
-  "name": "lesson1",
-  "description": "lesson1 description",
-  "slides": [{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  },{
-    "name": "slide1",
-    "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-    "text": "This is text for slide1",
-    "quizUrl": "quiz for slide1"
-  }]
-}];
-
-var tutorial2 = {
-  "name":"tutorial2 test",
-  "lessons": [{
-    "name": "lesson1",
-    "description": "lesson1 description",
-    "slides": [{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    }]
-  },{
-    "name": "lesson1",
-    "description": "lesson1 description",
-    "slides": [{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    }]
-  },{
-    "name": "lesson1",
-    "description": "lesson1 description",
-    "slides": [{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    },{
-      "name": "slide1",
-      "youTubeUrl": "https://www.youtube.com/watch?v=lAJWHHUz8_8",
-      "text": "This is text for slide1",
-      "quizUrl": "quiz for slide1"
-    }]
-  }]
-};
-
-
-
-
-
-
-
+export default lessons;
