@@ -29,6 +29,7 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.18.1",
     "mongoose": "^4.11.12",
     "react": "^15.6.1",
