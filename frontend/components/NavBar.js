@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchInput: ''
+    }
+  }
+
+  handleSearchSubmit(event) {
+    event.preventDefault();
+    console.log('You clicked the button');
   }
 
   render(props) {
