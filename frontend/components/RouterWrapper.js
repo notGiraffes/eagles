@@ -31,9 +31,10 @@ class RouterWrapper extends Component {
     this.getLessons()
     .then((results) => {
       console.log(this.state.lessons);
-      // var previousLessons = this.state.lessons;
       var filteredLessons = this.state.lessons.filter((lesson) => { 
-        if (lesson.name === searchInput)  {
+        var lowerSearchInput = searchInput.toLowerCase();
+        var lowerLessonName = lesson.name.toLowerCase();
+        if (lowerLessonName === lowerSearchInput) {
           return lesson;
         }
       });
