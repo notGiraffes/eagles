@@ -49,7 +49,7 @@ class SlideCreator extends React.Component {
       SLIDE CREATOR
       <form onSubmit={this.onSubmit.bind(this)}>
         Enter Slide name<input type='text' value={this.state.name} onChange={this.changeName.bind(this)}/>
-        Enter Slide youTubeUrl<input type='text' value={this.state.name} onChange={this.changeYouTubeUrl.bind(this)}/>
+        Enter Slide youTubeUrl<input type='text' value={this.state.youTubeUrl} onChange={this.changeYouTubeUrl.bind(this)}/>
         Enter Slide text<input type='text' value={this.state.text} onChange={this.changeText.bind(this)}/>
         Enter Slide quizUrl<input type='text' value={this.state.quizUrl} onChange={this.changeQuizUrl.bind(this)}/>
         <input type='submit' value='SubmitAll'/>
