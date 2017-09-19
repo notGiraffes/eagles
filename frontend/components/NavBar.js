@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 
 class NavBar extends Component {
   constructor(props) {
@@ -25,12 +26,20 @@ class NavBar extends Component {
   render(props) {
     return (
       <div>
-        <span>
-          <input type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/> 
-          <button onClick={this.handleSearchSubmit.bind(this)}>Search</button>      
-        </span>
-        <span><Link to='/lesson/0'>LessonTester   |  </Link></span>
-        <span><Link to='Link2'>Link2  |  </Link></span>
+        <ButtonToolbar>
+          <span>
+            <input type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/> 
+            <button onClick={this.handleSearchSubmit.bind(this)}>Search</button>      
+          </span>
+          <span>
+            <Link to='/create'>
+              <Button>Create</Button>
+            </Link>
+            <Link to='/'>
+              <Button>Home</Button>
+            </Link>
+          </span>
+        </ButtonToolbar>
         <hr/>
       </div>
     );
