@@ -3,7 +3,8 @@ import App from './App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LessonPreviewContainer from './LessonPreviewContainer.js';
 import Lesson from './Lesson.js';
-import lessons from '../testing/dummyData.js';
+import LessonCreator from './LessonCreator';
+
 
 class RouterWrapper extends Component {
   constructor(props) {
@@ -33,6 +34,9 @@ class RouterWrapper extends Component {
             />
             <Route path='/lesson/:id'
               component={ Lesson }
+            />
+            <Route path='/create'
+              component={ LessonCreator }
             />
           </Switch>
         </App>
