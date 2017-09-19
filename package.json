@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect backend/server.js",
-    "compile": "webpack"
+    "compile": "webpack --watch"
   },
   "repository": {
     "type": "git",
