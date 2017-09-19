@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 const LessonPreview = (props) => {
   return (
-    <div className="LessonPreview" onClick={() => props.onLessonPreviewClick(props)}>
+    <Link to={'/lesson/' + props.lesson.id}>
+    <div className="LessonPreview">
       <div className="LessonTitle">
         {props.lesson.name || 'no name'}
       </div>
@@ -10,6 +12,7 @@ const LessonPreview = (props) => {
         {props.lesson.description || 'no description'} 
       </div>
     </div>
+    </Link>
   )
 }
 

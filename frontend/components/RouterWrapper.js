@@ -22,11 +22,8 @@ class RouterWrapper extends Component {
                 /> 
               )}
             />
-            <Route path='/lesson' component={ Lesson } />
             <Route path='/lesson/:id'
-              render={() => {
-                return <div>{ JSON.stringify(this.props) }</div>
-              }}
+              component={ Lesson }
             />
           </Switch>
         </App>
