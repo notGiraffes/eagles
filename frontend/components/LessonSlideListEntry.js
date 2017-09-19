@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LessonSlideListEntry = (props) => (
-  <li className="LessonSlideListEntry" onClick={() => props.onLessonSlideListEntryClick(props.index)}>{props.slide.title}</li>
+  <li className="LessonSlideListEntry" onClick={() => props.onLessonSlideListEntryClick(props.index)}>{props.slide.name}</li>
 );
 
 
