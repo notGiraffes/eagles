@@ -1,6 +1,7 @@
-import LessonPreview from "./LessonPreview.jsx";
+import React, { Component } from 'react';
+import LessonPreview from "./LessonPreview.js";
 
-function LessonPreviewContainer(props) {
+const LessonPreviewContainer = (props) => {
   return (
     <div className="LessonPreviewContainer">
       {props.lessons.map((lesson, i) => 
@@ -13,6 +14,6 @@ function LessonPreviewContainer(props) {
       )}
     </div>
   )
-}
+};
 
 export default LessonPreviewContainer;
