@@ -1,6 +1,7 @@
 /*
 Schemas for each part. 
 user,tutorial,lesson,slide
+//don't mind the {type:String, required: true} it could just be String
 */
 
 
@@ -30,10 +31,11 @@ let lessonSchema = new Schema({
 let lesson = mongoose.model('lesson', lessonSchema);
 //////////////////
 
-
 let slideSchema = new Schema({
   name: String,
-  value: String
+  youTubeUrl: String,
+  text: String,
+  quizUrl: String
 })
 let slide = mongoose.model('slide', slideSchema);
 /////////////////

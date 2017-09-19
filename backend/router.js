@@ -36,10 +36,12 @@ router.get('/slides', function(req, res) {
   })
 });
 
-router.post('/slide', function(req, res) {
+router.post('/slides', function(req, res) {
   var slidename = req.body.name;
-  var slidevalue = req.body.value;
-  schema.slide.create({ name: slidename, value: slidevalue })
+  var slideyouTubeUrl = req.body.youTubeUrl;
+  var slidetext = req.body.text;
+  var slidequizUrl = req.body.quizUrl;
+  schema.slide.create({ name: slidename, youTubeUrl:slideyouTubeUrl, text: slidetext, quizUrl: slidequizUrl})
   .then(result => {
     res.end(`posted slide`);
   });
@@ -63,37 +65,3 @@ router.post('/tutorials', function(req, res) {
     res.end(`posted tutorials`);
   });
 })
-
-// let Schema = mongoose.Schema;
-
-// let userSchema = new Schema({
-//   username: { type: String, required: true }
-// });
-// let user = mongoose.model('user', userSchema);
-
-// //////////////////
-
-// let tutorialSchema = new Schema({
-//   name: { type: String, required: true },
-//   lessons: [[]]
-// });
-// let tutorial = mongoose.model('tutorial', tutorialSchema);
-// //////////////////
-
-
-// let lessonSchema = new Schema({
-//   name: {type: String, required: true},
-//   slides: [{
-//     name: String,
-//     value: String
-//   }]
-// });
-// let lesson = mongoose.model('lesson', lessonSchema);
-// //////////////////
-
-
-// let slideSchema = new Schema({
-//   name: String,
-//   value: String
-// })
-// let slide = mongoose.model('slide', slideSchema);

@@ -1,6 +1,25 @@
+var slides = [{
+  name: 'slide1',
+  youTubeUrl: "https://www.youtube.com/watch?v=lAJWHHUz8_8",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+},{
+  youTubeUrl: "https://www.youtube.com/watch?v=4ZAEBxGipoA",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+},{
+  youTubeUrl: "https://www.youtube.com/watch?v=mFEoarLnnqM",
+  text: "This is text for slide1",
+  quizUrl: "quiz for slide1"
+}];
+var lesson = {
+  name: 'lesson1',
+  description: 'lesson1 description',
+  slides: slides
+};
 var lessons = [
   {
-    title: "test1",
+    name: "test1",
     description: "test1 description",
     slides:[
       {
@@ -12,7 +31,7 @@ var lessons = [
     ]
   },
   {
-    title: "test2",
+    name: "test2",
     description: "test2 description",
     slides:[
       {
@@ -24,7 +43,7 @@ var lessons = [
     ]
   },
   {
-    title: "test3",
+    name: "test3",
     description: "test3 description",
     slides:[
       {
@@ -35,5 +54,9 @@ var lessons = [
       }
     ]
   },
-  
-]
+];
+
+var tutorial = {
+  name: 'tutorial1',
+  lessons: lessons
+};
