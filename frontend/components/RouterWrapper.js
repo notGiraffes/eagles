@@ -6,6 +6,7 @@ import Lesson from './Lesson/Lesson.js';
 import LessonCreator from './Creator/LessonCreator';
 import User from './User';
 import Login from './Auth/Login';
+import Logout from './Auth/Logout'
 
 
 class RouterWrapper extends Component {
@@ -87,6 +88,7 @@ class RouterWrapper extends Component {
   }
 
   logout() {
+    console.log('logging out');
     this.setState({ 
       loggedIn: false,
       displayLogginError: false,
@@ -113,7 +115,7 @@ class RouterWrapper extends Component {
               component={ Lesson }
             />
             <Route path='/create'
-              render={ () => <LessonCreator username={this.state.username} userRef={this.state.userRef} /> }
+              render={ () => <LessonCreator username={this.state.username} userRef={this.state.user} /> }
             />
             <Route path='/user' render={ () => 
                 <User 
@@ -121,10 +123,9 @@ class RouterWrapper extends Component {
                 />
               }
             />
-            <Route path='/logout' render={ () => {
-              this.logout();
-              return <Redirect to='/'/>
-              }}
+            <Route path='/logout' render={ () => 
+                <Logout logout={ this.logout } />
+              }
             />
           </Switch>) :
           (<Switch>
