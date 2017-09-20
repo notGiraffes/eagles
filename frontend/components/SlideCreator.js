@@ -108,12 +108,12 @@ class SlideCreator extends React.Component {
 }
 
 function youTubeQueryToServer(searchString) {
-  axios.get('/something', { params: { string: searchString } })
+  axios.get('/query', { params: { string: searchString } })
   .then((result) => {
-    console.log('YOUTUBE', result);
+    console.log('Youtube query sent to server');
   })
   .catch((err) => {
-    console.log('badddddddd', err);
+    console.log('Error: youtube query not sent to server', err);
   })
 }
 

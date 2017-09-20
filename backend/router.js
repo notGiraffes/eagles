@@ -9,7 +9,9 @@ slide {name:, value:}  //object
 */
 const express = require('express');
 const schema = require('./schema.js');
+const axios = require('axios');
 const router = express.Router();
+const key = require('./config/youtube.js')
 var user = schema.user;
 var lesson = schema.lesson;
 var slide = schema.slide
@@ -19,9 +21,23 @@ router.use(function(req, res, next) {
     next(); // continue doing what we were doing and go to the route
 });
 
-router.get('/something', function(req, res) {
-  console.log(req.query);
-  // Then do the youtubeapi request with req.query.string
+router.get('/query', function(req, res) {
+  axios({
+    method: 'get', 
+    url: 'https://www.googleapis.com/youtube/v3/videos',
+    params: {
+      id: req.query.string,
+      part: 'snippet,contentDetails,statistics',
+      key: key
+    }
+  })
+  .then((response) => {
+    console.log('Youtube API get request success', response.data.items);
+    // Send back (res.send) to SlideCreator, add to database from there.
+  })
+  .catch((err) => {
+    console.log('Youtube API get request error', err);
+  })
 })
 
 router.get('/',function(req, res) {
