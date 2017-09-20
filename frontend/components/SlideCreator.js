@@ -8,16 +8,28 @@ class SlideCreator extends React.Component {
     this.state = {
       name: '',
       youTubeUrl: '',
+      youTubeThumbnailUrl: '',
+      youTubeTags: '',
       text: '',
       quizUrl: ''
     }
-    this.onSubmit = this.onSubmit.bind(this);
+    // this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit (event) {
     event.preventDefault();
     var sliceFrom = this.state.youTubeUrl.indexOf('=');
     var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
-    youTubeQueryToServer(youTubeUrl);
+    youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
+      this.setState({
+        youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
+        youTubeTags: youTubeDataObj.snippet.tags
+      })
+      // youtubeDataObj.id;
+      // youTubeDataObj.snippet.title
+      console.log(this.state);
+    
+    });
+
 
     axios.post('/slides', this.state)
     .then(result => {
@@ -52,7 +64,7 @@ class SlideCreator extends React.Component {
 
   render () {
     return (
-      <Form horizontal onSubmit={this.onSubmit}>
+      <Form horizontal onSubmit={this.onSubmit.bind(this)}>
         <FormGroup>
           <Col smOffset={2} sm={2}>
             <ControlLabel>Slide Creator</ControlLabel>
@@ -112,10 +124,13 @@ class SlideCreator extends React.Component {
 
 }
 
-function youTubeQueryToServer(searchString) {
+function youTubeQueryToServer(searchString, cb) {
   axios.get('/query', { params: { string: searchString } })
   .then((result) => {
-    console.log('Youtube query sent to server');
+    console.log('Youtube query sent to server', result.data[0]);
+    // should perhaps return result.data[0]
+    // return result.data[0];
+    cb(result.data[0]);
   })
   .catch((err) => {
     console.log('Error: youtube query not sent to server', err);
