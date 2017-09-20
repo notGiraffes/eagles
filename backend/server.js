@@ -26,10 +26,15 @@ app.use(morgan('tiny'));
 
 app.use(express.static('../frontend/public'));
 
-app.get('/logout', (req, res) => res.redirect('/'));
+// -------------------AUTH-------------------------
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/')
+});
 app.post('/createAccount', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
 app.use(checkAuth.checkUser);
+// ------------------------------------------------
 
 app.set('port', (process.env.PORT || 3000));
 

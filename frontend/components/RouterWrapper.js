@@ -6,7 +6,6 @@ import Lesson from './Lesson/Lesson.js';
 import LessonCreator from './Creator/LessonCreator';
 import User from './User';
 import Login from './Auth/Login';
-import Logout from './Auth/Logout'
 
 
 class RouterWrapper extends Component {
@@ -99,6 +98,7 @@ class RouterWrapper extends Component {
 
   logout() {
     console.log('logging out');
+    fetch('/logout');
     this.setState({ 
       loggedIn: false,
       displayLogginError: false,
