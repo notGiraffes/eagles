@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import App from './App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LessonPreviewContainer from './LessonPreviewContainer.js';
-import Lesson from './Lesson.js';
-import LessonCreator from './LessonCreator';
+import LessonPreviewContainer from './Lesson/LessonPreviewContainer.js';
+import Lesson from './Lesson/Lesson.js';
+import LessonCreator from './Creator/LessonCreator';
 import User from './User';
-import Login from './Login';
+import Login from './Auth/Login';
 
 
 class RouterWrapper extends Component {
@@ -14,7 +14,8 @@ class RouterWrapper extends Component {
     this.state = {
       lessons: [],
       loggedIn: false,
-      displayLogginError: false
+      displayLogginError: false,
+      username: ''
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -111,8 +112,11 @@ class RouterWrapper extends Component {
             <Route path='/create'
               component={ LessonCreator }
             />
-            <Route path='/user'
-              component={ User }
+            <Route path='/user' render={ () => 
+                <User 
+                  username={ this.state.username }
+                />
+              }
             />
           </Switch>) :
           (<Switch>
