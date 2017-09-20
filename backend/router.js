@@ -88,7 +88,7 @@ router.get('/lessons', function(req, res) {
     res.status(400).send(err);
   })
 });
-//find specific slide
+//find specific slide using params
 router.get('/slides/:slideId', function(req, res) {
   Slide.find({_id: req.params.slideId})
   .then(function(slides) {
