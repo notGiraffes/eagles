@@ -12,7 +12,8 @@ class LessonCreator extends React.Component {
       description: '',
       slides: [],
       creatingSlide: false,
-      lessonid: 'No ID Yet'
+      lessonid: 'No ID Yet',
+      keyWords: []
     };
   }
   onSubmit (event) {
@@ -72,13 +73,15 @@ class LessonCreator extends React.Component {
       return (
         <Form horizontal onSubmit={this.onSubmit.bind(this)}>
           <FormGroup>
-            <Col smOffset={2} sm={2}>
-             <ControlLabel>Lesson Creator</ControlLabel>
-              <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>
-           </Col>
+            <Col smOffset={1} sm={2}>
+              <ControlLabel>Lesson Creator</ControlLabel>
+            </Col>
+            <Col smOffset={1} sm={4}>
+              {this.state.lessonid === 'No ID Yet' ? "You can make a slide after you make a lesson" : <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>}
+            </Col>
           </FormGroup>
           <FormGroup>
-            <Col smOffset={1} sm={2}>
+            <Col smOffset={1} sm={6}>
               <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
             </Col>
           </FormGroup>
