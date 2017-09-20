@@ -49,7 +49,7 @@ router.get('/',function(req, res) {
   res.end('router get worked');
 });
 
-router.get('/users', function(req, res) {
+router.get('/users/:userId', function(req, res) {
   User.find({})
   .then(function(users) {
     res.status(200).send(users);
@@ -77,6 +77,10 @@ router.get('/slides', function(req, res) {
   .catch(function(err) {
     res.status(400).send(err);
   })
+});
+
+router.post('/login', function(req, res) {
+  res.status(200).send({loggedIn: true});
 });
 
 router.post('/users', function(req, res) {
@@ -183,7 +187,7 @@ router.put('/lessons', function(req, res) {
     if (err) res.status(400).send(err);
 
     if (req.body.name) lesson.name = req.body.name;
-    if (req.body.createdBy) lesson.createdBy = req.body.createdBy;
+    if (req.body.userRef) lesson.userRef = req.body.userRef;
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
 
@@ -199,10 +203,12 @@ router.put('/slides', function(req, res) {
     if (err) res.status(400).send(err);
 
     if (req.body.name) slide.name = req.body.name;
+    if (req.body.lessonRef) slide.lessonRef = req.body.lessonRef;
     if (req.body.youTubeUrl) slide.youTuleUrl = req.body.youTubeUrl;
     if (req.body.text) slide.text = req.body.text;
     if (req.body.quizUrl) slide.quizUrl = req.body.quizUrl;
-    if (req.body.fromLesson) slide.fromLesson = req.body.fromLesson;
+    if (req.body.youTubeThumbnailUrl) slide.youTubeThumbnailUrl = req.body.youTubeThumbnailUrl;
+    if (req.body.youTubeTags) slide.youTubeTags = req.body.youTubeTags;
 
     Slide.save(function (err) {
       if (err) res.send(err);
