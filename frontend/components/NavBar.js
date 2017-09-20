@@ -43,6 +43,9 @@ class NavBar extends Component {
             <Link to='/'>
               <Button>Home</Button>
             </Link>
+            <Link to='/user'>
+              <Button>Your Account</Button>
+            </Link>
           </span>
         <hr/>
       </Form>

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';//use in functions
 import SlideCreator from './SlideCreator.js';
+import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 class LessonCreator extends React.Component {
   constructor (props) {
@@ -62,17 +63,48 @@ class LessonCreator extends React.Component {
   render () {
     if (!this.state.creatingSlide) {
       return (
-        <div className='LessonCreator'>
-        LESSON CREATOR
-        <button type='button' onClick={this.changeCreateState.bind(this)}>Go To SlideCreator</button>
-          <form onSubmit={this.onSubmit.bind(this)}>
-            Enter Lesson name<input type='text' value={this.state.name} onChange={this.changeName.bind(this)}/>
-            Enter Lesson createdBy<input type='text' value={this.state.createdBy} onChange={this.changeCreatedBy.bind(this)}/>
-            Enter Lesson description<input type='text' value={this.state.description} onChange={this.changeDescription.bind(this)}/>
-            Enter Lesson slides<input type='text' value={this.state.slides} onChange={this.changeSlides.bind(this)}/>
-            Make Lesson<input type="submit" value="SubmitAll"/>
-          </form>
-        </div>
+        <Form horizontal onSubmit={this.onSubmit.bind(this)}>
+          <FormGroup>
+            <Col smOffset={2} sm={2}>
+             <ControlLabel>Lesson Creator</ControlLabel>
+              <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>
+           </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>Lesson Name</Col>
+            <Col sm={10}>
+              <FormControl type='text' placeholder='Lesson Name'
+                value={this.state.name}
+                onChange={this.changeName.bind(this)}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>Creator Name</Col>
+            <Col sm={10}>
+              <FormControl type='text' placeholder='Slide Creator'
+                value={this.state.createdBy}
+                onChange={this.changeCreatedBy.bind(this)}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>Lesson description</Col>
+            <Col sm={10}>
+              <FormControl type='text' placeholder='Lesson Description'
+                value={this.state.description}
+                onChange={this.changeDescription.bind(this)}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col smOffset={2} sm={2}>
+              <Button type="submit">
+                Make Lesson
+              </Button>
+            </Col>
+          </FormGroup>
+        </Form>
       )
     } else {
       return (
