@@ -11,7 +11,8 @@ class LessonCreator extends React.Component {
       createdBy: '',
       description: '',
       slides: [],
-      creatingSlide: false
+      creatingSlide: false,
+      lessonid: 'No ID Yet'
     };
   }
   onSubmit (event) {
@@ -22,9 +23,13 @@ class LessonCreator extends React.Component {
       description: this.state.description,
       slides: this.state.slides
     };
-    axios.post('/lessons', this.state)
+    axios.post('/lessons', lessonObj)
     .then((result) => {
       console.log('result is',result);
+      this.setState({
+        lessonid: result.request.response
+      })
+      console.log('state now is ', this.state);
     })
   }
   changeName (event) {
@@ -53,11 +58,11 @@ class LessonCreator extends React.Component {
       creatingSlide: !this.state.creatingSlide
     })
   }
-  fetchSlideFromSlideCreator (slide) {
-    var slidedata = slide.config.data; 
-    console.log('this is the slide', slide.config.data);
+  fetchSlideFromSlideCreator (result) {
+    var slideID = result.request.response; 
+    console.log('this is the slide', slideID);
     this.setState({
-      slides: this.state.slides.concat(slidedata)
+      slides: this.state.slides.concat(slideID)
     })
   }
   render () {
@@ -69,6 +74,11 @@ class LessonCreator extends React.Component {
              <ControlLabel>Lesson Creator</ControlLabel>
               <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>
            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col sm={2}>
+              <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
+            </Col>
           </FormGroup>
           <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>Lesson Name</Col>
@@ -98,6 +108,14 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
+            <Col sm={2}>
+              <ControlLabel>Has The Following Slides</ControlLabel>
+            </Col>
+            <Col smOffset={2} sm={2}>
+              <ControlLabel>{this.state.slides.length === 0 ? "No Slides Yet" : this.state.slides}</ControlLabel>
+            </Col>
+          </FormGroup>
+          <FormGroup>
             <Col smOffset={2} sm={2}>
               <Button type="submit">
                 Make Lesson
@@ -108,7 +126,7 @@ class LessonCreator extends React.Component {
       )
     } else {
       return (
-        <SlideCreator fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)}></SlideCreator>
+        <SlideCreator lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)}></SlideCreator>
       )
     }
   }   
