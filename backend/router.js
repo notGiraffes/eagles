@@ -18,9 +18,6 @@ var User = schema.User;
 var Lesson = schema.Lesson;
 var Slide = schema.Slide
 
-
-
-
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console
     next(); // continue doing what we were doing and go to the route
