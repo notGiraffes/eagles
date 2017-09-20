@@ -9,40 +9,43 @@ stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
 
 
 const mongoose = require(`mongoose`);
-let Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-let userSchema = new Schema({
-  username: { type: String, required: true },
+var userSchema = new Schema({
+  username: {type: String, required: true},
+  password: {type: String, required: true},
   lessons: [String],
   favorites: [String],
   createdLessons:[String]
 });
-let user = mongoose.model('user', userSchema);
+var User = mongoose.model('User', userSchema);
 
 //////////////////
 
-let lessonSchema = new Schema({
+var lessonSchema = new Schema({
   name: {type: String, required: true},
-  createdBy: String,
+  userRef: String,
   description: String,
   slides: []
 });
-let lesson = mongoose.model('lesson', lessonSchema);
+var Lesson = mongoose.model('Lesson', lessonSchema);
 
 //////////////////
 
 let slideSchema = new Schema({
   name: String,
+  lessonRef: String,
   youTubeUrl: String,
   text: String,
   quizUrl: String,
-  fromLesson: String
-})
-let slide = mongoose.model('slide', slideSchema);
+  youTubeThumbnailUrl: String,
+  youTubeTags: [String]
+});
+let Slide = mongoose.model('Slide', slideSchema);
 
 module.exports = {
-  user: user,
-  lesson: lesson,
-  slide: slide
+  User: User,
+  Lesson: Lesson,
+  Slide: Slide
 }
 
