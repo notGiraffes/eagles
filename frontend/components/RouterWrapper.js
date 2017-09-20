@@ -23,6 +23,7 @@ class RouterWrapper extends Component {
     this.logout = this.logout.bind(this);
     this.getLessons = this.getLessons.bind(this);
     this.createAccount = this.createAccount.bind(this);
+    this.queryDataBaseWithSearchInput = this.queryDataBaseWithSearchInput.bind(this);
   }
 
   componentDidMount() {
@@ -42,8 +43,7 @@ class RouterWrapper extends Component {
       console.log(this.state.lessons);
       var filteredLessons = this.state.lessons.filter((lesson) => { 
         var lowerSearchInput = searchInput.toLowerCase();
-        var lowerLessonName = lesson.name.toLowerCase();
-        if (lowerLessonName === lowerSearchInput || lowerSearchInput === '') {
+        if (lesson.keywords.includes(lowerSearchInput) || lowerSearchInput === '') {
           return lesson;
         }
       });
@@ -52,6 +52,16 @@ class RouterWrapper extends Component {
       });
       console.log(this.state.lessons)
     })
+  }
+
+  organizeSearchResultsBasedOnMostLikes() {
+    var lessons = this.state.lessons;
+    lessons.sort(function(lesson1, lesson2) {
+      return lesson1.likes - lesson2.likes;
+    })
+    this.setState({
+      lessons: lessons
+    });
   }
 
   createAccount(username, passowrd) {
