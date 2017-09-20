@@ -16,8 +16,8 @@ class RouterWrapper extends Component {
       lessons: [],
       loggedIn: false,
       displayLogginError: false,
-      username: 'Colin',
-      userRef: '1234'
+      username: 'william',
+      userRef: '59c2ce2af424e2541cb7b508'
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
