@@ -19,19 +19,27 @@ class SlideCreator extends React.Component {
     event.preventDefault();
     var sliceFrom = this.state.youTubeUrl.indexOf('=');
     var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
-    youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
-      this.setState({
-        youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
-        youTubeTags: youTubeDataObj.snippet.tags
-      })
-      // youtubeDataObj.id;
-      // youTubeDataObj.snippet.title
-      axios.post('/slides', this.state)
-      .then(result => {
+    if (this.state.youTubeUrl !== '') {
+      youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
+        this.setState({
+          youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
+          youTubeTags: youTubeDataObj.snippet.tags
+        })
+        // youtubeDataObj.id;
+        // youTubeDataObj.snippet.title
+        axios.post('/slides', this.state)
+        .then(result => {
         console.log(result, ' that was result this.state is', this.state);
         this.props.fetch(result);
+        })
+      });
+    } else {
+      axios.post('/slides', this.state)
+      .then(result => {
+      console.log(result, ' that was result this.state is', this.state);
+      this.props.fetch(result);
       })
-    });
+    }
   }
 
   changeName (event) {
