@@ -10,9 +10,9 @@ class User extends Component {
   render() {
     return (
       <ListGroup>
-        <ListGroupItem>Username: </ListGroupItem>
-        <ListGroupItem>Email: </ListGroupItem>
-        <ListGroupItem>Lessons: </ListGroupItem>
+        <ListGroupItem>Username: { this.props.username || 'no username!' }</ListGroupItem>
+        <ListGroupItem>Favorite Lessons: </ListGroupItem>
+        <ListGroupItem>Your Lessons: </ListGroupItem>
       </ListGroup>
     );
   } 

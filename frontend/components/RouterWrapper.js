@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import App from './App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LessonPreviewContainer from './LessonPreviewContainer.js';
-import Lesson from './Lesson.js';
-import LessonCreator from './LessonCreator';
+import LessonPreviewContainer from './Lesson/LessonPreviewContainer.js';
+import Lesson from './Lesson/Lesson.js';
+import LessonCreator from './Creator/LessonCreator';
 import User from './User';
-import Login from './Login';
+import Login from './Auth/Login';
 
 
 class RouterWrapper extends Component {
@@ -13,11 +13,14 @@ class RouterWrapper extends Component {
     super(props);
     this.state = {
       lessons: [],
-      loggedIn: false
+      loggedIn: false,
+      displayLogginError: false,
+      username: ''
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.getLessons = this.getLessons.bind(this);
+    this.createAccount = this.createAccount.bind(this);
   }
 
   componentDidMount() {
@@ -49,40 +52,44 @@ class RouterWrapper extends Component {
     })
   }
 
-  login() {
-    this.setState({ loggedIn: true });
+  createAccount(username, passowrd) {
+    console.log('IMPLIMENT THIS TO CREATE ACCOUNTS!!!')
   }
 
-  // login(username, passowrd) {
-  //   let data = {
-  //     username: username,
-  //     passowrd: password
-  //   };
-  //   fetch('/login', {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     credentials: "same-origin"
-  //   })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     if(data.loggedIn === true) {
-  //       this.setState({ 
-  //         username: data.username,
-  //         loggedIn: true,
-  //         displayLogginError: false
-  //        });
-  //     } else {
-  //       this.setState({ displayLogginError: true });
-  //     }
-  //   })
-  //   .catch((err), console.log('Error Logging In!', err));
-  // }
+  login(username, password) {
+    let data = {
+      username: username,
+      passowrd: password
+    };
+    fetch('/login', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('got data', data);
+      if(data.loggedIn === true) {
+        this.setState({ 
+          username: data.username,
+          loggedIn: true,
+          displayLogginError: false
+         });
+      } else {
+        this.setState({ displayLogginError: true });
+      }
+    })
+    .catch((err) => console.log('Error Logging In!', err));
+  }
 
   logout() {
-    this.setState({ loggedIn: false });
+    this.setState({ 
+      loggedIn: false,
+      displayLogginError: false
+     });
   }
 
 
@@ -105,13 +112,19 @@ class RouterWrapper extends Component {
             <Route path='/create'
               component={ LessonCreator }
             />
-            <Route path='/user'
-              component={ User }
+            <Route path='/user' render={ () => 
+                <User 
+                  username={ this.state.username }
+                />
+              }
             />
           </Switch>) :
           (<Switch>
               <Route path='*' render={ () => 
-                <Login login={ this.login } displayLogginError={ this.state.displayLogginError } />
+                <Login login={ this.login } 
+                       displayLogginError={ this.state.displayLogginError }
+                       createAccount={ this.createAccount }
+                />
               }/>
             </Switch>)
             }

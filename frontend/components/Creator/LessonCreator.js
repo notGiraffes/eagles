@@ -8,7 +8,7 @@ class LessonCreator extends React.Component {
     super(props);
     this.state = {
       name: '',
-      createdBy: '',
+      userRef: '',
       description: '',
       slides: [],
       creatingSlide: false,
@@ -19,9 +19,10 @@ class LessonCreator extends React.Component {
     event.preventDefault();
     var lessonObj = {
       name: this.state.name,
-      createdBy: this.state.createdBy,
+      userRef: this.state.userRef,
       description: this.state.description,
       slides: this.state.slides
+
     };
     axios.post('/lessons', lessonObj)
     .then((result) => {
@@ -37,9 +38,9 @@ class LessonCreator extends React.Component {
       name: event.target.value
     });
   }
-  changeCreatedBy (event) {
+  changeUserRef (event) {
     this.setState({
-      createdBy: event.target.value
+      userRef: event.target.value
     });
   }
   changeDescription (event) {
@@ -76,9 +77,8 @@ class LessonCreator extends React.Component {
            </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Lesson ID: </Col>
-            <Col sm={10}>
-              {this.state.lessonid}
+            <Col smOffset={1} sm={2}>
+              <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
             </Col>
           </FormGroup>
           <FormGroup>
@@ -94,8 +94,8 @@ class LessonCreator extends React.Component {
             <Col componentClass={ControlLabel} sm={2}>Creator Name</Col>
             <Col sm={10}>
               <FormControl type='text' placeholder='Slide Creator'
-                value={this.state.createdBy}
-                onChange={this.changeCreatedBy.bind(this)}
+                value={this.state.userRef}
+                onChange={this.changeUserRef.bind(this)}
               />
             </Col>
           </FormGroup>
@@ -109,7 +109,7 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col sm={2}>
+            <Col smOffset={1} sm={2}>
               <ControlLabel>Has The Following Slides</ControlLabel>
             </Col>
             <Col smOffset={2} sm={2}>

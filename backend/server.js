@@ -8,8 +8,10 @@ const app = express();
 const router = require('./router.js');
 const database = require('./database.js');
 const path = require('path');
+const morgan = require('morgan');
 
 
+app.use(morgan('tiny'));
 
 app.use(express.static('../frontend/public'));
 

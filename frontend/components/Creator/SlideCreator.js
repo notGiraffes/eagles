@@ -14,7 +14,6 @@ class SlideCreator extends React.Component {
       quizUrl: '',
       lessonRef: props.lessonRef
     }
-    // this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit (event) {
     event.preventDefault();
@@ -27,17 +26,12 @@ class SlideCreator extends React.Component {
       })
       // youtubeDataObj.id;
       // youTubeDataObj.snippet.title
-      console.log(this.state);
-    
+      axios.post('/slides', this.state)
+      .then(result => {
+        console.log(result, ' that was result this.state is', this.state);
+        this.props.fetch(result);
+      })
     });
-
-
-    axios.post('/slides', this.state)
-    .then(result => {
-      console.log(result, ' that was result this.state is', this.state);
-      this.props.fetch(result);
-    })
-    ;
   }
 
   changeName (event) {
@@ -130,8 +124,6 @@ function youTubeQueryToServer(searchString, cb) {
   axios.get('/query', { params: { string: searchString } })
   .then((result) => {
     console.log('Youtube query sent to server', result.data[0]);
-    // should perhaps return result.data[0]
-    // return result.data[0];
     cb(result.data[0]);
   })
   .catch((err) => {
