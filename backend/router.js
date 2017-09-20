@@ -19,6 +19,11 @@ router.use(function(req, res, next) {
     next(); // continue doing what we were doing and go to the route
 });
 
+router.get('/something', function(req, res) {
+  console.log(req.query);
+  // Then do the youtubeapi request with req.query.string
+})
+
 router.get('/',function(req, res) {
   res.end('router get worked');
 });
