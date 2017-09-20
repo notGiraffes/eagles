@@ -14,7 +14,6 @@ class SlideCreator extends React.Component {
       quizUrl: '',
       lessonRef: props.lessonRef
     }
-    // this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit (event) {
     event.preventDefault();
@@ -130,8 +129,6 @@ function youTubeQueryToServer(searchString, cb) {
   axios.get('/query', { params: { string: searchString } })
   .then((result) => {
     console.log('Youtube query sent to server', result.data[0]);
-    // should perhaps return result.data[0]
-    // return result.data[0];
     cb(result.data[0]);
   })
   .catch((err) => {

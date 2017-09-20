@@ -34,7 +34,6 @@ router.get('/query', function(req, res) {
     }
   })
   .then((response) => {
-    // console.log('Youtube API get request success', response.data.items);
     res.send(response.data.items);
   })
   .catch((err) => {
@@ -70,8 +69,10 @@ router.get('/users', function(req, res) {
 
 //find specific lesson
 router.get('/lessons/:lessonId', function(req, res) {
+  console.log('handling request');
   Lesson.find({_id: req.params.lessonId})
   .then(function(lessons) {
+    console.log(lessons);
     res.status(200).send(lessons);
   })
   .catch(function(err) {
