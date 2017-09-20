@@ -11,7 +11,8 @@ class SlideCreator extends React.Component {
       youTubeThumbnailUrl: '',
       youTubeTags: '',
       text: '',
-      quizUrl: ''
+      quizUrl: '',
+      lessonRef: props.lessonRef
     }
     // this.onSubmit = this.onSubmit.bind(this);
   }
@@ -33,9 +34,10 @@ class SlideCreator extends React.Component {
 
     axios.post('/slides', this.state)
     .then(result => {
-      console.log(result);
+      console.log(result, ' that was result this.state is', this.state);
       this.props.fetch(result);
-    });
+    })
+    ;
   }
 
   changeName (event) {
