@@ -34,7 +34,6 @@ router.get('/query', function(req, res) {
     }
   })
   .then((response) => {
-    // console.log('Youtube API get request success', response.data.items);
     res.send(response.data.items);
   })
   .catch((err) => {
