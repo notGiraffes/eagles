@@ -96,7 +96,12 @@ class SlideCreator extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
-            <Button type="submit" onClick={this.props.changeCreateState}>
+            <FormControl type="submit" value='Submit All' />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col smOffset={2} sm={2}>
+            <Button onClick={this.props.changeCreateState}>
               Stop Creating
             </Button>
           </Col>
