@@ -15,33 +15,51 @@ class Lesson extends React.Component {
     }
   }
 
+  // componentDidMount() {
+  //   return fetch('/lessons', { method: 'GET' })
+  //     .then((response) => response.json())
+  //     .then((lessonsDataJSON) => {
+  //       console.log('got data: ', lessonsDataJSON);
+  //       console.log('params: ', this.props.match.params);
+  //       for (var i = 0; i < lessonsDataJSON.length; i++) {
+  //         if (lessonsDataJSON[i]._id === this.props.match.params.id) {
+  //           console.log('found match');
+  //           this.setState({
+  //             specificLesson: lessonsDataJSON[i],
+  //             slides: lessonsDataJSON[i].slides
+  //           });
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log('Disaster!!!', error);
+  //     })
+  // }
+
   componentDidMount() {
-    return fetch('/lessons', { method: 'GET' })
-      .then((response) => response.json())
-      .then((lessonsDataJSON) => {
-        console.log('got data: ', lessonsDataJSON);
-        console.log('params: ', this.props.match.params);
-        for (var i = 0; i < lessonsDataJSON.length; i++) {
-          if (lessonsDataJSON[i]._id === this.props.match.params.id) {
-            console.log('found match');
-            this.setState({
-              specificLesson: lessonsDataJSON[i],
-              slides: lessonsDataJSON[i].slides
-            });
-          }
-        }
+    return fetch('/lesson' + this.props.match.params.id, { method: 'GET' }) 
+      .then((response) => {
+        console.log(response.json());
+        // response.json())
       })
-      .catch((error) => {
-        console.log('Disaster!!!', error);
-      })
+      // .then((lessonDataJSON) => {
+      //   this.setState({
+      //     slides: lessonDataJSON.slides
+      //   });
+      // })
   }
 
 
 
   onLessonSlideListEntryClick(index) {
+    // Could try to modify the youtubeURL here.
+    var videoIdInUrl = this.state.slides[index].youTubeUrl;
+    var sliceFrom = url.indexOf('=');
+    var videoId = videoIdInUrl.slice(sliceFrom + 1);
     this.setState({
       currentSlide: this.state.slides[index],
-      index: index
+      index: index,
+      videoId: ''
     });
   }
 
