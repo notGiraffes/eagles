@@ -76,7 +76,7 @@ class LessonCreator extends React.Component {
            </Col>
           </FormGroup>
           <FormGroup>
-            <Col sm={2}>
+            <Col smOffset={1} sm={2}>
               <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
             </Col>
           </FormGroup>
@@ -108,7 +108,7 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col sm={2}>
+            <Col smOffset={1} sm={2}>
               <ControlLabel>Has The Following Slides</ControlLabel>
             </Col>
             <Col smOffset={2} sm={2}>
