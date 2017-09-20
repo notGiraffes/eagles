@@ -8,7 +8,7 @@ class LessonCreator extends React.Component {
     super(props);
     this.state = {
       name: '',
-      createdBy: '',
+      userRef: "59c2ce2af424e2541cb7b508",
       description: '',
       slides: [],
       creatingSlide: false,
@@ -19,15 +19,16 @@ class LessonCreator extends React.Component {
     event.preventDefault();
     var lessonObj = {
       name: this.state.name,
-      createdBy: this.state.createdBy,
+      userRef: this.state.userRef,
       description: this.state.description,
       slides: this.state.slides
+
     };
     axios.post('/lessons', lessonObj)
     .then((result) => {
       console.log('result is',result);
       this.setState({
-        lessonid: result.request.response
+        lessonid: result.data._id // setting lessonid to the lesson object's id
       })
       console.log('state now is ', this.state);
     })
@@ -37,11 +38,12 @@ class LessonCreator extends React.Component {
       name: event.target.value
     });
   }
-  changeCreatedBy (event) {
-    this.setState({
-      createdBy: event.target.value
-    });
-  }
+
+  // changeUserRef (event) {
+  //   this.setState({
+  //     userRef: event.target.value
+  //   });
+  // }
   changeDescription (event) {
     this.setState({
       description: event.target.value
@@ -59,10 +61,10 @@ class LessonCreator extends React.Component {
     })
   }
   fetchSlideFromSlideCreator (result) {
-    var slideID = result.request.response; 
+    var slideID = result.data._id; 
     console.log('this is the slide', slideID);
     this.setState({
-      slides: this.state.slides.concat(slideID)
+      slides: this.state.slides.concat(slideID) //pushing in slide object's id into slides;
     })
   }
   render () {
@@ -90,11 +92,11 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Creator Name</Col>
+            <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
             <Col sm={10}>
               <FormControl type='text' placeholder='Slide Creator'
-                value={this.state.createdBy}
-                onChange={this.changeCreatedBy.bind(this)}
+                value={this.state.userRef}
+                // onChange={this.changeUserRef.bind(this)}
               />
             </Col>
           </FormGroup>
