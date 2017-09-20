@@ -68,11 +68,9 @@ router.get('/users', function(req, res) {
 })
 
 //find specific lesson
-router.get('/lessons/:lessonId', function(req, res) {
-  console.log('handling request');
+router.get('/lesson/:lessonId', function(req, res) {
   Lesson.find({_id: req.params.lessonId})
   .then(function(lessons) {
-    console.log(lessons);
     res.send(lessons);
   })
   .catch(function(err) {
