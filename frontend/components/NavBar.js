@@ -46,7 +46,9 @@ class NavBar extends Component {
           <Link to='/user'>
             <Button>Your Account</Button>
           </Link>{' '}
-          <Button onClick={ this.props.logout }>Logout</Button>
+          <Link to='/logout'>
+            <Button>Logout</Button>
+          </Link>{' '}
         </span>
         </Form>
         </Navbar.Form>
