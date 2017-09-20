@@ -25,33 +25,31 @@ class NavBar extends Component {
   render(props) {
     return (
       <Navbar>
-        <Navbar.Collapse>
-          <Navbar.Form pullLeft>
-            <Form onSubmit={ (e) => {
-              e.preventDefault();
-              this.retrieveSearchInput.call(this, event);
-            }}>
-              <FormGroup>
-               <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
-              </FormGroup>{' '}
-              <Button type="submit" onClick={this.handleSearchSubmit}>
-                <Link to='/'>Search</Link>
-              </Button>{' '}
-            <span>
-            <Link to='/create'>
-              <Button>Create</Button>
-            </Link>{' '}
-            <Link to='/'>
-              <Button>Home</Button>
-            </Link>{' '}
-            <Link to='/user'>
-              <Button>Your Account</Button>
-            </Link>{' '}
-            <Button onClick={ this.props.logout }>Logout</Button>
-          </span>
-          </Form>
-          </Navbar.Form>
-        </Navbar.Collapse>
+        <Navbar.Form pullLeft>
+          <Form onSubmit={ (e) => {
+            e.preventDefault();
+            this.retrieveSearchInput.call(this, event);
+          }}>
+            <FormGroup>
+              <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
+            </FormGroup>{' '}
+            <Button type="submit" onClick={this.handleSearchSubmit}>
+              <Link to='/'>Search</Link>
+            </Button>{' '}
+          <span>
+          <Link to='/create'>
+            <Button>Create</Button>
+          </Link>{' '}
+          <Link to='/'>
+            <Button>Home</Button>
+          </Link>{' '}
+          <Link to='/user'>
+            <Button>Your Account</Button>
+          </Link>{' '}
+          <Button onClick={ this.props.logout }>Logout</Button>
+        </span>
+        </Form>
+        </Navbar.Form>
       </Navbar>
     );
   }
