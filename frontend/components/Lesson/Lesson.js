@@ -19,7 +19,7 @@ class Lesson extends React.Component {
     return fetch('/lesson/' + this.props.match.params.id, { method: 'GET' }) 
       .then((response) => response.json())
       .then((lessonDataJSON) => {
-        // console.log('LESSON DATA', lessonDataJSON); // Sends back array with 1 element
+        console.log('LESSON DATA', lessonDataJSON); // Sends back array with 1 element
         this.setState({
           specificLesson: lessonDataJSON[0],
           slides: lessonDataJSON[0].slides
