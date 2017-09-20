@@ -141,11 +141,13 @@ router.post('/lessons', function(req, res) {
   var name = req.body.name;
   var userRef = req.body.userRef
   var description = req.body.description;
+  var keywords = req.body.keywords;
   var slides = req.body.slides || [];
   Lesson.create({ 
     name: name, 
     userRef: userRef, 
     description: description, 
+    keywords: keywords,
     slides: slides 
   })
   .catch(function(err) {
