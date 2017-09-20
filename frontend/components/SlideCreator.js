@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 class SlideCreator extends React.Component {
   constructor (props) {
@@ -10,6 +11,7 @@ class SlideCreator extends React.Component {
       text: '',
       quizUrl: ''
     }
+    this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit (event) {
     event.preventDefault();
@@ -45,17 +47,58 @@ class SlideCreator extends React.Component {
   }
 
   render () {
-    return (<div className='SlideCreator'>
-      SLIDE CREATOR
-      <form onSubmit={this.onSubmit.bind(this)}>
-        Enter Slide name<input type='text' value={this.state.name} onChange={this.changeName.bind(this)}/>
-        Enter Slide youTubeUrl<input type='text' value={this.state.youTubeUrl} onChange={this.changeYouTubeUrl.bind(this)}/>
-        Enter Slide text<input type='text' value={this.state.text} onChange={this.changeText.bind(this)}/>
-        Enter Slide quizUrl<input type='text' value={this.state.quizUrl} onChange={this.changeQuizUrl.bind(this)}/>
-        <input type='submit' value='SubmitAll'/>
-      </form>
-      <button type="button" onClick={this.props.changeCreateState}>Stop Creating</button>
-    </div>)
+    return (
+      <Form horizontal onSubmit={this.onSubmit}>
+        <FormGroup>
+          <Col smOffset={2} sm={2}>
+            <ControlLabel>Slide Creator</ControlLabel>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>Slide Name</Col>
+          <Col sm={10}>
+            <FormControl type='text' placeholder='Slide Name'
+              value={this.state.name}
+              onChange={this.changeName.bind(this)}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>Slide youTubeUrl</Col>
+          <Col sm={10}>
+            <FormControl type='text' placeholder='Slide youTube Url'
+              value={this.state.youTubeUrl}
+              onChange={this.changeYouTubeUrl.bind(this)}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>Slide Text</Col>
+          <Col sm={10}>
+            <FormControl type='text' placeholder='Slide Text'
+              value={this.state.text}
+              onChange={this.changeText.bind(this)}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>Slide QuizUrl</Col>
+          <Col sm={10}>
+            <FormControl type='Quiz Url' placeholder='Quiz Url'
+              value={this.state.quizUrl}
+              onChange={this.changeQuizUrl.bind(this)}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col smOffset={2} sm={2}>
+            <Button type="submit" onClick={this.props.changeCreateState}>
+              Stop Creating
+            </Button>
+          </Col>
+        </FormGroup>
+      </Form>
+    );
   }
 
 }

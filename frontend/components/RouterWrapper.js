@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LessonPreviewContainer from './LessonPreviewContainer.js';
 import Lesson from './Lesson.js';
 import LessonCreator from './LessonCreator';
+import User from './User'
 
 
 class RouterWrapper extends Component {
@@ -63,6 +64,9 @@ class RouterWrapper extends Component {
             />
             <Route path='/create'
               component={ LessonCreator }
+            />
+            <Route path='/user'
+              component={ User }
             />
           </Switch>
         </App>
