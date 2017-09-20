@@ -4,16 +4,19 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LessonPreviewContainer from './LessonPreviewContainer.js';
 import Lesson from './Lesson.js';
 import LessonCreator from './LessonCreator';
-import User from './User'
+import User from './User';
+import Login from './Login';
 
 
 class RouterWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lessons: []
+      lessons: [],
+      loggedIn: false
     };
-    
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.getLessons = this.getLessons.bind(this);
   }
 
@@ -40,18 +43,27 @@ class RouterWrapper extends Component {
         }
       });
       this.setState({
-        lessons: filteredLessons
+        lessons: filteredLessons,
       });
       console.log(this.state.lessons)
     })
+  }
+
+  login() {
+    this.setState({ loggedIn: true });
+  }
+
+  logout() {
+    this.setState({ loggedIn: false });
   }
 
 
   render() {
     return (
       <BrowserRouter>
-        <App queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)}>
-          <Switch>
+        <App queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)} logout={this.logout}>
+          { this.state.loggedIn ?
+         (<Switch>
             <Route exact path='/'
               render={() => (
                 <LessonPreviewContainer 
@@ -68,7 +80,13 @@ class RouterWrapper extends Component {
             <Route path='/user'
               component={ User }
             />
-          </Switch>
+          </Switch>) :
+          (<Switch>
+              <Route path='*' render={ () => 
+                <Login login={ this.login } />
+              }/>
+            </Switch>)
+            }
         </App>
       </BrowserRouter>
     );
