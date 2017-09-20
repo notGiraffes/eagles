@@ -11,10 +11,12 @@ const express = require('express');
 const schema = require('./schema.js');
 const axios = require('axios');
 const router = express.Router();
-const key = require('./config/youtube.js')
+const dotenv = require('dotenv').config({path: '../.env'})
 var user = schema.user;
 var lesson = schema.lesson;
 var slide = schema.slide
+
+
 
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console
@@ -28,12 +30,12 @@ router.get('/query', function(req, res) {
     params: {
       id: req.query.string,
       part: 'snippet,contentDetails,statistics',
-      key: key
+      key: dotenv.parsed.ourKey
     }
   })
   .then((response) => {
-    console.log('Youtube API get request success', response.data.items);
-    // Send back (res.send) to SlideCreator, add to database from there.
+    // console.log('Youtube API get request success', response.data.items);
+    res.send(response.data.items);
   })
   .catch((err) => {
     console.log('Youtube API get request error', err);
