@@ -53,6 +53,34 @@ class RouterWrapper extends Component {
     this.setState({ loggedIn: true });
   }
 
+  // login(username, passowrd) {
+  //   let data = {
+  //     username: username,
+  //     passowrd: password
+  //   };
+  //   fetch('/login', {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     credentials: "same-origin"
+  //   })
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     if(data.loggedIn === true) {
+  //       this.setState({ 
+  //         username: data.username,
+  //         loggedIn: true,
+  //         displayLogginError: false
+  //        });
+  //     } else {
+  //       this.setState({ displayLogginError: true });
+  //     }
+  //   })
+  //   .catch((err), console.log('Error Logging In!', err));
+  // }
+
   logout() {
     this.setState({ loggedIn: false });
   }
@@ -83,7 +111,7 @@ class RouterWrapper extends Component {
           </Switch>) :
           (<Switch>
               <Route path='*' render={ () => 
-                <Login login={ this.login } />
+                <Login login={ this.login } displayLogginError={ this.state.displayLogginError } />
               }/>
             </Switch>)
             }
