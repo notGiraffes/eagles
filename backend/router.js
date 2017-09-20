@@ -18,9 +18,6 @@ var User = schema.User;
 var Lesson = schema.Lesson;
 var Slide = schema.Slide
 
-
-
-
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console
     next(); // continue doing what we were doing and go to the route
@@ -49,9 +46,10 @@ router.get('/',function(req, res) {
   res.end('router get worked');
 });
 
+//find specific user
 router.get('/users/:userId', function(req, res) {
-  User.find({})
-  .then(function(users) {
+  User.find({_id: req.params.userId})
+  .then(function(users) { 
     res.status(200).send(users);
   })
   .catch(function(err) {
@@ -59,6 +57,28 @@ router.get('/users/:userId', function(req, res) {
   })
 })
 
+//find all users
+router.get('/users', function(req, res) {
+  User.find({})
+  .then(function(users) { 
+    res.status(200).send(users);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+})
+
+//find specific lesson
+router.get('/lessons/:lessonId', function(req, res) {
+  Lesson.find({_id: req.params.lessonId})
+  .then(function(lessons) {
+    res.status(200).send(lessons);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+});
+//find all lessons
 router.get('/lessons', function(req, res) {
   Lesson.find({})
   .then(function(lessons) {
@@ -68,7 +88,19 @@ router.get('/lessons', function(req, res) {
     res.status(400).send(err);
   })
 });
+//find specific slide using params
+router.get('/slides/:slideId', function(req, res) {
+  Slide.find({_id: req.params.slideId})
+  .then(function(slides) {
+    res.status(200).send(slides);
+  })
+  .catch(function(err) {
+    res.status(400).send(err);
+  })
+});
 
+
+//find all slides
 router.get('/slides', function(req, res) {
   Slide.find({})
   .then(function(slides) {
@@ -95,7 +127,7 @@ router.post('/users', function(req, res) {
   createdLessons: createdLessons
   })
   .then(function(result) {
-    res.status(200).send('posted user');
+    res.status(200).send(result);
   })
   .catch(function(err) {
     res.status(400).send(err);
@@ -122,6 +154,7 @@ router.post('/lessons', function(req, res) {
       user.lessons.push(result._id);
       user.save();
     })
+    return result;
   })
   .catch(function(err) {
     res.status(400).send('findById did not work');
@@ -157,6 +190,7 @@ router.post('/slides', function(req, res) {
       lesson.slides.push(result._id)
       lesson.save();
     })
+    return result;
   })
   .then(result => {
     res.status(200).send(result);
