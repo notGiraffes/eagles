@@ -16,7 +16,7 @@ const dotenv = require('dotenv').config({path: '../.env'})
 const mongoose = require('mongoose');
 var User = schema.User;
 var Lesson = schema.Lesson;
-var Slide = schema.Slide
+var Slide = schema.Slide;
 
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console

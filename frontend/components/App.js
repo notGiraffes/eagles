@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar queryDataBaseWithSearchInput={this.props.queryDataBaseWithSearchInput}/>
+        <NavBar queryDataBaseWithSearchInput={this.props.queryDataBaseWithSearchInput} logout={ this.props.logout }/>
         { this.props.children || 'no children!' }
       </div>
     );

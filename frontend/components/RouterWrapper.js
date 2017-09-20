@@ -71,7 +71,7 @@ class RouterWrapper extends Component {
   login(username, password) {
     let data = {
       username: username,
-      passowrd: password
+      password: password
     };
     fetch('/login', {
       method: "POST",
@@ -133,9 +133,10 @@ class RouterWrapper extends Component {
                 />
               }
             />
-            <Route path='/logout' render={ () => 
-                <Logout logout={ this.logout } />
-              }
+            <Route path='/logout' render={ () => {
+              console.log('logging out route');
+              return <Logout logout={ this.logout }/>
+            }} 
             />
           </Switch>) :
           (<Switch>
