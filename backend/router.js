@@ -10,9 +10,10 @@ slide {name:, value:}  //object
 const express = require('express');
 const schema = require('./schema.js');
 const router = express.Router();
-var user = schema.user;
-var lesson = schema.lesson;
-var slide = schema.slide
+const mongoose = require('mongoose');
+var User = schema.User;
+var Lesson = schema.Lesson;
+var Slide = schema.Slide
 
 router.use(function(req, res, next) {
     //console.log('new log from router.use', req.method, req.body);// log each request to the console
@@ -24,7 +25,7 @@ router.get('/',function(req, res) {
 });
 
 router.get('/users', function(req, res) {
-  schema.user.find({})
+  User.find({})
   .then(function(users) {
     res.status(200).send(users);
   })
@@ -34,7 +35,7 @@ router.get('/users', function(req, res) {
 })
 
 router.get('/lessons', function(req, res) {
-  schema.lesson.find({})
+  Lesson.find({})
   .then(function(lessons) {
     res.status(200).send(lessons);
   })
@@ -44,7 +45,7 @@ router.get('/lessons', function(req, res) {
 });
 
 router.get('/slides', function(req, res) {
-  schema.slide.find({})
+  Slide.find({})
   .then(function(slides) {
     res.status(200).send(slides);
   })
@@ -55,12 +56,16 @@ router.get('/slides', function(req, res) {
 
 router.post('/users', function(req, res) {
   var username = req.body.username;
-  var lessons = req.body.lessons;
-  var favorites = req.body.favorites;
-  var createdLessons = req.body.createdLessons;
-  schema.user.create({username: username, lessons: [], favorites: [], createdLessons: []})
-  .then(result => {
-    console.log(result);
+  var lessons = req.body.lessons || [];
+  var favorites = req.body.favorites || [];
+  var createdLessons = req.body.createdLessons || [];
+  User.create({
+  username: username, 
+  lessons: lessons, 
+  favorites: favorites, 
+  createdLessons: createdLessons
+  })
+  .then(function(result) {
     res.status(200).send('posted user');
   })
   .catch(function(err) {
@@ -70,27 +75,62 @@ router.post('/users', function(req, res) {
 
 router.post('/lessons', function(req, res) {
   var name = req.body.name;
-  var createdBy = req.body.createdBy
+  var userRef = req.body.userRef
   var description = req.body.description;
-  var slides = req.body.slides;
-  schema.lesson.create({ name: name, createdBy: createdBy, description: description, slides: slides })
-  .then(result => {
-    res.end(`posted lessons`);
+  var slides = req.body.slides || [];
+  Lesson.create({ 
+    name: name, 
+    userRef: userRef, 
+    description: description, 
+    slides: slides 
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.status(400).send('create did not work')
+  })
+  .then(function(result) {
+    User.findById(userRef, function(err, user) {
+      if (err) res.send(err);
+      user.lessons.push(result._id);
+      user.save();
+    })
+  })
+  .catch(function(err) {
+    res.status(400).send('findById did not work');
+  })
+  .then(result => {
+    res.status(200).send(result);
+  })
+  .catch(function(err) {
+    res.status(400).send('result was not sent for post lessons');
   })
 })
 
 router.post('/slides', function(req, res) {
-  var slidename = req.body.name;
+  var name = req.body.name;
+  var lessonRef = req.body.lessonRef;
   var youTubeUrl = req.body.youTubeUrl;
   var text = req.body.text;
   var quizUrl = req.body.quizUrl;
-  var fromLesson = req.body.fromLesson
-  schema.slide.create({ name: slidename, youTubeUrl: youTubeUrl, text: text, quizUrl: quizUrl, fromLesson: fromLesson})
+  var youTubeThumbnailUrl = req.body.youTubeThumbnailUrl;
+  var youTubeTags = req.body.youTubeTags;
+  Slide.create({ 
+    name: name,
+    lessonRef: lessonRef,
+    youTubeUrl: youTubeUrl, 
+    text: text, 
+    quizUrl: quizUrl,
+    youTubeThumbnailUrl: youTubeThumbnailUrl,
+    youTubeTags: youTubeTags
+    })
+  .then(function(result) {
+    Lesson.findById(lessonRef, function(err, lesson) {
+      if (err) res.send(err);
+      lesson.slides.push(result._id)
+      lesson.save();
+    })
+  })
   .then(result => {
-    res.status(200).send(`posted slide`);
+    res.status(200).send(result);
   })
   .catch(function(err) {
     res.status(400).send(err);
@@ -98,7 +138,7 @@ router.post('/slides', function(req, res) {
 });
 
 router.put('/users', function(req, res) {
-  user.findById(req.query._id, function(err, user) {
+  User.findById(req.query._id, function(err, user) {
     if (err) res.status(400).send(err);
 
     if (req.body.username) user.username = req.body.username;
@@ -106,7 +146,7 @@ router.put('/users', function(req, res) {
     if (req.body.favorites) user.favorites = req.body.favorites;
     if (req.body.createdLessons) user.createdLessons = req.body.createdLessons;
 
-    user.save(function (err) {
+    User.save(function (err) {
       if (err) res.send(err);
       res.send('user updated')
     })
@@ -114,7 +154,7 @@ router.put('/users', function(req, res) {
 })
 
 router.put('/lessons', function(req, res) {
-  lesson.findById(req.query._id, function(err, lesson) {
+  Lesson.findById(req.query._id, function(err, lesson) {
     if (err) res.status(400).send(err);
 
     if (req.body.name) lesson.name = req.body.name;
@@ -122,7 +162,7 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
 
-    lesson.save(function (err) {
+    Lesson.save(function (err) {
       if (err) res.send(err);
       res.status(200).send(lesson);
     })
@@ -130,7 +170,7 @@ router.put('/lessons', function(req, res) {
 })
 
 router.put('/slides', function(req, res) {
-  slide.findById(req.query._id, function(err, slide) {
+  Slide.findById(req.query._id, function(err, slide) {
     if (err) res.status(400).send(err);
 
     if (req.body.name) slide.name = req.body.name;
@@ -139,7 +179,7 @@ router.put('/slides', function(req, res) {
     if (req.body.quizUrl) slide.quizUrl = req.body.quizUrl;
     if (req.body.fromLesson) slide.fromLesson = req.body.fromLesson;
 
-    lesson.save(function (err) {
+    Slide.save(function (err) {
       if (err) res.send(err);
       res.send('slide updated');
     })
@@ -147,7 +187,7 @@ router.put('/slides', function(req, res) {
 })
 
 router.delete('/users', function(req, res) {
-  user.findByIdAndRemove(req.query._id, function(err, user) {
+  User.findByIdAndRemove(req.query._id, function(err, user) {
     if (err) res.status(400).send(err);
 
     res.status(200).send(user._id + 'removed');
@@ -155,7 +195,7 @@ router.delete('/users', function(req, res) {
 })
 
 router.delete('/lessons', function(req, res) {
-  lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
+  Lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
     if (err) res.status(400).send(err);
 
     res.status(200).send(lesson._id + 'removed');
@@ -163,7 +203,7 @@ router.delete('/lessons', function(req, res) {
 })
 
 router.delete('/slides', function(req, res) {
-  slide.findByIdAndRemove(req.query._id, function(err, slide) {
+  Slide.findByIdAndRemove(req.query._id, function(err, slide) {
     if (err) res.status(400).send(err);
 
     res.status(200).send(slide._id + 'removed');
