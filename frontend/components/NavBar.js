@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Navbar } from 'react-bootstrap';
 
 class NavBar extends Component {
   constructor(props) {
@@ -17,7 +17,6 @@ class NavBar extends Component {
     });
   }
 
-
   handleSearchSubmit(event) {
     event.preventDefault();
     this.props.queryDataBaseWithSearchInput(this.state.searchInput);
@@ -25,32 +24,35 @@ class NavBar extends Component {
 
   render(props) {
     return (
-      <div>
-        <Form inline onSubmit={(event) => {
-              event.preventDefault();
-              this.handleSearchSubmit.call(this, event)
-              }}>
-          <span>
-            <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
-              <Button onClick={this.handleSearchSubmit}>
+      <Navbar>
+        <Navbar.Collapse>
+          <Navbar.Form pullLeft>
+            <Form onSubmit={ (e) => {
+              e.preventDefault();
+              this.retrieveSearchInput.call(this, event);
+            }}>
+              <FormGroup>
+               <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
+              </FormGroup>{' '}
+              <Button type="submit" onClick={this.handleSearchSubmit}>
                 <Link to='/'>Search</Link>
-              </Button>
-          </span>
-          <span>
+              </Button>{' '}
+            <span>
             <Link to='/create'>
               <Button>Create</Button>
-            </Link>
+            </Link>{' '}
             <Link to='/'>
               <Button>Home</Button>
-            </Link>
+            </Link>{' '}
             <Link to='/user'>
               <Button>Your Account</Button>
-            </Link>
+            </Link>{' '}
             <Button onClick={ this.props.logout }>Logout</Button>
           </span>
-        <hr/>
-      </Form>
-      </div>
+          </Form>
+          </Navbar.Form>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
