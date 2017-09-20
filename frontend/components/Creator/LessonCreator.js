@@ -8,7 +8,7 @@ class LessonCreator extends React.Component {
     super(props);
     this.state = {
       name: '',
-      userRef: '',
+      userRef: "59c2ce2af424e2541cb7b508",
       description: '',
       slides: [],
       creatingSlide: false,
@@ -38,11 +38,12 @@ class LessonCreator extends React.Component {
       name: event.target.value
     });
   }
-  changeUserRef (event) {
-    this.setState({
-      userRef: event.target.value
-    });
-  }
+
+  // changeUserRef (event) {
+  //   this.setState({
+  //     userRef: event.target.value
+  //   });
+  // }
   changeDescription (event) {
     this.setState({
       description: event.target.value
@@ -91,11 +92,11 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Creator Name</Col>
+            <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
             <Col sm={10}>
               <FormControl type='text' placeholder='Slide Creator'
                 value={this.state.userRef}
-                onChange={this.changeUserRef.bind(this)}
+                // onChange={this.changeUserRef.bind(this)}
               />
             </Col>
           </FormGroup>

@@ -49,10 +49,10 @@ router.get('/',function(req, res) {
 router.get('/users/:userId', function(req, res) {
   User.find({_id: req.params.userId})
   .then(function(users) { 
-    res.status(200).send(users);
+    res.send(users);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 })
 
@@ -60,10 +60,10 @@ router.get('/users/:userId', function(req, res) {
 router.get('/users', function(req, res) {
   User.find({})
   .then(function(users) { 
-    res.status(200).send(users);
+    res.send(users);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 })
 
@@ -73,30 +73,30 @@ router.get('/lessons/:lessonId', function(req, res) {
   Lesson.find({_id: req.params.lessonId})
   .then(function(lessons) {
     console.log(lessons);
-    res.status(200).send(lessons);
+    res.send(lessons);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 });
 //find all lessons
 router.get('/lessons', function(req, res) {
   Lesson.find({})
   .then(function(lessons) {
-    res.status(200).send(lessons);
+    res.send(lessons);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 });
 //find specific slide using params
 router.get('/slides/:slideId', function(req, res) {
   Slide.find({_id: req.params.slideId})
   .then(function(slides) {
-    res.status(200).send(slides);
+    res.send(slides);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 });
 
@@ -105,33 +105,35 @@ router.get('/slides/:slideId', function(req, res) {
 router.get('/slides', function(req, res) {
   Slide.find({})
   .then(function(slides) {
-    res.status(200).send(slides);
+    res.send(slides);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 });
 
 router.post('/login', function(req, res) {
-  res.status(200).send({loggedIn: true});
+  res.send({loggedIn: true});
 });
 
 router.post('/users', function(req, res) {
   var username = req.body.username;
+  var password = req.body.password;
   var lessons = req.body.lessons || [];
   var favorites = req.body.favorites || [];
   var createdLessons = req.body.createdLessons || [];
   User.create({
   username: username, 
+  password: password,
   lessons: lessons, 
   favorites: favorites, 
   createdLessons: createdLessons
   })
   .then(function(result) {
-    res.status(200).send(result);
+    res.send(result);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 })
 
@@ -146,25 +148,27 @@ router.post('/lessons', function(req, res) {
     description: description, 
     slides: slides 
   })
-  .catch(function(err) {
-    res.status(400).send('create did not work')
-  })
   .then(function(result) {
     User.findById(userRef, function(err, user) {
-      if (err) res.send(err);
-      user.lessons.push(result._id);
-      user.save();
+      //console.log('err',err,'user',user);
+      if (err) {
+        throw err;
+        return;
+      } else {
+        user.lessons.push(result._id);
+        user.save();
+      }
+      // if (err) res.send(err);
+      // user.lessons.push(result._id);
+      // user.save();
     })
     return result;
   })
-  .catch(function(err) {
-    res.status(400).send('findById did not work');
-  })
   .then(result => {
-    res.status(200).send(result);
+    res.send(result);
   })
   .catch(function(err) {
-    res.status(400).send('result was not sent for post lessons');
+    res.send('Error at endpoint /lessons type POST: ', err);
   })
 })
 
@@ -187,23 +191,27 @@ router.post('/slides', function(req, res) {
     })
   .then(function(result) {
     Lesson.findById(lessonRef, function(err, lesson) {
-      if (err) res.send(err);
-      lesson.slides.push(result._id)
-      lesson.save();
+      if (err) {
+        throw err;
+        return;
+      } else {
+        lesson.slides.push(result._id)
+        lesson.save();
+      }
     })
     return result;
   })
   .then(result => {
-    res.status(200).send(result);
+    res.send(result);
   })
   .catch(function(err) {
-    res.status(400).send(err);
+    res.send(err);
   })
 });
 
 router.put('/users', function(req, res) {
   User.findById(req.query._id, function(err, user) {
-    if (err) res.status(400).send(err);
+    if (err) res.send(err);
 
     if (req.body.username) user.username = req.body.username;
     if (req.body.lessons) user.lessons = req.body.lessons;
@@ -219,7 +227,7 @@ router.put('/users', function(req, res) {
 
 router.put('/lessons', function(req, res) {
   Lesson.findById(req.query._id, function(err, lesson) {
-    if (err) res.status(400).send(err);
+    if (err) res.send(err);
 
     if (req.body.name) lesson.name = req.body.name;
     if (req.body.userRef) lesson.userRef = req.body.userRef;
@@ -228,14 +236,14 @@ router.put('/lessons', function(req, res) {
 
     Lesson.save(function (err) {
       if (err) res.send(err);
-      res.status(200).send(lesson);
+      res.send(lesson);
     })
   })
 })
 
 router.put('/slides', function(req, res) {
   Slide.findById(req.query._id, function(err, slide) {
-    if (err) res.status(400).send(err);
+    if (err) res.send(err);
 
     if (req.body.name) slide.name = req.body.name;
     if (req.body.lessonRef) slide.lessonRef = req.body.lessonRef;
@@ -254,25 +262,34 @@ router.put('/slides', function(req, res) {
 
 router.delete('/users', function(req, res) {
   User.findByIdAndRemove(req.query._id, function(err, user) {
-    if (err) res.status(400).send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
-    res.status(200).send(user._id + 'removed');
+    res.send(user._id + 'removed');
   })
 })
 
 router.delete('/lessons', function(req, res) {
   Lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
-    if (err) res.status(400).send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
-    res.status(200).send(lesson._id + 'removed');
+    res.send(lesson._id + 'removed');
   })
 })
 
 router.delete('/slides', function(req, res) {
   Slide.findByIdAndRemove(req.query._id, function(err, slide) {
-    if (err) res.status(400).send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
-    res.status(200).send(slide._id + 'removed');
+    res.send(slide._id + 'removed');
   })
 })
 
