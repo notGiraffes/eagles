@@ -13,6 +13,10 @@ class SlideCreator extends React.Component {
   }
   onSubmit (event) {
     event.preventDefault();
+    var sliceFrom = this.state.youTubeUrl.indexOf('=');
+    var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
+    youTubeQueryToServer(youTubeUrl);
+
     axios.post('/slides', this.state)
     .then(result => {
       console.log(result);
@@ -58,6 +62,16 @@ class SlideCreator extends React.Component {
     </div>)
   }
 
+}
+
+function youTubeQueryToServer(searchString) {
+  axios.get('/something', { params: { string: searchString } })
+  .then((result) => {
+    console.log('YOUTUBE', result);
+  })
+  .catch((err) => {
+    console.log('badddddddd', err);
+  })
 }
 
 export default SlideCreator;
