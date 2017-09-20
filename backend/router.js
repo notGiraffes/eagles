@@ -148,25 +148,27 @@ router.post('/lessons', function(req, res) {
     description: description, 
     slides: slides 
   })
-  .catch(function(err) {
-    res.send('create did not work')
-  })
   .then(function(result) {
     User.findById(userRef, function(err, user) {
-      if (err) res.send(err);
-      user.lessons.push(result._id);
-      user.save();
+      //console.log('err',err,'user',user);
+      if (err) {
+        throw err;
+        return;
+      } else {
+        user.lessons.push(result._id);
+        user.save();
+      }
+      // if (err) res.send(err);
+      // user.lessons.push(result._id);
+      // user.save();
     })
     return result;
-  })
-  .catch(function(err) {
-    res.send('findById did not work');
   })
   .then(result => {
     res.send(result);
   })
   .catch(function(err) {
-    res.send('result was not sent for post lessons');
+    res.send('Error at endpoint /lessons type POST: ', err);
   })
 })
 
@@ -189,9 +191,13 @@ router.post('/slides', function(req, res) {
     })
   .then(function(result) {
     Lesson.findById(lessonRef, function(err, lesson) {
-      if (err) res.send(err);
-      lesson.slides.push(result._id)
-      lesson.save();
+      if (err) {
+        throw err;
+        return;
+      } else {
+        lesson.slides.push(result._id)
+        lesson.save();
+      }
     })
     return result;
   })
@@ -256,7 +262,10 @@ router.put('/slides', function(req, res) {
 
 router.delete('/users', function(req, res) {
   User.findByIdAndRemove(req.query._id, function(err, user) {
-    if (err) res.send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
     res.send(user._id + 'removed');
   })
@@ -264,7 +273,10 @@ router.delete('/users', function(req, res) {
 
 router.delete('/lessons', function(req, res) {
   Lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
-    if (err) res.send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
     res.send(lesson._id + 'removed');
   })
@@ -272,7 +284,10 @@ router.delete('/lessons', function(req, res) {
 
 router.delete('/slides', function(req, res) {
   Slide.findByIdAndRemove(req.query._id, function(err, slide) {
-    if (err) res.send(err);
+    if (err) {
+      throw err;
+      return;
+    };
 
     res.send(slide._id + 'removed');
   })
