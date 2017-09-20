@@ -44,7 +44,7 @@ router.get('/',function(req, res) {
   res.end('router get worked');
 });
 
-router.get('/users', function(req, res) {
+router.get('/users/:userId', function(req, res) {
   User.find({})
   .then(function(users) {
     res.status(200).send(users);
@@ -72,6 +72,10 @@ router.get('/slides', function(req, res) {
   .catch(function(err) {
     res.status(400).send(err);
   })
+});
+
+router.post('/login', function(req, res) {
+  res.status(200).send({loggedIn: true});
 });
 
 router.post('/users', function(req, res) {
