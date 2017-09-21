@@ -259,13 +259,14 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
-    if (req.body.likes) lesson.likes = req.body.likes
-    if (lesson.userLikes.length !== 0) {// ain't empty
+    if (lesson.userLikes.length !== 0) {
       if (lesson.userLikes.indexOf(req.session.username) === -1) {
         lesson.userLikes.push(req.session.username);
+         if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
       }
     } else {
       lesson.userLikes.push(req.session.username);
+       if (req.body.likes) lesson.likes = req.body.likes
     }
 
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
