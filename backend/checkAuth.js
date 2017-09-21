@@ -64,11 +64,6 @@ exports.checkUser = (req, res, next) => {
     res.redirect('/');
   } else {
     console.log('sent along: ', req.session.username);
-    // let username = req.session.username;
-    // req.session.regenerate(function (err) {
-    //   if(err) console.log('error regenerating session');
-    // });
-    // req.session.username = username;
     next();
   }
 }
