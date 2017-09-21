@@ -45,10 +45,9 @@ class RouterWrapper extends Component {
   queryDataBaseWithSearchInput(searchInput) {
     this.getLessons()
     .then((results) => {
-      console.log(this);
       var filteredLessons = this.state.lessons.filter((lesson) => { 
         var lowerSearchInput = searchInput.toLowerCase();
-        if (lesson.keywords.includes(lowerSearchInput) || lowerSearchInput === '') {
+        if (lesson.keyWords.includes(lowerSearchInput) || lowerSearchInput === '') {
           return lesson;
         }
       });
@@ -147,6 +146,7 @@ class RouterWrapper extends Component {
         <App 
         queryDataBaseWithSearchInput={ this.queryDataBaseWithSearchInput } 
         logout={ this.logout } 
+        getLessons={ this.getLessons }
         >
           { this.state.loggedIn ?
          (<Switch>
@@ -167,6 +167,7 @@ class RouterWrapper extends Component {
             <Route path='/user' render={ () => 
                 <User 
                   user={ this.state.user }
+                  getLessons={ this.getLessons }
                 />
               }
             />

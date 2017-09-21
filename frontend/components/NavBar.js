@@ -41,7 +41,7 @@ class NavBar extends Component {
             <Button>Create</Button>
           </Link>{' '}
           <Link to='/'>
-            <Button>Home</Button>
+            <Button onClick={ this.props.getLessons }>Home</Button>
           </Link>{' '}
           <Link to='/user'>
             <Button>Your Account</Button>
