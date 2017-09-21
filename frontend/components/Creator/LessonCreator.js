@@ -45,11 +45,18 @@ class LessonCreator extends React.Component {
   }
   keyWordSubmit (event) {
     event.preventDefault();
-    console.log('keyWordSubmit triggered')
+    console.log('keyWordSubmit triggered');
+    var body = {keyWords: this.state.keyWords, lessonid: this.state.lessonid};
+    axios.put('/lessons', body)
+    .then(function(result) {
+      console.log('from line43 lessoncreator result is', result);
+    })
   }
   changeKeyWords (event) {
+    var arr = [];
+    arr.push(event.target.value);
     this.setState({
-      keyWords: event.target.value
+      keyWords: arr
     })
   }
   changeName (event) {
@@ -135,7 +142,7 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           
-          <FormGroup>
+          {this.state.lessonid === 'No ID Yet' ? null : <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>keyWords</Col>
             <Col sm={10}>
                 <FormControl type='text' 
@@ -144,7 +151,7 @@ class LessonCreator extends React.Component {
                 />
                 <Button onClick={this.keyWordSubmit.bind(this)}> Add keyWord </Button>
             </Col>
-          </FormGroup>
+          </FormGroup>}
           
           <FormGroup>
             <Col smOffset={1} sm={2}>
