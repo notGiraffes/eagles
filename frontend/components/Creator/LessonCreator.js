@@ -105,7 +105,7 @@ class LessonCreator extends React.Component {
   }
   fetchSlideFromSlideCreator (result) {
     console.log(result);
-    var slideID = result._id; 
+    var slideID = result.name; 
     console.log('this is the slide', slideID);
     this.setState({
       slides: this.state.slides.concat(slideID) //pushing in slide object's id into slides;
