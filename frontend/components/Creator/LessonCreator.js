@@ -45,6 +45,7 @@ class LessonCreator extends React.Component {
   }
   keyWordSubmit (event) {
     event.preventDefault();
+<<<<<<< HEAD
     console.log('keyWordSubmit triggered');
     var body = {keyWords: this.state.keyWords, lessonid: this.state.lessonid};
     axios.put('/lessons', body)
@@ -57,6 +58,13 @@ class LessonCreator extends React.Component {
     arr.push(event.target.value);
     this.setState({
       keyWords: arr
+=======
+    console.log('keyWordSubmit triggered')
+  }
+  changeKeyWords (event) {
+    this.setState({
+      keyWords: event.target.value
+>>>>>>> working on put
     })
   }
   changeName (event) {
