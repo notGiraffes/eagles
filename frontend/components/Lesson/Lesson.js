@@ -26,7 +26,7 @@ class Lesson extends React.Component {
           specificLesson: lessonDataJSON,
           slides: lessonDataJSON.slides
         });
-        console.log(this.state.slides.youTubeThumbnailUrl);
+        console.log(this.state.specificLesson);
       })
   }
 
@@ -78,11 +78,14 @@ class Lesson extends React.Component {
   }
 
   likeALesson() {
-    if (!this.state.liked) {
+    // if (!this.state.liked) {
       this.state.specificLesson.likes++;
-      this.setState({
-        liked: true
-      })
+    //   this.setState({
+    //     liked: true
+    //   })
+      // console.log(req.session.username);
+
+
       var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id };
       fetch('/lessons', {
         method: "PUT",
@@ -95,12 +98,15 @@ class Lesson extends React.Component {
       .then(function(result) {
         return result.json();
       })
+      .then((res) => {
+        console.log('THIS RES', res);
+      })
       .catch(function(err) {
         console.log(err);
       })
-    } else {
-      alert('You can\'t like twice!');
-    }
+    // } else {
+    //   alert('You can\'t like twice!');
+    // }
   }
 
 

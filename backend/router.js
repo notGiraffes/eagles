@@ -164,7 +164,8 @@ router.post('/lessons', function(req, res) {
     description: description, 
     keywords: keywords,
     slides: slides ,
-    likes: 0
+    likes: 0,
+    userLikes: []
   })
   .then(function(result) {
     User.findById(userRef, function(err, user) {
@@ -259,10 +260,19 @@ router.put('/lessons', function(req, res) {
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
     if (req.body.likes) lesson.likes = req.body.likes
+    if (lesson.userLikes.length !== 0) {// ain't empty
+      if (lesson.userLikes.indexOf(req.session.username) === -1) {
+        lesson.userLikes.push(req.session.username);
+      }
+    } else {
+      lesson.userLikes.push(req.session.username);
+    }
 
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
+      console.log('RES', result);
+
       res.send(result);
     })
     .catch(function(err) {
