@@ -40,7 +40,11 @@ class User extends Component {
       },
       credentials: "include"
     })
-    .then((res) => res.send(res))
+    .then((deletedlesson) => {
+      let newState = this.state.lessons.filter(lesson => lesson._id !== lessonId)
+      console.log('new state: ', newState);
+      this.setState({lessons: newState});
+    })
     .catch((err) => console.log('Error deleting lessons', err));
   }
 
