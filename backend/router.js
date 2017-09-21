@@ -31,7 +31,7 @@ router.get('/query', function(req, res) {
     params: {
       id: req.query.string,
       part: 'snippet,contentDetails,statistics',
-      key: dotenv.parsed.ourKey
+      key: process.env.KEY
     }
   })
   .then((response) => {
