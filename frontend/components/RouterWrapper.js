@@ -47,10 +47,6 @@ class RouterWrapper extends Component {
     .then((results) => {
       var filteredLessons = this.state.lessons.filter((lesson) => { 
         var lowerSearchInput = searchInput.toLowerCase();
-<<<<<<< HEAD
-=======
-        console.log(lesson);
->>>>>>> working on delete function, refactoring
         if (lesson.keyWords.includes(lowerSearchInput) || lowerSearchInput === '') {
           return lesson;
         }

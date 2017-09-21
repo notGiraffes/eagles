@@ -313,7 +313,7 @@ router.delete('/lessons/:lessonId', function(req, res) {
       return;
     };
 
-    res.send('removed');
+    res.send(lesson);
   })
 })
 
