@@ -30,7 +30,13 @@ class RouterWrapper extends Component {
   }
 
   getLessons() {
-    return fetch('/lessons')
+    return fetch('/lessons', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })
     .then((res) => res.json())
     .then((lessons) => this.setState({lessons}))
     .catch((err) => console.log('Error getting lessons', err));
@@ -76,9 +82,9 @@ class RouterWrapper extends Component {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      credentials: "same-origin"
+      credentials: "include"
     })
     .then((res) => res.json())
     .then((data) => {
@@ -98,7 +104,10 @@ class RouterWrapper extends Component {
 
   logout() {
     console.log('logging out');
-    fetch('/logout');
+    fetch('/logout', {
+      method: "GET",
+      credentials: "include"
+    });
     this.setState({ 
       loggedIn: false,
       displayLogginError: false,
