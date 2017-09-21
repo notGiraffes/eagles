@@ -29,6 +29,10 @@ class User extends Component {
     .catch((err) => console.log('Error getting lessons', err));
   }
 
+  deleteLesson() {
+    
+  }
+
   componentDidMount() {
     this.getLessons();
   }

@@ -22,6 +22,7 @@ class RouterWrapper extends Component {
     this.getLessons = this.getLessons.bind(this);
     this.createAccount = this.createAccount.bind(this);
     this.queryDataBaseWithSearchInput = this.queryDataBaseWithSearchInput.bind(this);
+    this.organizeSearchResultsBasedOnMostLikes = this.organizeSearchResultsBasedOnMostLikes.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +45,7 @@ class RouterWrapper extends Component {
   queryDataBaseWithSearchInput(searchInput) {
     this.getLessons()
     .then((results) => {
-      console.log(this.state.lessons);
+      console.log(this);
       var filteredLessons = this.state.lessons.filter((lesson) => { 
         var lowerSearchInput = searchInput.toLowerCase();
         if (lesson.keywords.includes(lowerSearchInput) || lowerSearchInput === '') {
@@ -144,9 +145,8 @@ class RouterWrapper extends Component {
     return (
       <BrowserRouter>
         <App 
-        queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)} 
-        logout={this.logout} 
-        organizeSearchResultsBasedOnMostLikes={this.organizeSearchResultsBasedOnMostLikes}
+        queryDataBaseWithSearchInput={ this.queryDataBaseWithSearchInput } 
+        logout={ this.logout } 
         >
           { this.state.loggedIn ?
          (<Switch>
@@ -154,6 +154,7 @@ class RouterWrapper extends Component {
               render={() => (
                 <LessonPreviewContainer 
                   lessons= { this.state.lessons }
+                  organizeSearchResultsBasedOnMostLikes={ this.organizeSearchResultsBasedOnMostLikes }
                 /> 
               )}
             />
