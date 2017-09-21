@@ -29,7 +29,7 @@ app.use(express.static('../frontend/public'));
 
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
-app.post('/createAccount', checkAuth.createAccount);
+app.post('/users', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
 app.use(checkAuth.checkUser);
 // ------------------------------------------------ //

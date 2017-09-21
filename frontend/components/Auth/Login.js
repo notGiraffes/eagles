@@ -56,7 +56,6 @@ class Login extends Component {
                 Go Back
               </Button>
               <Button onClick={() => {
-                this.props.login(this.state.username, this.state.password);
                 this.props.createAccount(this.state.username, this.state.password);
                 }}>
                 Create Account!

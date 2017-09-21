@@ -9,6 +9,7 @@ exports.attemptLoggin = (req, res) => {
     .then((users) => {
       if(users.length === 0) throw new Error('no Users');
       let user = users[0];
+      delete user.password;
       req.session.username = username;
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({
@@ -29,8 +30,31 @@ exports.logout = (req, res) => {
 }
 
 exports.createAccount = (req, res) => {
-  // validate the input
-  // create a user in the DB
+  var username = req.body.username;
+  var password = req.body.password;
+  var lessons = req.body.lessons || [];
+  var favorites = req.body.favorites || [];
+  var createdLessons = req.body.createdLessons || [];
+  User.create({
+    username: username, 
+    password: password,
+    lessons: lessons, 
+    favorites: favorites, 
+    createdLessons: createdLessons
+  })
+  .then(function(result) {
+    console.log('created user: ', result);
+    req.session.username = result.username;
+    delete result.password;
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      loggedIn: true,
+      userData: result
+    }));
+  })
+  .catch(function(err) {
+    res.send(err);
+  })
 }
 
 exports.checkUser = (req, res, next) => {

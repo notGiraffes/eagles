@@ -128,26 +128,26 @@ router.get('/slides', function(req, res) {
 //   res.send({loggedIn: true});
 // });
 
-router.post('/users', function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-  var lessons = req.body.lessons || [];
-  var favorites = req.body.favorites || [];
-  var createdLessons = req.body.createdLessons || [];
-  User.create({
-  username: username, 
-  password: password,
-  lessons: lessons, 
-  favorites: favorites, 
-  createdLessons: createdLessons
-  })
-  .then(function(result) {
-    res.send(result);
-  })
-  .catch(function(err) {
-    res.send(err);
-  })
-})
+// router.post('/users', function(req, res) {
+//   var username = req.body.username;
+//   var password = req.body.password;
+//   var lessons = req.body.lessons || [];
+//   var favorites = req.body.favorites || [];
+//   var createdLessons = req.body.createdLessons || [];
+//   User.create({
+//   username: username, 
+//   password: password,
+//   lessons: lessons, 
+//   favorites: favorites, 
+//   createdLessons: createdLessons
+//   })
+//   .then(function(result) {
+//     res.send(result);
+//   })
+//   .catch(function(err) {
+//     res.send(err);
+//   })
+// })
 
 router.post('/lessons', function(req, res) {
   var name = req.body.name;
