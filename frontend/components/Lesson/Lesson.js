@@ -12,7 +12,8 @@ class Lesson extends React.Component {
       slides: [],
       currentSlide: null,
       index: 0,
-      videoIdOfClickedOnVideo: ''
+      videoIdOfClickedOnVideo: '',
+      liked: false
     }
   }
 
@@ -42,6 +43,13 @@ class Lesson extends React.Component {
       videoIdOfClickedOnVideo: videoId
     });
   }
+  
+  exit() {
+    this.setState({
+      currentSlide: '',
+      index: ''
+    });
+  }
 
   previousSlideClick(index) {
     index--;
@@ -69,12 +77,36 @@ class Lesson extends React.Component {
     }
   }
 
-  exit() {
-    this.setState({
-      currentSlide: '',
-      index: ''
-    });
+  likeALesson() {
+    if (!this.state.liked) {
+      this.state.specificLesson.likes++;
+      this.setState({
+        liked: true
+      })
+      var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id };
+      fetch('/lessons', {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      })
+      .then(function(result) {
+        return result.json();
+      })
+      .then(function(result) {
+        console.log('from line62 lessoncreator result after keyword update is', result);
+      })
+      .catch(function(err) {
+        console.log('line 70 err', err);
+      })
+    } else {
+      alert('You can\'t like twice!');
+    }
   }
+
+
 
 
   render() {
@@ -105,6 +137,7 @@ class Lesson extends React.Component {
                 })}
               </div>
             </div>
+            <button type="button" onClick={this.likeALesson.bind(this)}>Like</button>
           </div>
         )}
       </div>
