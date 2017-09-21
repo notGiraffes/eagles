@@ -126,6 +126,7 @@ class LessonCreator extends React.Component {
               <div>Lesson Name: {this.state.name}</div>
               <div>Lesson Description: {this.state.description}</div>
               <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+              {this.state.slides.length === 0 ? (<div>No Slides Yet</div>) : (<div>Lesson Slides: {this.state.slides.join(', ')}</div>)}
             </div>) 
           }
 {/*
@@ -178,15 +179,17 @@ class LessonCreator extends React.Component {
           </FormGroup>}
 
           
-          <FormGroup>
+          {/*
+            <FormGroup>
             <Col smOffset={1} sm={2}>
               <ControlLabel>Has The Following Slides</ControlLabel>
             </Col>
             <div>
               <ControlLabel>{this.state.slides.length === 0 ? "No Slides Yet, You can create slides after making a lesson" : this.state.slides.join(', ')}</ControlLabel>
             </div>
-          </FormGroup>
-          <FormGroup>
+            </FormGroup>
+          */}
+            <FormGroup>
             { this.state.lessonid === 'No ID Yet' ? 
               (<Col smOffset={2} sm={6}>
                 <Button type="submit">
@@ -202,7 +205,13 @@ class LessonCreator extends React.Component {
       )
     } else {
       return (
-        <SlideCreator lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)}></SlideCreator>
+        <div>
+          <div>Lesson Name: {this.state.name}</div>
+          <div>Lesson Description: {this.state.description}</div>
+          <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+          <div>Lesson Slides: {this.state.slides.join(', ')}</div>
+          <SlideCreator lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)}></SlideCreator>
+        </div>
       )
     }
   }   
