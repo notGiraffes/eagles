@@ -43,6 +43,15 @@ class LessonCreator extends React.Component {
       console.log('state now is ', this.state);
     })
   }
+  keyWordSubmit (event) {
+    event.preventDefault();
+    console.log('keyWordSubmit triggered')
+  }
+  changeKeyWords (event) {
+    this.setState({
+      keyWords: event.target.value
+    })
+  }
   changeName (event) {
     this.setState({
       name: event.target.value
@@ -90,6 +99,7 @@ class LessonCreator extends React.Component {
               {this.state.lessonid === 'No ID Yet' ? "You can make a slide after you make a lesson" : <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>}
             </Col>
           </FormGroup>
+
           <FormGroup>
             <Col smOffset={1} sm={6}>
               <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
@@ -104,6 +114,7 @@ class LessonCreator extends React.Component {
               />
             </Col>
           </FormGroup>
+          
           <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
             <Col sm={10}>
@@ -113,6 +124,7 @@ class LessonCreator extends React.Component {
               />
             </Col>
           </FormGroup>
+          
           <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>Lesson description</Col>
             <Col sm={10}>
@@ -122,6 +134,18 @@ class LessonCreator extends React.Component {
               />
             </Col>
           </FormGroup>
+          
+          <FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>keyWords</Col>
+            <Col sm={10}>
+                <FormControl type='text' 
+                  value={this.state.keyWords}
+                  onChange={this.changeKeyWords.bind(this)}
+                />
+                <Button onClick={this.keyWordSubmit.bind(this)}> Add keyWord </Button>
+            </Col>
+          </FormGroup>
+          
           <FormGroup>
             <Col smOffset={1} sm={2}>
               <ControlLabel>Has The Following Slides</ControlLabel>
