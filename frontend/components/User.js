@@ -44,7 +44,6 @@ class User extends Component {
       <ListGroup>
         <ListGroupItem>Username: { this.props.user.username || 'no username!' }</ListGroupItem>
         <ListGroupItem>Favorite Lessons: { this.props.user.favorites || 'no favorite lessons!' } </ListGroupItem>
-        <ListGroupItem>Your Lessons: { this.props.user.createdLessons || 'no createdLessons!' } </ListGroupItem>
         <ListGroupItem>
           <ButtonGroup vertical block>
             <DropdownButton title="Your Lessons:" id="Your Lessons">
