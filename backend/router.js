@@ -236,7 +236,10 @@ router.put('/users', function(req, res) {
 })
 
 router.put('/lessons', function(req, res) {
-  Lesson.findById(req.query._id, function(err, lesson) {
+  console.log('hello line239 router.js req is ', req.body);
+  Lesson.findById(req.body.lessonid, function(err, lesson) {
+    //console.log('lesson is ', lesson, 'err is ', err)
+    console.log('Lesson is ', Lesson, lesson.keyWords)
     if (err) res.send(err);
 
     if (req.body.name) lesson.name = req.body.name;
@@ -244,10 +247,14 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
-
-    Lesson.save(function (err) {
-      if (err) res.send(err);
-      res.send(lesson);
+    console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
+    lesson.save()
+    .then(function (err, result) {
+      if (err) {
+        throw err;
+        return;
+      }
+      res.send(result);
     })
   })
 })
