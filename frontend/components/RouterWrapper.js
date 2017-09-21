@@ -61,7 +61,7 @@ class RouterWrapper extends Component {
   organizeSearchResultsBasedOnMostLikes() {
     var lessons = this.state.lessons;
     lessons.sort(function(lesson1, lesson2) {
-      return lesson1.likes - lesson2.likes;
+      return lesson2.likes - lesson1.likes;
     })
     this.setState({
       lessons: lessons
