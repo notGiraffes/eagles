@@ -49,13 +49,15 @@ class User extends Component {
           <ButtonGroup vertical block>
             <DropdownButton title="Your Lessons:" id="Your Lessons">
               <MenuItem key={ this.props.user._id }>
-                {this.state.lessons.map((lesson, i) => 
+                { this.state.lessons.length === 0 ? 'You Have No Lessons!' :
+                  (this.state.lessons.map((lesson, i) => 
                   <div key={ lesson._id }>
                   {lesson.description || 'no description'} 
                   <Link to={'/lesson/' + lesson._id}>
                     <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
                   </Link>
-                  </div>
+                  <hr/>
+                  </div>)
                 )}
               </MenuItem> 
             </DropdownButton>

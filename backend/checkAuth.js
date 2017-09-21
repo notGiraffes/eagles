@@ -9,7 +9,7 @@ exports.attemptLoggin = (req, res) => {
     .then((users) => {
       if(users.length === 0) throw new Error('no Users');
       let user = users[0];
-      delete user.password;
+      user.password = '';
       req.session.username = username;
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({
@@ -45,7 +45,7 @@ exports.createAccount = (req, res) => {
   .then(function(result) {
     console.log('created user: ', result);
     req.session.username = result.username;
-    delete result.password;
+    result.password = '';
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
       loggedIn: true,
