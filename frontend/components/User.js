@@ -31,8 +31,18 @@ class User extends Component {
     .catch((err) => console.log('Error getting lessons', err));
   }
 
-  deleteLesson() {
-    
+  deleteLesson(lessonId) {
+    return fetch('/lessons/' + lessonId, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => console.log('Error deleting lessons', err));
   }
 
   componentDidMount() {

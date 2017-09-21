@@ -6,10 +6,12 @@ const LessonPreview = (props) => {
   return (
     <div className="LessonPreview">
       <ListGroupItem header={props.lesson.name || 'no name'}>
-        {props.lesson.description || 'no description'} 
-      <Link to={'/lesson/' + props.lesson._id}>
-        <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
-      </Link>
+        <br />
+          {props.lesson.description || 'no description'} 
+          <br />
+        <Link to={'/lesson/' + props.lesson._id}>
+          <Button bsStyle="primary" bsSize="small" >View Lesson</Button>
+        </Link>
       </ListGroupItem>
     </div>
   )
