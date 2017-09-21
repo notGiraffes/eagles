@@ -25,6 +25,7 @@ class Lesson extends React.Component {
           specificLesson: lessonDataJSON,
           slides: lessonDataJSON.slides
         });
+        console.log(this.state.slides.youTubeThumbnailUrl);
       })
   }
 
@@ -93,7 +94,7 @@ class Lesson extends React.Component {
             <div className="lesson">
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
               <p className="lessonDescription">{this.state.specificLesson.description}</p>
-              <ol className="lessonOrderedList">
+              <div className="lessonOrderedList">
                 {this.state.slides.map((slide, i) => {
                   return <LessonSlideListEntry
                     slide={slide}
@@ -102,7 +103,7 @@ class Lesson extends React.Component {
                     onLessonSlideListEntryClick={this.onLessonSlideListEntryClick.bind(this)}
                   />
                 })}
-              </ol>
+              </div>
             </div>
           </div>
         )}
