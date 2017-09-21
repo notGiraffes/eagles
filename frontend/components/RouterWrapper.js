@@ -139,7 +139,6 @@ class RouterWrapper extends Component {
      });
   }
 
-
   render() {
     return (
       <BrowserRouter>
