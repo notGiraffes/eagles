@@ -78,35 +78,22 @@ class Lesson extends React.Component {
   }
 
   likeALesson() {
-    // if (!this.state.liked) {
-      this.state.specificLesson.likes++;
-    //   this.setState({
-    //     liked: true
-    //   })
-      // console.log(req.session.username);
-
-
-      var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id };
-      fetch('/lessons', {
-        method: "PUT",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include"
-      })
-      .then(function(result) {
-        return result.json();
-      })
-      .then((res) => {
-        console.log('THIS RES', res);
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
-    // } else {
-    //   alert('You can\'t like twice!');
-    // }
+    this.state.specificLesson.likes++;
+    var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id };
+    fetch('/lessons', {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+    .then(function(result) {
+      return result.json();
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
   }
 
 
