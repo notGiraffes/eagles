@@ -1,7 +1,7 @@
 import React from 'react';
 import LessonSlideListEntry from './LessonSlideListEntry.js';
 import Slide from './Slide.js';
-// import lessons from '../testing/dummyData.js'
+import { Button } from 'react-bootstrap';
 
 
 class Lesson extends React.Component {
@@ -95,11 +95,8 @@ class Lesson extends React.Component {
       .then(function(result) {
         return result.json();
       })
-      .then(function(result) {
-        console.log('from line62 lessoncreator result after keyword update is', result);
-      })
       .catch(function(err) {
-        console.log('line 70 err', err);
+        console.log(err);
       })
     } else {
       alert('You can\'t like twice!');
@@ -137,7 +134,7 @@ class Lesson extends React.Component {
                 })}
               </div>
             </div>
-            <button type="button" onClick={this.likeALesson.bind(this)}>Like</button>
+            <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
           </div>
         )}
       </div>

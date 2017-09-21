@@ -7,7 +7,7 @@ const LessonPreviewContainer = (props) => {
     <div className="LessonPreviewContainer">
       Order by:
       
-      <Button bsStyle="primary" bsSize="small" >by Likes</Button>
+      <Button bsStyle="primary" bsSize="small" onClick={props.organizeSearchResultsBasedOnMostLikes} >by Likes</Button>
       <Button bsStyle="primary" bsSize="small" >by Date</Button>
       <ListGroup>
       {props.lessons.map((lesson, i) => 
