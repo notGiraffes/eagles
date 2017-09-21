@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroupItem, Header, Button } from 'react-bootstrap';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, DropdownButton } from 'react-bootstrap';
 import LessonPreviewContainer from './Lesson/LessonPreviewContainer';
 
 class User extends Component {
@@ -39,8 +39,9 @@ class User extends Component {
         <ListGroupItem>Username: { this.props.user.username || 'no username!' }</ListGroupItem>
         <ListGroupItem>Favorite Lessons: { this.props.user.favorites || 'no favorite lessons!' } </ListGroupItem>
         <ListGroupItem>Your Lessons: { this.props.user.createdLessons || 'no createdLessons!' } </ListGroupItem>
-        <ListGroupItem>Your Lessons: </ListGroupItem>
+        <ListGroupItem>Your Lessons:
         {this.state.lessons.length > 0 ? (<LessonPreviewContainer lessons={ this.state.lessons }/>) : '' }
+        </ListGroupItem>
       </ListGroup>
     );
   } 
