@@ -17,17 +17,39 @@ class SlideCreator extends React.Component {
   }
   onSubmit (event) {
     event.preventDefault();
-    var sliceFrom = this.state.youTubeUrl.indexOf('=');
-    var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
-    if (this.state.youTubeUrl !== '') {
-      youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
-        this.setState({
-          youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
-          youTubeTags: youTubeDataObj.snippet.tags
-        })
-        // youtubeDataObj.id;
-        // youTubeDataObj.snippet.title
-        // axios.post('/slides', this.state)
+    if (this.state.name !== '') {
+      if (this.state.youTubeUrl !== '') {
+        if (this.state.youTubeUrl.includes('https://www.youtube.com/watch?v=')) {
+          var sliceFrom = this.state.youTubeUrl.indexOf('=');
+          var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
+          youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
+            this.setState({
+              youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
+              youTubeTags: youTubeDataObj.snippet.tags
+            })
+            // youtubeDataObj.id;
+            // youTubeDataObj.snippet.title
+            fetch('/slides', {
+              method: "POST",
+              body: JSON.stringify(this.state),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include"
+            })
+            .then((something) => something.json())
+            .then(result => {
+            console.log(result, ' that was result this.state is', this.state);
+            this.props.fetch(result);
+            })
+          });
+        } else {
+          alert('Incorrect YouTube URL input! Please revise Youtube URL input');
+          this.setState({
+            youTubeUrl: ''
+          });
+        }
+      } else {
         fetch('/slides', {
           method: "POST",
           body: JSON.stringify(this.state),
@@ -41,23 +63,10 @@ class SlideCreator extends React.Component {
         console.log(result, ' that was result this.state is', this.state);
         this.props.fetch(result);
         })
-      });
-    } else {
-      // axios.post('/slides', this.state)
-      fetch('/slides', {
-        method: "POST",
-        body: JSON.stringify(this.state),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include"
-      })
-      .then((something) => something.json())
-      .then(result => {
-      console.log(result, ' that was result this.state is', this.state);
-      this.props.fetch(result);
-      })
-    }
+      }
+      } else {
+        alert('Slide name required. Please enter a slide name.');
+      }
   }
 
   changeName (event) {
