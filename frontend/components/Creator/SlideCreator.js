@@ -15,6 +15,16 @@ class SlideCreator extends React.Component {
       lessonRef: props.lessonRef
     }
   }
+  reset () {
+    this.setState({
+      name: '',
+      youTubeUrl: '',
+      youTubeThumbnailUrl: '',
+      youTubeTags: '',
+      text: '',
+      quizUrl: '',  
+    });
+  }
   onSubmit (event) {
     event.preventDefault();
     if (this.state.name !== '') {
@@ -39,8 +49,9 @@ class SlideCreator extends React.Component {
             })
             .then((something) => something.json())
             .then(result => {
-            console.log(result, ' that was result this.state is', this.state);
-            this.props.fetch(result);
+              console.log(result, ' that was result this.state is', this.state);
+              this.props.fetch(result);
+              this.reset();  
             })
           });
         } else {
@@ -60,13 +71,14 @@ class SlideCreator extends React.Component {
         })
         .then((something) => something.json())
         .then(result => {
-        console.log(result, ' that was result this.state is', this.state);
-        this.props.fetch(result);
+          console.log(result, ' that was result this.state is', this.state);
+          this.props.fetch(result);
+          this.reset();
         })
       }
-      } else {
+    } else {
         alert('Slide name required. Please enter a slide name.');
-      }
+    }
   }
 
   changeName (event) {

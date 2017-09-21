@@ -48,7 +48,7 @@ class RouterWrapper extends Component {
       console.log(this);
       var filteredLessons = this.state.lessons.filter((lesson) => { 
         var lowerSearchInput = searchInput.toLowerCase();
-        if (lesson.keywords.includes(lowerSearchInput) || lowerSearchInput === '') {
+        if (lesson.keyWords.includes(lowerSearchInput) || lowerSearchInput === '') {
           return lesson;
         }
       });
