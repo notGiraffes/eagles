@@ -260,12 +260,13 @@ router.put('/lessons', function(req, res) {
 
     console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
-    .then(function (err, result) {
-      if (err) {
-        throw err;
-        return;
-      }
+    .then(function (result) {
       res.send(result);
+    })
+    .catch(function(err) {
+      console.log('line 271', err);
+      throw err;
+      return;
     })
   })
 })
