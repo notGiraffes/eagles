@@ -25,7 +25,15 @@ class LessonCreator extends React.Component {
       slides: this.state.slides
 
     };
-    axios.post('/lessons', lessonObj)
+    // axios.post('/lessons', lessonObj)
+    fetch('/lessons', {
+      method: "POST",
+      body: JSON.stringify(lessonObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })
     .then((result) => {
       console.log('result is',result);
       this.setState({

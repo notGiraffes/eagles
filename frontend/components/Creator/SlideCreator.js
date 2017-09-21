@@ -27,14 +27,30 @@ class SlideCreator extends React.Component {
         })
         // youtubeDataObj.id;
         // youTubeDataObj.snippet.title
-        axios.post('/slides', this.state)
+        // axios.post('/slides', this.state)
+        fetch('/slides', {
+          method: "POST",
+          body: JSON.stringify(this.state),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include"
+        })
         .then(result => {
         console.log(result, ' that was result this.state is', this.state);
         this.props.fetch(result);
         })
       });
     } else {
-      axios.post('/slides', this.state)
+      // axios.post('/slides', this.state)
+      fetch('/slides', {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include"
+      })
       .then(result => {
       console.log(result, ' that was result this.state is', this.state);
       this.props.fetch(result);
@@ -129,7 +145,11 @@ class SlideCreator extends React.Component {
 }
 
 function youTubeQueryToServer(searchString, cb) {
-  axios.get('/query', { params: { string: searchString } })
+  // axios.get('/query', { params: { string: searchString } })
+  fetch('/query?string=' + searchString, {
+    method: "GET",
+    credentials: "include"
+  })
   .then((result) => {
     console.log('Youtube query sent to server', result.data[0]);
     cb(result.data[0]);

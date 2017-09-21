@@ -22,6 +22,12 @@ exports.attemptLoggin = (req, res) => {
     });
 }
 
+exports.logout = (req, res) => {
+  console.log('destroying your session');
+  req.session.destroy();
+  res.redirect('/');
+}
+
 exports.createAccount = (req, res) => {
   // validate the input
   // create a user in the DB
