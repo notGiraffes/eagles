@@ -12,29 +12,31 @@ const morgan = require('morgan');
 const checkAuth = require('./checkAuth');
 const session = require('express-session');
 
-app.set('trust proxy', 1) // trust first proxy 
+app.use(bodyparser.json());
+
 app.use(session({
   secret: 'super secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { 
+    maxAge: 60000,
+    secure: false,
+    httpOnly: false
+   }
 }))
 
-
-app.use(bodyparser.json());
 app.use(morgan('tiny'));
 
 app.use(express.static('../frontend/public'));
 
-// -------------------AUTH-------------------------
+// -------------------AUTH------------------------- //
 app.get('/logout', (req, res) => {
+  console.log('destroying your session');
   req.session.destroy();
-  res.redirect('/')
+  res.redirect('/');
 });
 app.post('/createAccount', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
-// app.use(checkAuth.checkUser);
-// ------------------------------------------------
+app.use(checkAuth.checkUser);
+// ------------------------------------------------ //
 
 app.set('port', (process.env.PORT || 3000));
 

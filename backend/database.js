@@ -3,6 +3,8 @@
 
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+
 var learndb = mongoose.connection;
 learndb.on('error', console.error.bind(console, 'db:line7:Kai needs to fix something probably'));
 learndb.once('open', function() {

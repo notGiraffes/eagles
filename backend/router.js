@@ -120,9 +120,9 @@ router.get('/slides', function(req, res) {
   })
 });
 
-router.post('/login', function(req, res) {
-  res.send({loggedIn: true});
-});
+// router.post('/login', function(req, res) {
+//   res.send({loggedIn: true});
+// });
 
 router.post('/users', function(req, res) {
   var username = req.body.username;
