@@ -104,7 +104,8 @@ router.get('/slides/:slideId', function(req, res) {
     res.send(slides);
   })
   .catch(function(err) {
-    res.send(err);
+    throw err;
+    return;
   })
 });
 
@@ -116,7 +117,8 @@ router.get('/slides', function(req, res) {
     res.send(slides);
   })
   .catch(function(err) {
-    res.send(err);
+    throw err;
+    return;
   })
 });
 
@@ -229,7 +231,10 @@ router.put('/users', function(req, res) {
     if (req.body.createdLessons) user.createdLessons = req.body.createdLessons;
 
     User.save(function (err) {
-      if (err) res.send(err);
+      if (err) {
+        throw err;
+        return;
+      };
       res.send('user updated')
     })
   })
@@ -272,7 +277,10 @@ router.put('/slides', function(req, res) {
     if (req.body.youTubeTags) slide.youTubeTags = req.body.youTubeTags;
 
     Slide.save(function (err) {
-      if (err) res.send(err);
+      if (err) {
+        throw err;
+        return;
+      }
       res.send('slide updated');
     })
   })
