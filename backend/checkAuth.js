@@ -64,6 +64,9 @@ exports.checkUser = (req, res, next) => {
     res.redirect('/');
   } else {
     console.log('sent along: ', req.session.username);
+    req.session.regenerate(function (err) {
+      req.session.username = req.session.username;
+    });
     next();
   }
 }
