@@ -143,7 +143,11 @@ class RouterWrapper extends Component {
   render() {
     return (
       <BrowserRouter>
-        <App queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)} logout={this.logout}>
+        <App 
+        queryDataBaseWithSearchInput={this.queryDataBaseWithSearchInput.bind(this)} 
+        logout={this.logout} 
+        organizeSearchResultsBasedOnMostLikes={this.organizeSearchResultsBasedOnMostLikes}
+        >
           { this.state.loggedIn ?
          (<Switch>
             <Route exact path='/'
