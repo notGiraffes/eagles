@@ -21,8 +21,8 @@ class Lesson extends React.Component {
       .then((lessonDataJSON) => {
         console.log('LESSON DATA', lessonDataJSON); // Sends back array with 1 element
         this.setState({
-          specificLesson: lessonDataJSON[0],
-          slides: lessonDataJSON[0].slides
+          specificLesson: lessonDataJSON,
+          slides: lessonDataJSON.slides
         });
       })
   }
