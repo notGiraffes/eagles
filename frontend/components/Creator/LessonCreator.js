@@ -163,6 +163,7 @@ class LessonCreator extends React.Component {
                 <Button onClick={this.keyWordSubmit.bind(this)}> Add keyWord </Button>
             </Col>
           </FormGroup>}
+
           
           <FormGroup>
             <Col smOffset={1} sm={2}>
