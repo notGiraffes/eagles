@@ -36,6 +36,7 @@ class SlideCreator extends React.Component {
           },
           credentials: "include"
         })
+        .then((something) => something.json())
         .then(result => {
         console.log(result, ' that was result this.state is', this.state);
         this.props.fetch(result);
@@ -51,6 +52,7 @@ class SlideCreator extends React.Component {
         },
         credentials: "include"
       })
+      .then((something) => something.json())
       .then(result => {
       console.log(result, ' that was result this.state is', this.state);
       this.props.fetch(result);
@@ -148,11 +150,16 @@ function youTubeQueryToServer(searchString, cb) {
   // axios.get('/query', { params: { string: searchString } })
   fetch('/query?string=' + searchString, {
     method: "GET",
+     headers: {
+        "Content-Type": "application/json",
+      },
     credentials: "include"
   })
+  .then((something) => something.json())
   .then((result) => {
-    console.log('Youtube query sent to server', result.data[0]);
-    cb(result.data[0]);
+    console.log(result);
+    console.log('Youtube query sent to server', result[0]);
+    cb(result[0]);
   })
   .catch((err) => {
     console.log('Error: youtube query not sent to server', err);

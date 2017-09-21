@@ -34,10 +34,11 @@ class LessonCreator extends React.Component {
       },
       credentials: "include"
     })
+    .then((anything) => anything.json())
     .then((result) => {
       console.log('result is',result);
       this.setState({
-        lessonid: result.data._id // setting lessonid to the lesson object's id
+        lessonid: result._id // setting lessonid to the lesson object's id
       })
       console.log('state now is ', this.state);
     })
@@ -70,7 +71,8 @@ class LessonCreator extends React.Component {
     })
   }
   fetchSlideFromSlideCreator (result) {
-    var slideID = result.data._id; 
+    console.log(result);
+    var slideID = result._id; 
     console.log('this is the slide', slideID);
     this.setState({
       slides: this.state.slides.concat(slideID) //pushing in slide object's id into slides;
