@@ -154,6 +154,7 @@ class RouterWrapper extends Component {
                 <LessonPreviewContainer 
                   lessons= { this.state.lessons }
                   organizeSearchResultsBasedOnMostLikes={ this.organizeSearchResultsBasedOnMostLikes }
+                  getLessons={ this.getLessons }
                 /> 
               )}
             />
