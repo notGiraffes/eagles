@@ -144,7 +144,6 @@ class LessonCreator extends React.Component {
           
 
           {this.state.lessonid === 'No ID Yet' ? null : <FormGroup>
-          <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>keyWords</Col>
             <Col sm={10}>
                 <FormControl type='text' 
