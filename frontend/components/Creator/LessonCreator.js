@@ -13,7 +13,8 @@ class LessonCreator extends React.Component {
       slides: [],
       creatingSlide: false,
       lessonid: 'No ID Yet',
-      keyWords: []
+      keyWords: [],
+      clientShownKeyWords: ''
     };
   }
   onSubmit (event) {
@@ -45,8 +46,12 @@ class LessonCreator extends React.Component {
   }
   keyWordSubmit (event) {
     event.preventDefault();
-    console.log('keyWordSubmit triggered');
-    var body = {keyWords: this.state.keyWords, lessonid: this.state.lessonid};
+    console.log('keyWordSubmit triggered keyWords look like ', this.state.clientShownKeyWords);
+    var keyWords = this.state.clientShownKeyWords.split(',').map(item => item.trim()).filter(item => item !== '');
+    this.setState({
+      keyWords: keyWords
+    })
+    var body = { keyWords: keyWords, lessonid: this.state.lessonid };
     fetch('/lessons', {
       method: "PUT",
       body: JSON.stringify(body),
@@ -59,14 +64,13 @@ class LessonCreator extends React.Component {
       return result.json();
     })
     .then(function(result) {
-      console.log('from line43 lessoncreator result is', result);
+      console.log('from line62 lessoncreator result after keyword update is', result);
     })
   }
-  changeKeyWords (event) {
-    var arr = [];
-    arr.push(event.target.value);
+  changeClientKeyWords (event) {
+    var keyWords = event.target.value;
     this.setState({
-      keyWords: arr
+      clientShownKeyWords: keyWords
     })
   }
   changeName (event) {
@@ -112,26 +116,22 @@ class LessonCreator extends React.Component {
             <Col smOffset={1} sm={2}>
               <ControlLabel>Lesson Creator</ControlLabel>
             </Col>
-            <Col smOffset={1} sm={4}>
-              {this.state.lessonid === 'No ID Yet' ? "You can make a slide after you make a lesson" : <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>}
-            </Col>
           </FormGroup>
 
+          { this.state.lessonid === 'No ID Yet' ? null : 
+            (<div>
+              <div>Lesson Name: {this.state.name}</div>
+              <div>Lesson Description: {this.state.description}</div>
+              <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+            </div>) 
+          }
+{/*
           <FormGroup>
             <Col smOffset={1} sm={6}>
               <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
             </Col>
           </FormGroup>
-          <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Lesson Name</Col>
-            <Col sm={10}>
-              <FormControl type='text' placeholder='Lesson Name'
-                value={this.state.name}
-                onChange={this.changeName.bind(this)}
-              />
-            </Col>
-          </FormGroup>
-          
+
           <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
             <Col sm={10}>
@@ -141,8 +141,18 @@ class LessonCreator extends React.Component {
               />
             </Col>
           </FormGroup>
+*/}
+          { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>Lesson Name</Col>
+            <Col sm={10}>
+              <FormControl type='text' placeholder='Lesson Name'
+                value={this.state.name}
+                onChange={this.changeName.bind(this)}
+              />
+            </Col>
+          </FormGroup>) : null }
           
-          <FormGroup>
+          { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
             <Col componentClass={ControlLabel} sm={2}>Lesson description</Col>
             <Col sm={10}>
               <FormControl type='text' placeholder='Lesson Description'
@@ -150,17 +160,17 @@ class LessonCreator extends React.Component {
                 onChange={this.changeDescription.bind(this)}
               />
             </Col>
-          </FormGroup>
+          </FormGroup>) : null }
           
 
           {this.state.lessonid === 'No ID Yet' ? null : <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>keyWords</Col>
+            <Col componentClass={ControlLabel} sm={2}>Add Tags To Lesson</Col>
             <Col sm={10}>
                 <FormControl type='text' 
-                  value={this.state.keyWords}
-                  onChange={this.changeKeyWords.bind(this)}
+                  value={this.state.clientShownKeyWords}
+                  onChange={this.changeClientKeyWords.bind(this)}
                 />
-                <Button onClick={this.keyWordSubmit.bind(this)}> Add keyWord </Button>
+                <Button onClick={this.keyWordSubmit.bind(this)}> Set Tags </Button>
             </Col>
           </FormGroup>}
 
@@ -169,16 +179,21 @@ class LessonCreator extends React.Component {
             <Col smOffset={1} sm={2}>
               <ControlLabel>Has The Following Slides</ControlLabel>
             </Col>
-            <Col smOffset={2} sm={2}>
-              <ControlLabel>{this.state.slides.length === 0 ? "No Slides Yet" : this.state.slides}</ControlLabel>
-            </Col>
+            <div>
+              <ControlLabel>{this.state.slides.length === 0 ? "No Slides Yet, You can create slides after making a lesson" : this.state.slides.join(', ')}</ControlLabel>
+            </div>
           </FormGroup>
           <FormGroup>
-            <Col smOffset={2} sm={2}>
-              <Button type="submit">
-                Make Lesson
-              </Button>
-            </Col>
+            { this.state.lessonid === 'No ID Yet' ? 
+              (<Col smOffset={2} sm={6}>
+                <Button type="submit">
+                  Make Lesson
+                </Button>
+              </Col>) :
+              (<Col smOffset={1} sm={4}>
+                <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>
+              </Col>)
+            }
           </FormGroup>
         </Form>
       )
