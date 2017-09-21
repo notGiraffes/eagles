@@ -17,7 +17,7 @@ class Lesson extends React.Component {
   }
 
   componentDidMount() {
-    return fetch('/lesson/' + this.props.match.params.id, { method: 'GET' }) 
+    return fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" }) 
       .then((response) => response.json())
       .then((lessonDataJSON) => {
         // console.log('LESSON DATA', lessonDataJSON); 

@@ -15,8 +15,7 @@ class RouterWrapper extends Component {
       lessons: [],
       loggedIn: false,
       displayLogginError: false,
-      username: 'william',
-      userRef: '59c2ce2af424e2541cb7b508'
+      user: {}
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -69,8 +68,33 @@ class RouterWrapper extends Component {
     });
   }
 
-  createAccount(username, passowrd) {
-    console.log('IMPLIMENT THIS TO CREATE ACCOUNTS!!!')
+  createAccount(username, password) {
+    let data = {
+      username,
+      password
+    };
+    fetch('/users', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('got data', data);
+      if(data.loggedIn === true) {
+        this.setState({ 
+          user: data.userData,
+          loggedIn: true,
+          displayLogginError: false
+         });
+      } else {
+        this.setState({ displayLogginError: true });
+      }
+    })
+    .catch((err) => console.log('Error creating an account In!', err));
   }
 
   login(username, password) {
@@ -91,7 +115,7 @@ class RouterWrapper extends Component {
       console.log('got data', data);
       if(data.loggedIn === true) {
         this.setState({ 
-          username: data.username,
+          user: data.userData,
           loggedIn: true,
           displayLogginError: false
          });
@@ -111,8 +135,7 @@ class RouterWrapper extends Component {
     this.setState({ 
       loggedIn: false,
       displayLogginError: false,
-      username: '',
-      userRef: ''
+      user: {}
      });
   }
 
@@ -134,11 +157,11 @@ class RouterWrapper extends Component {
               component={ Lesson }
             />
             <Route path='/create'
-              render={ () => <LessonCreator username={this.state.username} userRef={this.state.user} /> }
+              render={ () => <LessonCreator username={this.state.user.username} userRef={this.state.user._id} /> }
             />
             <Route path='/user' render={ () => 
                 <User 
-                  username={ this.state.username }
+                  user={ this.state.user }
                 />
               }
             />

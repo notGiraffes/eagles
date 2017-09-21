@@ -28,12 +28,8 @@ app.use(morgan('tiny'));
 app.use(express.static('../frontend/public'));
 
 // -------------------AUTH------------------------- //
-app.get('/logout', (req, res) => {
-  console.log('destroying your session');
-  req.session.destroy();
-  res.redirect('/');
-});
-app.post('/createAccount', checkAuth.createAccount);
+app.get('/logout', checkAuth.logout);
+app.post('/users', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
 app.use(checkAuth.checkUser);
 // ------------------------------------------------ //
