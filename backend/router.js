@@ -252,6 +252,7 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
+
     console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (err, result) {
