@@ -27,6 +27,7 @@ app.use(morgan('tiny'));
 
 app.use(express.static('../frontend/public'));
 
+
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
 app.post('/users', checkAuth.createAccount);

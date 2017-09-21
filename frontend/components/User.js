@@ -12,6 +12,7 @@ class User extends Component {
       lessons: []
     }
     this.getLessons = this.getLessons.bind(this);
+    this.deleteLesson = this.deleteLesson.bind(this);
   }
 
   getLessons() {
@@ -39,9 +40,7 @@ class User extends Component {
       },
       credentials: "include"
     })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => res.send(res))
     .catch((err) => console.log('Error deleting lessons', err));
   }
 
@@ -60,13 +59,14 @@ class User extends Component {
               <MenuItem key={ this.props.user._id }>
                 { this.state.lessons.length === 0 ? 'You Have No Lessons!' :
                   (this.state.lessons.map((lesson, i) => 
-                  <div key={ lesson._id }>
-                  {lesson.description || 'no description'} 
-                  <Link to={'/lesson/' + lesson._id}>
-                    <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
-                  </Link>
-                  <hr/>
-                  </div>)
+                    <div key={ lesson._id }>
+                    {lesson.description || 'no description'} 
+                    <Link to={'/lesson/' + lesson._id}>
+                      <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
+                    </Link>
+                    <Button bsStyle="primary" bsSize="small" onClick={ () => this.deleteLesson(lesson._id) } block>Delete Lesson</Button>
+                    </div>
+                  )
                 )}
               </MenuItem> 
             </DropdownButton>
