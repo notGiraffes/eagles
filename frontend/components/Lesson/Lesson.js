@@ -11,7 +11,8 @@ class Lesson extends React.Component {
       specificLesson: {},
       slides: [],
       currentSlide: null,
-      index: 0
+      index: 0,
+      videoIdOfClickedOnVideo: ''
     }
   }
 
@@ -19,10 +20,10 @@ class Lesson extends React.Component {
     return fetch('/lesson/' + this.props.match.params.id, { method: 'GET' }) 
       .then((response) => response.json())
       .then((lessonDataJSON) => {
-        console.log('LESSON DATA', lessonDataJSON); // Sends back array with 1 element
+        // console.log('LESSON DATA', lessonDataJSON); 
         this.setState({
-          specificLesson: lessonDataJSON[0],
-          slides: lessonDataJSON[0].slides
+          specificLesson: lessonDataJSON,
+          slides: lessonDataJSON.slides
         });
       })
   }
@@ -30,13 +31,14 @@ class Lesson extends React.Component {
 
 
   onLessonSlideListEntryClick(index) {
+    
     var videoIdInUrl = this.state.slides[index].youTubeUrl;
-    var sliceFrom = url.indexOf('=');
+    var sliceFrom = videoIdInUrl.indexOf('=');
     var videoId = videoIdInUrl.slice(sliceFrom + 1);
     this.setState({
       currentSlide: this.state.slides[index],
       index: index,
-      videoId: ''
+      videoIdOfClickedOnVideo: videoId
     });
   }
 
@@ -80,6 +82,7 @@ class Lesson extends React.Component {
         { this.state.currentSlide ? (
           <Slide 
           slideData={this.state.currentSlide} 
+          videoIdOfClickedOnVideo={this.state.videoIdOfClickedOnVideo}
           previousSlideClick={this.previousSlideClick.bind(this)}
           nextSlideClick={this.nextSlideClick.bind(this)}
           exitClick={this.exit.bind(this)}
