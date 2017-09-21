@@ -139,13 +139,13 @@ class SlideCreator extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
-            <FormControl type="submit" value='Submit All' />
+            <FormControl type="submit" value='Create The Slide' />
           </Col>
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
             <Button onClick={this.props.changeCreateState}>
-              Stop Creating
+              Go Back
             </Button>
           </Col>
         </FormGroup>
