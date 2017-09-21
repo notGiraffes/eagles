@@ -38,7 +38,10 @@ class RouterWrapper extends Component {
       credentials: "include"
     })
     .then((res) => res.json())
-    .then((lessons) => this.setState({lessons}))
+    .then((lessons) => {
+      this.setState({lessons});
+      return lessons
+    })
     .catch((err) => console.log('Error getting lessons', err));
   }
 
