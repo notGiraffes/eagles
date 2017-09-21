@@ -49,7 +49,10 @@ class User extends Component {
   }
 
   componentDidMount() {
-    this.getLessons();
+    this.props.getLessons()
+      .then((lessons) => {
+        this.setState({ lessons: lessons });
+      });
   }
 
   render() {
