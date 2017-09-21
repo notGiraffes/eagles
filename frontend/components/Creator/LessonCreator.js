@@ -47,11 +47,11 @@ class LessonCreator extends React.Component {
   keyWordSubmit (event) {
     event.preventDefault();
     console.log('keyWordSubmit triggered keyWords look like ', this.state.clientShownKeyWords);
-    var keyWords = this.state.clientShownKeyWords.split(',').map(item => item.trim()).filter(item => item !== '');
+    var keyWords = this.state.clientShownKeyWords.trim();
     this.setState({
-      keyWords: keyWords
+      keyWords: [...this.state.keyWords, keyWords]
     })
-    var body = { keyWords: keyWords, lessonid: this.state.lessonid };
+    var body = { keyWords: this.state.keyWords, lessonid: this.state.lessonid };
     fetch('/lessons', {
       method: "PUT",
       body: JSON.stringify(body),
