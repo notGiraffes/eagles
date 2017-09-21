@@ -4,7 +4,7 @@ const Slide = (props) => (
   <div>
     <h1>THIS IS THE SLIDE COMPONENT</h1>
     <div className="youtubeVideoContainer">
-      <iframe className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.slideData.youTubeUrl} allowFullScreen></iframe>
+      <iframe className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
     </div>
     <div> 
         <p>{props.slideData.quizUrl}</p>

@@ -74,7 +74,6 @@ router.get('/lesson/:lessonId', function(req, res) {
     return lesson[0];
   })
   .then((specificLesson) => {
-    // console.log('THIS LESSON', specificLesson)
     Slide.find({})
     .then((allSlides) => {
       specificLesson.slides = allSlides.filter((slide) => {
