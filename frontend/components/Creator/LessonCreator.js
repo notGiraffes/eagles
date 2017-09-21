@@ -47,7 +47,17 @@ class LessonCreator extends React.Component {
     event.preventDefault();
     console.log('keyWordSubmit triggered');
     var body = {keyWords: this.state.keyWords, lessonid: this.state.lessonid};
-    axios.put('/lessons', body)
+    fetch('/lessons', {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+    .then(function(result) {
+      return result.json();
+    })
     .then(function(result) {
       console.log('from line43 lessoncreator result is', result);
     })
