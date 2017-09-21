@@ -12,17 +12,3 @@ const LessonSlideListEntry = (props) => (
 
 
 export default LessonSlideListEntry;
-
-
-
-
-// const LessonSlideListEntry = (props) => (
-//   <div className="LessonSlideListEntry" onClick={() => props.onLessonSlideListEntryClick(props.index)}>
-//     <div>
-//       {props.index + 1}
-//     </div>
-//     <div>
-//       <img src={props.slide.youTubeThumbnailUrl} alt="" />
-//     </div>
-//     <p>{props.slide.name}</p>
-//   </div>

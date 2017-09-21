@@ -163,7 +163,8 @@ router.post('/lessons', function(req, res) {
     userRef: userRef, 
     description: description, 
     keywords: keywords,
-    slides: slides 
+    slides: slides ,
+    likes: 0
   })
   .then(function(result) {
     User.findById(userRef, function(err, user) {
@@ -249,7 +250,7 @@ router.put('/lessons', function(req, res) {
   console.log('hello line239 router.js req is ', req.body);
   Lesson.findById(req.body.lessonid, function(err, lesson) {
     //console.log('lesson is ', lesson, 'err is ', err)
-    console.log('Lesson is ', Lesson, lesson.keyWords)
+    // console.log('Lesson is ', Lesson, lesson.keyWords)
     if (err) res.send(err);
 
     if (req.body.name) lesson.name = req.body.name;
@@ -257,8 +258,9 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
+    if (req.body.likes) lesson.likes = req.body.likes
 
-    console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
+    // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
       res.send(result);
