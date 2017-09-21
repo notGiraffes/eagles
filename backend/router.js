@@ -295,8 +295,8 @@ router.put('/slides', function(req, res) {
   })
 })
 
-router.delete('/users', function(req, res) {
-  User.findByIdAndRemove(req.query._id, function(err, user) {
+router.delete('/users/:lessonId', function(req, res) {
+  User.findByIdAndRemove(req.params.userId, function(err, user) {
     if (err) {
       throw err;
       return;
@@ -306,19 +306,19 @@ router.delete('/users', function(req, res) {
   })
 })
 
-router.delete('/lessons', function(req, res) {
-  Lesson.findByIdAndRemove(req.query._id, function(err, lesson) {
+router.delete('/lessons/:lessonId', function(req, res) {
+  Lesson.findByIdAndRemove(req.params.lessonId, function(err, lesson) {
     if (err) {
       throw err;
       return;
     };
 
-    res.send(lesson._id + 'removed');
+    res.send('removed');
   })
 })
 
-router.delete('/slides', function(req, res) {
-  Slide.findByIdAndRemove(req.query._id, function(err, slide) {
+router.delete('/slides/:slideId', function(req, res) {
+  Slide.findByIdAndRemove(req.params.slideId, function(err, slide) {
     if (err) {
       throw err;
       return;
