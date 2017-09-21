@@ -33,7 +33,7 @@ app.get('/logout', (req, res) => {
 });
 app.post('/createAccount', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
-app.use(checkAuth.checkUser);
+// app.use(checkAuth.checkUser);
 // ------------------------------------------------
 
 app.set('port', (process.env.PORT || 3000));

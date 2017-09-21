@@ -8,7 +8,7 @@ exports.attemptLoggin = (req, res) => {
   // query db for user with password
   User.find({ username: username, password: password  })
     .then((users) => {
-      console.log('found users', users);
+      // console.log('found users', users);
       // if yes, estabish a session
       if(users.length === 0) throw new Error('no Users');
       let user = users[0];
@@ -31,6 +31,7 @@ exports.createAccount = (req, res) => {
 exports.checkUser = (req, res, next) => {
   // make sure the person making requests is logged in
   if (!req.session.user) {
+    console.log('your session: ', req.session);
     res.redirect('/logout');
   } else {
     next();
