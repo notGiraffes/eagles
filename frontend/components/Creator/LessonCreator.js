@@ -8,7 +8,7 @@ class LessonCreator extends React.Component {
     super(props);
     this.state = {
       name: '',
-      userRef: "59c2ce2af424e2541cb7b508",
+      userRef: this.props.userRef,
       description: '',
       slides: [],
       creatingSlide: false,
@@ -106,7 +106,7 @@ class LessonCreator extends React.Component {
             <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
             <Col sm={10}>
               <FormControl type='text' placeholder='Slide Creator'
-                value={this.state.userRef}
+                value={this.state.userRef || 'no user ref!'}
                 // onChange={this.changeUserRef.bind(this)}
               />
             </Col>
