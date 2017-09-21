@@ -126,6 +126,7 @@ class LessonCreator extends React.Component {
               <div>Lesson Name: {this.state.name}</div>
               <div>Lesson Description: {this.state.description}</div>
               <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+              {this.state.slides.length === 0 ? (<div>No Slides Yet</div>) : (<div>Lesson Slides: {this.state.slides.join(', ')}</div>)}
             </div>) 
           }
 {/*
