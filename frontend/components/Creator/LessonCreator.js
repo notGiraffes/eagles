@@ -142,7 +142,11 @@ class LessonCreator extends React.Component {
             </Col>
           </FormGroup>
           
+<<<<<<< HEAD
           {this.state.lessonid === 'No ID Yet' ? null : <FormGroup>
+=======
+          <FormGroup>
+>>>>>>> working on put
             <Col componentClass={ControlLabel} sm={2}>keyWords</Col>
             <Col sm={10}>
                 <FormControl type='text' 
@@ -151,7 +155,11 @@ class LessonCreator extends React.Component {
                 />
                 <Button onClick={this.keyWordSubmit.bind(this)}> Add keyWord </Button>
             </Col>
+<<<<<<< HEAD
           </FormGroup>}
+=======
+          </FormGroup>
+>>>>>>> working on put
           
           <FormGroup>
             <Col smOffset={1} sm={2}>
