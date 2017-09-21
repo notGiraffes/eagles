@@ -6,6 +6,7 @@ const LessonPreviewContainer = (props) => {
   return (
     <div className="LessonPreviewContainer">
       Order by:
+      
       <Button bsStyle="primary" bsSize="small" >by Likes</Button>
       <Button bsStyle="primary" bsSize="small" >by Date</Button>
       <ListGroup>
