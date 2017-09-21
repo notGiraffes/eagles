@@ -66,6 +66,9 @@ class LessonCreator extends React.Component {
     .then(function(result) {
       console.log('from line62 lessoncreator result after keyword update is', result);
     })
+    .catch(function(err) {
+      console.log('line 70 err', err);
+    })
   }
   changeClientKeyWords (event) {
     var keyWords = event.target.value;
