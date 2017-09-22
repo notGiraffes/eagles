@@ -144,7 +144,7 @@ class RouterWrapper extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter history={}>
         <App 
         queryDataBaseWithSearchInput={ this.queryDataBaseWithSearchInput } 
         logout={ this.logout } 

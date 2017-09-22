@@ -30,6 +30,7 @@ class NavBar extends Component {
           <Form onSubmit={ (e) => {
             e.preventDefault();
             this.retrieveSearchInput.call(this, event);
+            this.props.history.push('/');
           }}>
             <FormGroup>
               <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
