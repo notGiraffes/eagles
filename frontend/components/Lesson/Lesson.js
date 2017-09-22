@@ -101,6 +101,7 @@ class Lesson extends React.Component {
         alert("You've already liked this lesson.");
       } else {
         alert("You've liked this video and it has been added to your favorites!")
+        console.log(this.state.specificLesson);
       }
     })
     .catch(function(err) {
