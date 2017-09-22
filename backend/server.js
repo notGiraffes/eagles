@@ -1,32 +1,41 @@
 /*
 Run server to persist data
-router in a separate file
+routers in separate files
 */
-const bodyparser = require('body-parser');
 const express = require('express');
-const app = express();
-const router = require('./router.js');
-const database = require('./database.js');
+const database = require('./db/database.js');
 const path = require('path');
 const morgan = require('morgan');
-const checkAuth = require('./checkAuth');
+const bodyparser = require('body-parser');
 const session = require('express-session');
 
+// create express instance
+const app = express();
+
+// route handlers
+const userRoutes = require('./routes/userRoutes');
+const lessonRoutes = require('./routes/lessonRoutes');
+const slideRoutes = require('./routes/slideRoutes');
+const utilRoutes = require('./routes/utilRoutes');
+const checkAuth = require('./checkAuth');
+
+
+// morgan for logging and body parser to parse requests
+app.use(morgan('tiny'));
 app.use(bodyparser.json());
 
+// set cookie for auth
 app.use(session({
   secret: 'super secret',
   cookie: { 
     maxAge: 600000,
     secure: false,
     httpOnly: false
-   }
+  }
 }))
 
-app.use(morgan('tiny'));
-
+// public file with static routes
 app.use(express.static('../frontend/public'));
-
 
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
@@ -35,14 +44,21 @@ app.post('/login', checkAuth.attemptLoggin);
 app.use(checkAuth.checkUser);
 // ------------------------------------------------ //
 
-app.set('port', (process.env.PORT || 3000));
+// handle protected routes
+app.all('/slides', slideRoutes);
+app.all('/slides/*', slideRoutes);
+app.all('/users', userRoutes);
+app.all('/users/*', userRoutes);
+app.all('/lessons', lessonRoutes);
+app.all('/lessons/*', lessonRoutes);
+app.all('/lesson', lessonRoutes);
+app.all('/lesson/*', lessonRoutes);
+app.all('/query/*', utilRoutes);
 
-app.use(['/','/slides','/lessons','tutorials'], router);
-
-app.get('*', (req, res) => {
+// redirect any uncaught routes 
+app.use((req, res) => {
   res.redirect('/');
 });
 
-
-
-const server = app.listen(app.get('port'));
+// server listens for requests
+app.listen(process.env.PORT || 3000);

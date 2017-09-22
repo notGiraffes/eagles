@@ -33,9 +33,11 @@ class NavBar extends Component {
             <FormGroup>
               <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
             </FormGroup>{' '}
-            <Button type="submit" onClick={this.handleSearchSubmit}>
-              <Link to='/'>Search</Link>
-            </Button>{' '}
+            <Link to='/'>
+              <Button type="submit" onClick={this.handleSearchSubmit}>
+                Search
+              </Button>
+            </Link>{' '}
           <span>
           <Link to='/create'>
             <Button>Create</Button>

@@ -30,8 +30,6 @@ class Lesson extends React.Component {
       })
   }
 
-
-
   onLessonSlideListEntryClick(index) {
     
     var videoIdInUrl = this.state.slides[index].youTubeUrl;
@@ -101,9 +99,6 @@ class Lesson extends React.Component {
       console.log(err);
     })
   }
-
-
-
 
   render() {
     return (

@@ -12,29 +12,8 @@ class User extends Component {
       lessons: [],
       favoriteLessons: []
     }
-    // this.getLessons = this.getLessons.bind(this);
     this.deleteLesson = this.deleteLesson.bind(this);
   }
-
-  // getLessons() {
-  //   return fetch('/lessons', {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include"
-  //   })
-  //   .then((res) => res.json())
-  //   .then((unfilteredLessons) => {
-  //     console.log('not filtered: ', this.props.user);
-  //     return {
-  //       lessons: unfilteredLessons.filter(lsn => this.props.user.lessons.indexOf(lsn._id) >= 0),
-  //       favoriteLessons: unfilteredLessons.filter(lsn => len.userLikes.indexOf(this.props.user.username) >= 0)
-  //     }
-  //   })
-  //   .then((lesson) => this.setState({lessons: lesson.lessons, favoriteLessons: lesson.favoriteLessons}))
-  //   .catch((err) => console.log('Error getting lessons', err));
-  // }
 
   deleteLesson(lessonId) {
     return fetch('/lessons/' + lessonId, {

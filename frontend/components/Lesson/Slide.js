@@ -1,10 +1,11 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
 const Slide = (props) => (
   <div>
-    <h1>THIS IS THE SLIDE COMPONENT</h1>
+    <h1>{ props.slideData.name || 'No Slide Name' }</h1>
     <div className="youtubeVideoContainer">
-      <iframe className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
+      <iframe style={{width: 500, height: 500}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
     </div>
     <div> 
         <p>{props.slideData.quizUrl}</p>
@@ -12,9 +13,9 @@ const Slide = (props) => (
     <div>
       <p>{props.slideData.text}</p>
     </div>
-    <button type="button" onClick={() => props.previousSlideClick(props.index)}>Previous Slide</button>
-    <button type="button" onClick={() => props.nextSlideClick(props.index)}>Next Slide</button>
-    <button type="button" onClick={() => props.exitClick()}>Exit</button>
+    <Button type="button" onClick={() => props.previousSlideClick(props.index)}>Previous Slide</Button>
+    <Button type="button" onClick={() => props.nextSlideClick(props.index)}>Next Slide</Button>
+    <Button type="button" onClick={() => props.exitClick()}>Exit</Button>
   </div>
 
 );
