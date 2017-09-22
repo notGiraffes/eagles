@@ -8,12 +8,13 @@ var Lesson = schema.Lesson;
 var Slide = schema.Slide;
 
 const shouldEmail = (likes) => {
-  let goal = 10;
-  while(goal <= likes) {
-    goal *= 2;
-  }
-  if(goal === likes) return true;
-  return false;
+  return true;
+  // let goal = 10;
+  // while(goal <= likes) {
+  //   goal *= 2;
+  // }
+  // if(goal === likes) return true;
+  // return false;
 }
 
 const sendCongad = (userRef, lessonName, numLikes) => {
