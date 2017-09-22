@@ -36,7 +36,7 @@ class User extends Component {
     .then((unfilteredLessons) => {
       console.log('not filtered: ', unfilteredLessons);
       return {
-        lessons: unfilteredLessons.filter(lsn => this.props.user.lessons.indexOf(lsn._id) >= 0),
+        lessons: unfilteredLessons.filter(lsn => this.props.user._id === lsn.userRef),
         favoriteLessons: unfilteredLessons.filter(lsn => lsn.userLikes.indexOf(this.props.user.username) >= 0)
       }
     })
@@ -55,6 +55,8 @@ class User extends Component {
                 { this.state.favoriteLessons.length === 0 ? 'You Have No Favorite Lessons!' :
                   (this.state.favoriteLessons.map((lesson, i) => 
                     <div key={ lesson._id }>
+                    {lesson.name || 'Unnamed Lesson'} 
+                    <br/>
                     {lesson.description || 'no description'} 
                     <Link to={'/lesson/' + lesson._id}>
                       <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
@@ -73,7 +75,9 @@ class User extends Component {
                 { this.state.lessons.length === 0 ? 'You Have No Lessons!' :
                   (this.state.lessons.map((lesson, i) => 
                     <div key={ lesson._id }>
-                    {lesson.description || 'no description'} 
+                    {lesson.name || 'Unnamed Lesson'} 
+                    <br/>
+                    {lesson.description || 'No Description'} 
                     <Link to={'/lesson/' + lesson._id}>
                       <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
                     </Link>
