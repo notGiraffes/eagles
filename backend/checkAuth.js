@@ -1,21 +1,30 @@
+const bcrypt = require('bcrypt');
 const schema = require('./db/schema.js');
 let User = schema.User;
 
 exports.attemptLoggin = (req, res) => {
   let username = req.body.username || '';
   let password = req.body.password || '';
-  // // query db for user with password
-  User.find({ username: username, password: password  })
+  // query db for user with password
+  User.find({ username: username })
     .then((users) => {
       if(users.length === 0) throw new Error('no Users');
       let user = users[0];
-      user.password = '';
-      req.session.username = username;
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({
-        loggedIn: true,
-        userData: user
-      }));
+      
+      bcrypt.compare(password, user.password, function(err, valid) {
+        if (valid) {
+          user.password = '';
+          req.session.username = username;
+          res.setHeader('Content-Type', 'application/json');
+          res.send(JSON.stringify({
+            loggedIn: true,
+            userData: user
+          }));
+        } else {
+          console.log('failed logging in: ', err);
+          res.send({ loggedIn: false });
+        }
+      });
     })
     .catch((err) => {
       console.log('failed logging in: ', err);
@@ -30,32 +39,39 @@ exports.logout = (req, res) => {
 }
 
 exports.createAccount = (req, res) => {
+  const saltRounds = 2;
   var username = req.body.username;
   var password = req.body.password;
   var lessons = req.body.lessons || [];
   var favorites = req.body.favorites || [];
   var createdLessons = req.body.createdLessons || [];
-  User.create({
-    username: username, 
-    password: password,
-    lessons: lessons, 
-    favorites: favorites, 
-    createdLessons: createdLessons
-  })
-  .then(function(result) {
-    console.log('created user: ', result);
-    req.session.username = result.username;
-    result.password = '';
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-      loggedIn: true,
-      userData: result
-    }));
-  })
-  .catch(function(err) {
-    res.send(err);
-  })
+
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+      User.create({
+        username: username, 
+        password: hash,
+        lessons: lessons, 
+        favorites: favorites, 
+        createdLessons: createdLessons
+      })
+      .then(function(result) {
+        console.log('created user: ', result);
+        req.session.username = result.username;
+        result.password = '';
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({
+          loggedIn: true,
+          userData: result
+        }));
+      })
+      .catch(function(err) {
+        res.send(err);
+      })   
+    });
+  });
 }
+
 
 exports.checkUser = (req, res, next) => {
   // make sure the person making requests is logged in
