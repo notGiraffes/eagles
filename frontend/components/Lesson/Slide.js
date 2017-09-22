@@ -5,7 +5,7 @@ const Slide = (props) => (
   <div>
     <h1>{ props.slideData.name || 'No Slide Name' }</h1>
     <div className="youtubeVideoContainer">
-      <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
+    <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
       <p className="slideText">{props.slideData.text}</p>
     </div>
     <div> 
@@ -21,3 +21,8 @@ const Slide = (props) => (
 );
 
 export default Slide;
+
+
+
+      // <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
+      // {props.renderVideo(props.videoIdOfClickedOnVideo)}

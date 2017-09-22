@@ -75,6 +75,12 @@ class Lesson extends React.Component {
     }
   }
 
+  renderVideo(thereIsAVideo) {
+    if (thereIsAVideo) {
+      return <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + thereIsAVideo} allowFullScreen></iframe>
+    } 
+  }
+
   likeALesson() {
     this.state.specificLesson.likes++;
     var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id, fromLike: true };
@@ -107,6 +113,7 @@ class Lesson extends React.Component {
           <Slide 
           slideData={this.state.currentSlide} 
           videoIdOfClickedOnVideo={this.state.videoIdOfClickedOnVideo}
+          renderVideo={this.renderVideo(this.state.videoIdOfClickedOnVideo)}
           previousSlideClick={this.previousSlideClick.bind(this)}
           nextSlideClick={this.nextSlideClick.bind(this)}
           exitClick={this.exit.bind(this)}
