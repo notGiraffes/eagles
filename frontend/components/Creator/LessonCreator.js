@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';//use in functions
 import {Link} from 'react-router-dom';
 import SlideCreator from './SlideCreator.js';
-import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Form, FormGroup, Col, FormControl, ControlLabel, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class LessonCreator extends React.Component {
   constructor (props) {
@@ -193,17 +193,17 @@ class LessonCreator extends React.Component {
       return (
         <Form horizontal onSubmit={this.onSubmit.bind(this)}>
           <FormGroup>
-            <Col smOffset={1} sm={2}>
+            <div className='lessonCreator'>
               <ControlLabel>Lesson Creator</ControlLabel>
-            </Col>
+            </div>
           </FormGroup>
 
           { this.state.lessonid === 'No ID Yet' ? null : 
-            (<div>
-              <div>Lesson Name: {this.state.name}</div>
-              <div>Lesson Description: {this.state.description}</div>
-              <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-            </div>) 
+            (<ListGroup>
+              <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+              <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+              <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+            </ListGroup>) 
           }
 
           { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
@@ -294,9 +294,11 @@ class LessonCreator extends React.Component {
     } else if (this.state.creatingSlide && !this.state.editingOldSlide) {
       return (
         <div>
-          <div>Lesson Name: {this.state.name}</div>
-          <div>Lesson Description: {this.state.description}</div>
-          <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+          <ListGroup>
+            <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+            <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+            <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+          </ListGroup>
           <SlideCreator 
             slide={{}} 
             lessonRef={this.state.lessonid} 
@@ -319,10 +321,12 @@ class LessonCreator extends React.Component {
     } else if (this.state.creatingSlide && this.state.editingOldSlide) {
       return (
         <div>
-          <div>Editing An Old Slide</div>
-          <div>Lesson Name: {this.state.name}</div>
-          <div>Lesson Description: {this.state.description}</div>
-          <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+          <ListGroup>
+            <ListGroupItem>Editing An Old Slide</ListGroupItem>
+            <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+            <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+            <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+          </ListGroup>
           <SlideCreator 
             slide={this.state.oldSlide} 
             lessonRef={this.state.lessonid} 
