@@ -9,28 +9,32 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lessons: []
+      lessons: [],
+      favoriteLessons: []
     }
-    this.getLessons = this.getLessons.bind(this);
+    // this.getLessons = this.getLessons.bind(this);
     this.deleteLesson = this.deleteLesson.bind(this);
   }
 
-  getLessons() {
-    return fetch('/lessons', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include"
-    })
-    .then((res) => res.json())
-    .then((unfilteredLessons) => {
-      console.log('not filtered: ', this.props.user);
-      return unfilteredLessons.filter(lsn => this.props.user.lessons.indexOf(lsn._id) >= 0)
-    })
-    .then((lessons) => this.setState({lessons}))
-    .catch((err) => console.log('Error getting lessons', err));
-  }
+  // getLessons() {
+  //   return fetch('/lessons', {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include"
+  //   })
+  //   .then((res) => res.json())
+  //   .then((unfilteredLessons) => {
+  //     console.log('not filtered: ', this.props.user);
+  //     return {
+  //       lessons: unfilteredLessons.filter(lsn => this.props.user.lessons.indexOf(lsn._id) >= 0),
+  //       favoriteLessons: unfilteredLessons.filter(lsn => len.userLikes.indexOf(this.props.user.username) >= 0)
+  //     }
+  //   })
+  //   .then((lesson) => this.setState({lessons: lesson.lessons, favoriteLessons: lesson.favoriteLessons}))
+  //   .catch((err) => console.log('Error getting lessons', err));
+  // }
 
   deleteLesson(lessonId) {
     return fetch('/lessons/' + lessonId, {
@@ -50,16 +54,39 @@ class User extends Component {
 
   componentDidMount() {
     this.props.getLessons()
-      .then((lessons) => {
-        this.setState({ lessons: lessons });
-      });
+    .then((unfilteredLessons) => {
+      console.log('not filtered: ', unfilteredLessons);
+      return {
+        lessons: unfilteredLessons.filter(lsn => this.props.user.lessons.indexOf(lsn._id) >= 0),
+        favoriteLessons: unfilteredLessons.filter(lsn => lsn.userLikes.indexOf(this.props.user.username) >= 0)
+      }
+    })
+    .then((lesson) => this.setState({lessons: lesson.lessons, favoriteLessons: lesson.favoriteLessons}))
+    .catch((err) => console.log('Error! ', err));
   }
 
   render() {
     return (
       <ListGroup>
         <ListGroupItem>Username: { this.props.user.username || 'no username!' }</ListGroupItem>
-        <ListGroupItem>Favorite Lessons: { this.props.user.favorites || 'no favorite lessons!' } </ListGroupItem>
+        <ListGroupItem>
+          <ButtonGroup vertical block>
+            <DropdownButton title="Your Favorite Lessons:" id="Your Favorite Lesson">
+              <MenuItem key={ this.props.user._id + 1 }>
+                { this.state.favoriteLessons.length === 0 ? 'You Have No Favorite Lessons!' :
+                  (this.state.favoriteLessons.map((lesson, i) => 
+                    <div key={ lesson._id }>
+                    {lesson.description || 'no description'} 
+                    <Link to={'/lesson/' + lesson._id}>
+                      <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
+                    </Link>
+                    </div>
+                  )
+                )}
+              </MenuItem> 
+            </DropdownButton>
+          </ButtonGroup>
+        </ListGroupItem>
         <ListGroupItem>
           <ButtonGroup vertical block>
             <DropdownButton title="Your Lessons:" id="Your Lessons">
