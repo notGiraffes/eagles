@@ -91,6 +91,12 @@ class Lesson extends React.Component {
     .then(function(result) {
       return result.json();
     })
+    .then((likeCheck) => {
+      if (this.state.specificLesson.likes - 1 === likeCheck.likes) {
+        this.state.specificLesson.likes = likeCheck.likes;
+        alert("You've already liked this lesson.");
+      }
+    })
     .catch(function(err) {
       console.log(err);
     })

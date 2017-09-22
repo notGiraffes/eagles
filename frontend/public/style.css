@@ -13,3 +13,9 @@ body {
   padding: 0px; 
   border: 0px;
 }
+
+.slideNameInLessonSlideListEntry {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+}
