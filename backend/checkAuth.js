@@ -1,4 +1,4 @@
-const schema = require('./schema.js');
+const schema = require('./db/schema.js');
 let User = schema.User;
 
 exports.attemptLoggin = (req, res) => {
@@ -61,7 +61,7 @@ exports.checkUser = (req, res, next) => {
   // make sure the person making requests is logged in
   if (!req.session.username) {
     console.log('stopped: ', req.session.username);
-    res.redirect('/');
+    res.redirect('/logout');
   } else {
     console.log('sent along: ', req.session.username);
     next();

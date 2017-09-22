@@ -29,7 +29,7 @@ class LessonCreator extends React.Component {
       slides: this.state.slides
 
     };
-    // axios.post('/lessons', lessonObj)
+
     fetch('/lessons', {
       method: "POST",
       body: JSON.stringify(lessonObj),
@@ -68,13 +68,10 @@ class LessonCreator extends React.Component {
       this.setState({
         oldSlide: oldSlide,
         editingOldSlide: !this.state.editingOldSlide
-      })
-    })
-    // this.setState({
-    //   editingOldSlide: !this.state.editingOldSlide,
-    //   //oldSlide: event.target.
-    // });
+      });
+    });
   }
+
   keyWordSubmit (event) {
     event.preventDefault();
     console.log('keyWordSubmit triggered keyWords look like ', this.state.clientShownKeyWords);
@@ -113,21 +110,12 @@ class LessonCreator extends React.Component {
     });
   }
 
-  // changeUserRef (event) {
-  //   this.setState({
-  //     userRef: event.target.value
-  //   });
-  // }
   changeDescription (event) {
     this.setState({
       description: event.target.value
     });
   }
-  // changeSlides (event) {
-  //   this.setState({
-  //     slides: event.target.value
-  //   });
-  // }
+  
   changeCreateState (event) {
     console.log('changingcreatestate')
     this.setState({
@@ -223,7 +211,7 @@ class LessonCreator extends React.Component {
           <div>Lesson Name: {this.state.name}</div>
           <div>Lesson Description: {this.state.description}</div>
           <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-          <SlideCreator slide={null} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
+          <SlideCreator slide={{}} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
           <div>Lesson Slides: 
             {
               this.state.slides.map((slide,i) => {
@@ -248,41 +236,3 @@ class LessonCreator extends React.Component {
 }
 
 export default LessonCreator;
-
-
-
-
-
-{/*
-          <FormGroup>
-            <Col smOffset={1} sm={6}>
-              <ControlLabel>Lesson ID: {this.state.lessonid}</ControlLabel>
-            </Col>
-          </FormGroup>
-
-          <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>userRef:</Col>
-            <Col sm={10}>
-              <FormControl type='text' placeholder='Slide Creator'
-                value={this.state.userRef || 'no user ref!'}
-                // onChange={this.changeUserRef.bind(this)}
-              />
-            </Col>
-          </FormGroup>
-*/}
-
-{/*
-  <FormGroup>
-  <Col smOffset={1} sm={2}>
-    <ControlLabel>Has The Following Slides</ControlLabel>
-  </Col>
-  <div>
-    <ControlLabel>{this.state.slides.length === 0 ? "No Slides Yet, You can create slides after making a lesson" : this.state.slides.join(', ')}</ControlLabel>
-  </div>
-  </FormGroup>
-*/}
-
-
-
-
-

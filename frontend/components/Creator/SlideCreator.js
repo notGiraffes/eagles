@@ -5,28 +5,16 @@ import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-b
 class SlideCreator extends React.Component {
   constructor (props) {
     super(props);
-    props.slide === null ? 
-    (this.state = {
-      name: '',
-      youTubeUrl: '',
-      youTubeThumbnailUrl: '',
-      youTubeTags: '',
-      text: '',
-      quizUrl: '',
-      old: '',
+    this.state = {
+      name: props.slide.name || '',
+      youTubeUrl: props.slide.youTubeUrl || '',
+      youTubeThumbnailUrl: props.slide.youTubeThumbnailUrl || '',
+      youTubeTags: props.slide.youTubeTags || '',
+      text: props.slide.text || '',
+      quizUrl: props.slide.quizUrl || '',
+      old: props.slide.old || '',
       lessonRef: props.lessonRef
-    })
-    :
-    (this.state = {
-      name: props.slide.name,
-      youTubeUrl: props.slide.youTubeUrl,
-      youTubeThumbnailUrl: props.slide.youTubeThumbnailUrl,
-      youTubeTags: props.slide.youTubeTags,
-      text: props.slide.text,
-      quizUrl: props.slide.quizUrl,
-      old: props.slide.old,
-      lessonRef: props.lessonRef
-    });
+    }
   }
   reset () {
     this.setState({
@@ -45,7 +33,7 @@ class SlideCreator extends React.Component {
         if (this.state.youTubeUrl.includes('https://www.youtube.com/watch?v=')) {
           var sliceFrom = this.state.youTubeUrl.indexOf('=');
           var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
-          youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
+          this.youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
             this.setState({
               youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
               youTubeTags: youTubeDataObj.snippet.tags
@@ -93,6 +81,7 @@ class SlideCreator extends React.Component {
         alert('Slide name required. Please enter a slide name.');
     }
   }
+
   updateOldSlide () {
     var id = this.props.slide._id;
     var body = this.state;
@@ -115,27 +104,22 @@ class SlideCreator extends React.Component {
       console.log('line 114 err', err);
     })
   }
-  changeName (event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
 
-  changeYouTubeUrl (event) {
-    this.setState({
-      youTubeUrl: event.target.value
+  youTubeQueryToServer(searchString, cb) {
+    fetch('/query?string=' + searchString, {
+      method: "GET",
+       headers: {
+          "Content-Type": "application/json",
+        },
+      credentials: "include"
     })
-  }
-
-  changeText (event) {
-    this.setState({
-      text: event.target.value
+    .then((something) => something.json())
+    .then((result) => {
+      console.log('Youtube query sent to server', result[0]);
+      cb(result[0]);
     })
-  }
-
-  changeQuizUrl (event) {
-    this.setState({
-      quizUrl: event.target.value
+    .catch((err) => {
+      console.log('Error: youtube query not sent to server', err);
     })
   }
 
@@ -152,7 +136,7 @@ class SlideCreator extends React.Component {
           <Col sm={10}>
             <FormControl type='text' placeholder='Slide Name'
               value={this.state.name}
-              onChange={this.changeName.bind(this)}
+              onChange={(event) => this.setState({name: event.target.value})}
             />
           </Col>
         </FormGroup>
@@ -161,7 +145,7 @@ class SlideCreator extends React.Component {
           <Col sm={10}>
             <FormControl type='text' placeholder='Slide youTube Url'
               value={this.state.youTubeUrl}
-              onChange={this.changeYouTubeUrl.bind(this)}
+              onChange={(event) => this.setState({youTubeUrl: event.target.value})}
             />
           </Col>
         </FormGroup>
@@ -170,7 +154,7 @@ class SlideCreator extends React.Component {
           <Col sm={10}>
             <FormControl type='text' placeholder='Slide Text'
               value={this.state.text}
-              onChange={this.changeText.bind(this)}
+              onChange={(event) => this.setState({text: event.target.value})}
             />
           </Col>
         </FormGroup>
@@ -179,7 +163,7 @@ class SlideCreator extends React.Component {
           <Col sm={10}>
             <FormControl type='Quiz Url' placeholder='Quiz Url'
               value={this.state.quizUrl}
-              onChange={this.changeQuizUrl.bind(this)}
+              onChange={(event) => this.setState({quizUrl: event.target.value})}
             />
           </Col>
         </FormGroup>
@@ -209,24 +193,5 @@ class SlideCreator extends React.Component {
 
 }
 
-function youTubeQueryToServer(searchString, cb) {
-  // axios.get('/query', { params: { string: searchString } })
-  fetch('/query?string=' + searchString, {
-    method: "GET",
-     headers: {
-        "Content-Type": "application/json",
-      },
-    credentials: "include"
-  })
-  .then((something) => something.json())
-  .then((result) => {
-    console.log(result);
-    console.log('Youtube query sent to server', result[0]);
-    cb(result[0]);
-  })
-  .catch((err) => {
-    console.log('Error: youtube query not sent to server', err);
-  })
-}
 
 export default SlideCreator;
