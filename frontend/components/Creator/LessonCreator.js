@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';//use in functions
+import {Link} from 'react-router-dom';
 import SlideCreator from './SlideCreator.js';
 import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
@@ -71,7 +72,31 @@ class LessonCreator extends React.Component {
       });
     });
   }
-
+  seeOldSlideFromLesson (slide) {
+    console.log('this is the event after clicking ', slide);
+    var indexOfSlideId = this.state.slides.indexOf(slide);
+    var slideId = this.state.slidesId[indexOfSlideId];
+    console.log(slideId,indexOfSlideId);
+    var url = '/slides/' + slideId;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })
+    .then(result => result.json())
+    .then((result) => {
+      console.log('result of retrieving slide by id',result[0])
+      var oldSlide = result[0];
+      oldSlide.old = true;
+      this.setState({
+        oldSlide: oldSlide,
+        editingOldSlide: !this.state.editingOldSlide,
+        creatingSlide: !this.state.creatingSlide
+      });
+    });
+  }
   keyWordSubmit (event) {
     event.preventDefault();
     console.log('keyWordSubmit triggered keyWords look like ', this.state.clientShownKeyWords);
@@ -129,6 +154,30 @@ class LessonCreator extends React.Component {
       editingOldSlide: !this.state.editingOldSlide
     });
   }
+  reset () {
+    this.setState({
+      name: '',
+      userRef: this.props.userRef,
+      description: '',
+      slides: [],
+      slidesId: [],
+      creatingSlide: false,
+      lessonid: 'No ID Yet',
+      keyWords: [],
+      clientShownKeyWords: '',
+      editingOldSlide: false,
+      oldSlide: ''
+    });
+  }
+  // goHome (event) {
+  //   fetch('/',{
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type":"application/json"
+  //     },
+  //     credentials: "include"
+  //   })
+  // }
   fetchSlideFromSlideCreator (result) {
     console.log(result);
     var slideName = result.name; 
@@ -185,24 +234,61 @@ class LessonCreator extends React.Component {
                   value={this.state.clientShownKeyWords}
                   onChange={this.changeClientKeyWords.bind(this)}
                 />
-                <Button onClick={this.keyWordSubmit.bind(this)}> Set Tags </Button>
+                <Button onClick={this.keyWordSubmit.bind(this)} 
+                  bsStyle="info" 
+                  bsSize="small"> Set Tags </Button>
             </Col>
           </FormGroup>}
 
           
           <FormGroup>
-            { this.state.lessonid === 'No ID Yet' ? 
-              (<Col smOffset={2} sm={6}>
-                <Button type="submit">
+            { 
+              this.state.lessonid === 'No ID Yet' ? 
+              (<Col smOffset={1} sm={1}>
+                <Button type="submit" bsStyle="primary" bsSize="small">
                   Make Lesson
                 </Button>
               </Col>) :
-              (<Col smOffset={1} sm={4}>
-                <Button onClick={this.changeCreateState.bind(this)}>Go To Slide Creator</Button>
+              (<Col smOffset={1} sm={1}>
+                <Button 
+                onClick={this.changeCreateState.bind(this)}
+                bsStyle="primary" 
+                bsSize="small">Go To Slide Creator</Button>
               </Col>)
             }
+            {this.state.lessonid === 'No ID Yet' ? null :
+              (<Col smOffset={1} sm={1}>
+                <Button type="button" 
+                  onClick={this.reset.bind(this)} 
+                  bsStyle="warning" 
+                  bsSize="small">Make New Lesson</Button>
+              </Col>)
+            }
+            { 
+              <Col smOffset={1} sm={1}>
+                <Link to='/'>
+                  <Button type="button" bsStyle="warning" bsSize="small">Go Home</Button>
+                </Link>
+              </Col>
+            }
           </FormGroup>
-          {this.state.slides.length === 0 ? (<div>No Slides Yet</div>) : (<div>Lesson Slides: {this.state.slides.join(', ')}</div>)}
+          {
+            this.state.slides.length === 0 ? 
+            (<div>No Slides Yet</div>) 
+            : 
+            (<div>Lesson Slides: 
+              {
+                this.state.slides.map((slide,i) => {
+                  return <Button key={i} 
+                  onClick={this.seeOldSlideFromLesson.bind(this,slide)}
+                  bsStyle="info" 
+                  bsSize="small">
+                  {slide}
+                  </Button>
+                })
+              }
+            </div>)
+          }
         </Form>
       )
     } else if (this.state.creatingSlide && !this.state.editingOldSlide) {
@@ -211,11 +297,20 @@ class LessonCreator extends React.Component {
           <div>Lesson Name: {this.state.name}</div>
           <div>Lesson Description: {this.state.description}</div>
           <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-          <SlideCreator slide={{}} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
+          <SlideCreator 
+            slide={{}} 
+            lessonRef={this.state.lessonid} 
+            fetch={this.fetchSlideFromSlideCreator.bind(this)} 
+            changeCreateState={this.changeCreateState.bind(this)} 
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+          </SlideCreator>
           <div>Lesson Slides: 
             {
               this.state.slides.map((slide,i) => {
-                return <div key={i} onClick={this.seeOldSlide.bind(this,slide)}>{slide}</div>
+                return <Button key={i} 
+                onClick={this.seeOldSlide.bind(this,slide)}
+                bsStyle="info" 
+                bsSize="small">{slide}</Button>
               })
             }
           </div>
@@ -228,7 +323,13 @@ class LessonCreator extends React.Component {
           <div>Lesson Name: {this.state.name}</div>
           <div>Lesson Description: {this.state.description}</div>
           <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-          <SlideCreator slide={this.state.oldSlide} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
+          <SlideCreator 
+            slide={this.state.oldSlide} 
+            lessonRef={this.state.lessonid} 
+            fetch={this.fetchSlideFromSlideCreator.bind(this)} 
+            changeCreateState={this.changeCreateState.bind(this)} 
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+          </SlideCreator>
         </div>
       )
     }
