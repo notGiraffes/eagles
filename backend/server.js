@@ -53,7 +53,7 @@ app.all('/lessons', lessonRoutes);
 app.all('/lessons/*', lessonRoutes);
 app.all('/lesson', lessonRoutes);
 app.all('/lesson/*', lessonRoutes);
-app.all('/query/*', utilRoutes);
+app.all('/query', utilRoutes);
 
 // redirect any uncaught routes 
 app.use((req, res) => {

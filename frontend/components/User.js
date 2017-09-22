@@ -55,9 +55,9 @@ class User extends Component {
                 { this.state.favoriteLessons.length === 0 ? 'You Have No Favorite Lessons!' :
                   (this.state.favoriteLessons.map((lesson, i) => 
                     <div key={ lesson._id }>
-                    {lesson.name || 'Unnamed Lesson'} 
+                    Lesson Name: {lesson.name || 'Unnamed Lesson'} 
                     <br/>
-                    {lesson.description || 'no description'} 
+                    Lesson Description: {lesson.description || 'no description'} 
                     <Link to={'/lesson/' + lesson._id}>
                       <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
                     </Link>
@@ -75,9 +75,9 @@ class User extends Component {
                 { this.state.lessons.length === 0 ? 'You Have No Lessons!' :
                   (this.state.lessons.map((lesson, i) => 
                     <div key={ lesson._id }>
-                    {lesson.name || 'Unnamed Lesson'} 
+                    Lesson Name: {lesson.name || 'Unnamed Lesson'}
                     <br/>
-                    {lesson.description || 'No Description'} 
+                    Lesson Description: {lesson.description || 'no description'} 
                     <Link to={'/lesson/' + lesson._id}>
                       <Button bsStyle="primary" bsSize="small" block>View Lesson</Button>
                     </Link>

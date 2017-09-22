@@ -1,7 +1,7 @@
 import React from 'react';
 import LessonSlideListEntry from './LessonSlideListEntry.js';
 import Slide from './Slide.js';
-import { Button } from 'react-bootstrap';
+import { Button, Grid, Row } from 'react-bootstrap';
 
 
 class Lesson extends React.Component {
@@ -117,16 +117,18 @@ class Lesson extends React.Component {
             <div className="lesson">
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
               <p className="lessonDescription">{this.state.specificLesson.description}</p>
-              <div className="lessonOrderedList">
-                {this.state.slides.map((slide, i) => {
-                  return <LessonSlideListEntry
+              <Grid>
+                <Row>
+                {this.state.slides.map((slide, i) => (
+                  <LessonSlideListEntry
                     slide={slide}
                     index={i}
                     key={i}
                     onLessonSlideListEntryClick={this.onLessonSlideListEntryClick.bind(this)}
                   />
-                })}
-              </div>
+                ))}
+                </Row>
+              </Grid>
             </div>
             <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
           </div>
