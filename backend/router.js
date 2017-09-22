@@ -259,14 +259,16 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
-    if (lesson.userLikes.length !== 0) {
-      if (lesson.userLikes.indexOf(req.session.username) === -1) {
+    if (!req.body.description) { // Therefore likes will not be added on put requests not from lesson.js
+      if (lesson.userLikes.length !== 0) {
+        if (lesson.userLikes.indexOf(req.session.username) === -1) {
+          lesson.userLikes.push(req.session.username);
+           if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
+        }
+      } else {
         lesson.userLikes.push(req.session.username);
-         if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
+         if (req.body.likes) lesson.likes = req.body.likes
       }
-    } else {
-      lesson.userLikes.push(req.session.username);
-       if (req.body.likes) lesson.likes = req.body.likes
     }
 
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
