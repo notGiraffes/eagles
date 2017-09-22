@@ -79,7 +79,7 @@ class Lesson extends React.Component {
 
   likeALesson() {
     this.state.specificLesson.likes++;
-    var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id };
+    var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id, fromLike: true };
     fetch('/lessons', {
       method: "PUT",
       body: JSON.stringify(body),
