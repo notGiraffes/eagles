@@ -211,7 +211,13 @@ class LessonCreator extends React.Component {
           <div>Lesson Name: {this.state.name}</div>
           <div>Lesson Description: {this.state.description}</div>
           <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-          <SlideCreator slide={{}} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
+          <SlideCreator 
+            slide={{}} 
+            lessonRef={this.state.lessonid} 
+            fetch={this.fetchSlideFromSlideCreator.bind(this)} 
+            changeCreateState={this.changeCreateState.bind(this)} 
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+          </SlideCreator>
           <div>Lesson Slides: 
             {
               this.state.slides.map((slide,i) => {
@@ -228,7 +234,13 @@ class LessonCreator extends React.Component {
           <div>Lesson Name: {this.state.name}</div>
           <div>Lesson Description: {this.state.description}</div>
           <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-          <SlideCreator slide={this.state.oldSlide} lessonRef={this.state.lessonid} fetch={this.fetchSlideFromSlideCreator.bind(this)} changeCreateState={this.changeCreateState.bind(this)} changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}></SlideCreator>
+          <SlideCreator 
+            slide={this.state.oldSlide} 
+            lessonRef={this.state.lessonid} 
+            fetch={this.fetchSlideFromSlideCreator.bind(this)} 
+            changeCreateState={this.changeCreateState.bind(this)} 
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+          </SlideCreator>
         </div>
       )
     }
