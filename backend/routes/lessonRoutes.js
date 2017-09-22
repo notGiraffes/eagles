@@ -143,6 +143,7 @@ router.put('/lessons', function(req, res) {
         if (lesson.userLikes.indexOf(req.session.username) === -1) {
           lesson.userLikes.push(req.session.username);
           if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
+          if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name, lesson.userLikes.length);
         }
       } else {
         lesson.userLikes.push(req.session.username);
@@ -152,7 +153,6 @@ router.put('/lessons', function(req, res) {
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
-      if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name, lesson.userLikes.length);
       res.send(result);
     })
     .catch(function(err) {
