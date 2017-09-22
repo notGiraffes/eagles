@@ -321,10 +321,12 @@ class LessonCreator extends React.Component {
     } else if (this.state.creatingSlide && this.state.editingOldSlide) {
       return (
         <div>
-          <div>Editing An Old Slide</div>
-          <div>Lesson Name: {this.state.name}</div>
-          <div>Lesson Description: {this.state.description}</div>
-          <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+          <ListGroup>
+            <ListGroupItem>Editing An Old Slide</ListGroupItem>
+            <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+            <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+            <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+          </ListGroup>
           <SlideCreator 
             slide={this.state.oldSlide} 
             lessonRef={this.state.lessonid} 
