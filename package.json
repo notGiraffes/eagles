@@ -37,6 +37,7 @@
     "express-session": "^1.15.5",
     "mongoose": "^4.11.12",
     "morgan": "^1.8.2",
+    "nodemailer": "^4.1.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",

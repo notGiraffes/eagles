@@ -8,6 +8,7 @@ class Login extends Component {
       username: '',
       password: '',
       creatingAccount: false,
+      email: ''
     }
   }
 
@@ -38,10 +39,21 @@ class Login extends Component {
               />
             </Col>
           </FormGroup>
+          { this.state.creatingAccount ?
+          (<FormGroup>
+            <Col componentClass={ControlLabel} sm={2}>Email</Col>
+            <Col sm={10}>
+              <FormControl type='email' placeholder='Email'
+                value={this.state.email}
+                onChange={(e) => this.setState({ email: e.target.value })}
+              />
+            </Col>
+          </FormGroup>) : ''
+          }
       { !this.state.creatingAccount ? (
           <FormGroup>
             <Col smOffset={2} sm={2}>
-              <Button onClick={() => this.props.login(this.state.username, this.state.password)}>
+              <Button onClick={() => this.props.login(this.state.username, this.state.password, this.state.email)}>
                 Log In!
               </Button>
               <Button onClick={() => this.setState({ creatingAccount: true })}>

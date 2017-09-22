@@ -42,6 +42,7 @@ exports.createAccount = (req, res) => {
   const saltRounds = 2;
   var username = req.body.username;
   var password = req.body.password;
+  var email = req.body.email;
   var lessons = req.body.lessons || [];
   var favorites = req.body.favorites || [];
   var createdLessons = req.body.createdLessons || [];
@@ -53,7 +54,8 @@ exports.createAccount = (req, res) => {
         password: hash,
         lessons: lessons, 
         favorites: favorites, 
-        createdLessons: createdLessons
+        createdLessons: createdLessons,
+        email: email
       })
       .then(function(result) {
         console.log('created user: ', result);

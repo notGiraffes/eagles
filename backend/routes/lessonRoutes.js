@@ -1,10 +1,55 @@
 const express = require('express');
+const nodemailer = require('nodemailer');
 const schema = require('../db/schema.js');
 const router = express.Router();
 const mongoose = require('mongoose');
 var User = schema.User;
 var Lesson = schema.Lesson;
 var Slide = schema.Slide;
+
+const shouldEmail = (likes) => {
+  return true;
+  // let goal = 10;
+  // while(goal <= likes) {
+  //   goal *= 2;
+  // }
+  // if(goal === likes) return true;
+  // return false;
+}
+
+const sendCongad = (userRef, lessonName) => {
+  // create reusable transporter object using the default SMTP transport
+  console.log('starting send email');
+  User.find({ id: userRef })
+  .then((user) => {
+    var smtpTransport = nodemailer.createTransport("SMTP",{
+      service: "Gmail",
+      auth: {
+          user: "learningwithlessons@gmail.com",
+          pass: "test123test"
+        }
+      });
+
+    let mailOptions ={
+        from: "Fred Foo ✔ <foo@blurdybloop.com>", // sender address
+        to: "ccolin84@gmail.com", // list of receivers
+        subject: "Hello ✔", // Subject line
+        text: "Hello world ✔", // plaintext body
+        html: "<b>Hello world ✔</b>" // html body
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+      if(error){
+          console.log(error);
+      }else{
+          res.redirect('/');
+      }
+  });
+  })
+  .catch((err) => {
+    console.log('Error sending email: ', err);
+  })
+}
 
 //find specific lesson
 router.get('/lesson/:lessonId', function(req, res) {
@@ -74,12 +119,12 @@ router.post('/lessons', function(req, res) {
     res.send(result);
   })
   .catch(function(err) {
-    res.send('Error at endpoint /lessons type POST: ', err);
+    console.log('Error at endpoint /lessons type POST: ', err);
+    res.send('Error');
   })
 })
 
 router.put('/lessons', function(req, res) {
-  console.log('hello line239 router.js req is ', req.body);
   Lesson.findById(req.body.lessonid, function(err, lesson) {
     //console.log('lesson is ', lesson, 'err is ', err)
     // console.log('Lesson is ', Lesson, lesson.keyWords)
@@ -94,19 +139,17 @@ router.put('/lessons', function(req, res) {
       if (lesson.userLikes.length !== 0) {
         if (lesson.userLikes.indexOf(req.session.username) === -1) {
           lesson.userLikes.push(req.session.username);
-           if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
+          if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
         }
       } else {
         lesson.userLikes.push(req.session.username);
          if (req.body.likes) lesson.likes = req.body.likes
       }
     }
-
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
-      console.log('RES', result);
-
+      if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name);
       res.send(result);
     })
     .catch(function(err) {

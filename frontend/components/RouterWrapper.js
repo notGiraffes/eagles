@@ -100,10 +100,11 @@ class RouterWrapper extends Component {
     .catch((err) => console.log('Error creating an account!', err));
   }
 
-  login(username, password) {
+  login(username, password, email) {
     let data = {
       username: username,
-      password: password
+      password: password,
+      email: email
     };
     fetch('/login', {
       method: "POST",
@@ -117,6 +118,7 @@ class RouterWrapper extends Component {
     .then((data) => {
       console.log('login got data', data);
       if(data.loggedIn === true) {
+        this.getLessons();
         this.setState({ 
           user: data.userData,
           loggedIn: true,
