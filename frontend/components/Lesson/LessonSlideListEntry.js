@@ -7,7 +7,6 @@ const LessonSlideListEntry = (props) => (
       <Well onClick={() => props.onLessonSlideListEntryClick(props.index)}>
         <h4 className="index">Slide: {props.index + 1}</h4>
         <h4> Slide Name: {props.slide.name || 'No Slide Name'} </h4>
-        <h6> Slide Description: {props.slide.text || 'No Slide Description'} </h6>
       </Well>
     </Col>)  :
     (<Col xs={6} md={4}>
