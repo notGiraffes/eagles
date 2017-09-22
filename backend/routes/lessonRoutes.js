@@ -17,34 +17,37 @@ const shouldEmail = (likes) => {
   // return false;
 }
 
-const sendCongad = (userRef, lessonName) => {
+const sendCongad = (userRef, lessonName, numLikes) => {
   // create reusable transporter object using the default SMTP transport
-  console.log('starting send email');
-  User.find({ id: userRef })
+  User.find({ _id : userRef })
   .then((user) => {
-    var smtpTransport = nodemailer.createTransport("SMTP",{
-      service: "Gmail",
-      auth: {
-          user: "learningwithlessons@gmail.com",
-          pass: "test123test"
+    user = user[0];
+    if (user.email) {
+        console.log('sending email to ', user.email);
+        var smtpTransport = nodemailer.createTransport({
+          service: "Gmail",
+          auth: {
+              user: "learningwithlessons@gmail.com",
+              pass: "test123test"
+            }
+          });
+    
+        let mailOptions ={
+            from: "Learning with Lessons", // sender address
+            to: user.email, // list of receivers
+            subject: "Congratulations!", // Subject line
+            text: `Your lesson named ${lessonName} just reached ${numLikes} likes!`, // plaintext body
+            html: `<p>Your lesson named ${lessonName} just reached ${numLikes} likes!<p>` // html body
         }
+    
+        smtpTransport.sendMail(mailOptions, function(error, response){
+          if(error){
+              console.log(error);
+          }else{
+              res.redirect('/');
+          }
       });
-
-    let mailOptions ={
-        from: "Fred Foo ✔ <foo@blurdybloop.com>", // sender address
-        to: "ccolin84@gmail.com", // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world ✔", // plaintext body
-        html: "<b>Hello world ✔</b>" // html body
     }
-
-    smtpTransport.sendMail(mailOptions, function(error, response){
-      if(error){
-          console.log(error);
-      }else{
-          res.redirect('/');
-      }
-  });
   })
   .catch((err) => {
     console.log('Error sending email: ', err);
@@ -149,7 +152,7 @@ router.put('/lessons', function(req, res) {
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
-      if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name);
+      if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name, lesson.userLikes.length);
       res.send(result);
     })
     .catch(function(err) {

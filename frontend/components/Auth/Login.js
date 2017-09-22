@@ -53,7 +53,7 @@ class Login extends Component {
       { !this.state.creatingAccount ? (
           <FormGroup>
             <Col smOffset={2} sm={2}>
-              <Button onClick={() => this.props.login(this.state.username, this.state.password, this.state.email)}>
+              <Button onClick={() => this.props.login(this.state.username, this.state.password)}>
                 Log In!
               </Button>
               <Button onClick={() => this.setState({ creatingAccount: true })}>
@@ -68,7 +68,7 @@ class Login extends Component {
                 Go Back
               </Button>
               <Button onClick={() => {
-                this.props.createAccount(this.state.username, this.state.password);
+                this.props.createAccount(this.state.username, this.state.password, this.state.email);
                 }}>
                 Create Account!
               </Button>

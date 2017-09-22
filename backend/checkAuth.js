@@ -58,7 +58,6 @@ exports.createAccount = (req, res) => {
         email: email
       })
       .then(function(result) {
-        console.log('created user: ', result);
         req.session.username = result.username;
         result.password = '';
         res.setHeader('Content-Type', 'application/json');

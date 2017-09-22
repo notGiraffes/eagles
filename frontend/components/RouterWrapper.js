@@ -71,10 +71,11 @@ class RouterWrapper extends Component {
     });
   }
 
-  createAccount(username, password) {
+  createAccount(username, password, email) {
     let data = {
       username,
-      password
+      password,
+      email
     };
     fetch('/users', {
       method: "POST",
