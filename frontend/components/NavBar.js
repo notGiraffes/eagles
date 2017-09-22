@@ -9,6 +9,7 @@ class NavBar extends Component {
       searchInput: ''
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    console.log('navbar props: ', props);
   }
 
   retrieveSearchInput(searchInput) {
@@ -34,7 +35,10 @@ class NavBar extends Component {
               <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
             </FormGroup>{' '}
             <Link to='/'>
-              <Button type="submit" onClick={this.handleSearchSubmit}>
+              <Button type="submit" onClick={ (event) => {
+                this.handleSearchSubmit(event);
+                this.props.history.push('/');
+              }}>
                 Search
               </Button>
             </Link>{' '}
