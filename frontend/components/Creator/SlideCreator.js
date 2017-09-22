@@ -127,9 +127,12 @@ class SlideCreator extends React.Component {
     return (
       <Form horizontal onSubmit={this.onSubmit.bind(this)}>
         <FormGroup>
-          <Col smOffset={2} sm={2}>
-            <ControlLabel>Slide Creator</ControlLabel>
-          </Col>
+          <div className='slideCreator'>
+            Slide Creator
+          </div>
+{          // <Col smOffset={2} sm={2}>
+          //   <ControlLabel>Slide Creator</ControlLabel>
+          // </Col>}
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>Slide Name</Col>
