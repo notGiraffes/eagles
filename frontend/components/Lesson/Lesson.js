@@ -93,6 +93,8 @@ class Lesson extends React.Component {
       if (this.state.specificLesson.likes - 1 === likeCheck.likes) {
         this.state.specificLesson.likes = likeCheck.likes;
         alert("You've already liked this lesson.");
+      } else {
+        alert("You've liked this video! It has been added to your favorites!")
       }
     })
     .catch(function(err) {
