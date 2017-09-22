@@ -285,7 +285,7 @@ router.put('/lessons', function(req, res) {
 })
 
 router.put('/slides', function(req, res) {
-  Slide.findById(req.query._id, function(err, slide) {
+  Slide.findById(req.body.id, function(err, slide) {
     if (err) res.send(err);
 
     if (req.body.name) slide.name = req.body.name;
@@ -295,13 +295,17 @@ router.put('/slides', function(req, res) {
     if (req.body.quizUrl) slide.quizUrl = req.body.quizUrl;
     if (req.body.youTubeThumbnailUrl) slide.youTubeThumbnailUrl = req.body.youTubeThumbnailUrl;
     if (req.body.youTubeTags) slide.youTubeTags = req.body.youTubeTags;
+    if (req.body.old) slide.old = true;
 
-    Slide.save(function (err) {
-      if (err) {
-        throw err;
-        return;
-      }
-      res.send('slide updated');
+    console.log('slide being updated is ', slide);
+    slide.save()
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (err) {
+      console.log('line 293',err);
+      throw err;
+      return;
     })
   })
 })

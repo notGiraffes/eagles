@@ -5,15 +5,28 @@ import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-b
 class SlideCreator extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
+    props.slide === null ? 
+    (this.state = {
       name: '',
       youTubeUrl: '',
       youTubeThumbnailUrl: '',
       youTubeTags: '',
       text: '',
       quizUrl: '',
+      old: '',
       lessonRef: props.lessonRef
-    }
+    })
+    :
+    (this.state = {
+      name: props.slide.name,
+      youTubeUrl: props.slide.youTubeUrl,
+      youTubeThumbnailUrl: props.slide.youTubeThumbnailUrl,
+      youTubeTags: props.slide.youTubeTags,
+      text: props.slide.text,
+      quizUrl: props.slide.quizUrl,
+      old: props.slide.old,
+      lessonRef: props.lessonRef
+    });
   }
   reset () {
     this.setState({
@@ -80,7 +93,28 @@ class SlideCreator extends React.Component {
         alert('Slide name required. Please enter a slide name.');
     }
   }
-
+  updateOldSlide () {
+    var id = this.props.slide._id;
+    var body = this.state;
+    body.id = id;
+    fetch('/slides',{
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    })    
+    .then(function(result) {
+      return result.json();
+    })
+    .then(function(result) {
+      console.log('from line111 slidecreator result after update is', result);
+    })
+    .catch(function(err) {
+      console.log('line 114 err', err);
+    })
+  }
   changeName (event) {
     this.setState({
       name: event.target.value
@@ -151,14 +185,22 @@ class SlideCreator extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
-            <FormControl type="submit" value='Create The Slide' />
+            { this.state.old === '' ? <FormControl type="submit" value='Create The Slide' /> : 
+              (<FormControl type='text' value='Update Slide' onClick={this.updateOldSlide.bind(this)}/>) 
+            }
           </Col>
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
-            <Button onClick={this.props.changeCreateState}>
-              Go Back
-            </Button>
+            { this.state.old === '' ? 
+              (<Button onClick={this.props.changeCreateState}>
+                Go Back
+              </Button>)
+              :
+              (<Button onClick={this.props.changeEditingOldSlide}>
+                Finish Update
+              </Button>)
+            }
           </Col>
         </FormGroup>
       </Form>
