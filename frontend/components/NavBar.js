@@ -9,7 +9,6 @@ class NavBar extends Component {
       searchInput: ''
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-    console.log('navbar props: ', props);
   }
 
   retrieveSearchInput(searchInput) {

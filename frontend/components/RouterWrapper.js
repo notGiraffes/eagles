@@ -97,7 +97,7 @@ class RouterWrapper extends Component {
         this.setState({ displayLogginError: true });
       }
     })
-    .catch((err) => console.log('Error creating an account In!', err));
+    .catch((err) => console.log('Error creating an account!', err));
   }
 
   login(username, password) {
@@ -115,7 +115,7 @@ class RouterWrapper extends Component {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log('got data', data);
+      console.log('login got data', data);
       if(data.loggedIn === true) {
         this.setState({ 
           user: data.userData,
@@ -144,13 +144,13 @@ class RouterWrapper extends Component {
 
   render() {
     return (
-      <BrowserRouter history={}>
+      <BrowserRouter>
         <App 
         queryDataBaseWithSearchInput={ this.queryDataBaseWithSearchInput } 
         logout={ this.logout } 
         getLessons={ this.getLessons }
         >
-          { this.state.loggedIn ?
+          { this.state.loggedIn ? // If you are logged in allow all routes
          (<Switch>
             <Route exact path='/'
               render={() => (
@@ -165,7 +165,12 @@ class RouterWrapper extends Component {
               component={ Lesson }
             />
             <Route path='/create'
-              render={ () => <LessonCreator username={this.state.user.username} userRef={this.state.user._id} /> }
+              render={ () => (
+                <LessonCreator 
+                  username={this.state.user.username} 
+                  userRef={this.state.user._id} 
+                /> 
+              )}
             />
             <Route path='/user' render={ () => 
                 <User 
@@ -174,17 +179,17 @@ class RouterWrapper extends Component {
                 />
               }
             />
-            <Route path='/logout' render={ () => {
-              console.log('logging out route');
-              return <Logout logout={ this.logout }/>
-            }} 
+            <Route path='/logout' render={ () => (
+              <Logout logout={ this.logout }/>
+            )} 
             />
-          </Switch>) :
+          </Switch>) : // if not, everything goes to the login component
           (<Switch>
               <Route path='*' render={ () => 
-                <Login login={ this.login } 
-                       displayLogginError={ this.state.displayLogginError }
-                       createAccount={ this.createAccount }
+                <Login 
+                  login={ this.login } 
+                  displayLogginError={ this.state.displayLogginError }
+                  createAccount={ this.createAccount }
                 />
               }/>
             </Switch>)
