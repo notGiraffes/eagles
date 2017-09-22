@@ -199,11 +199,11 @@ class LessonCreator extends React.Component {
           </FormGroup>
 
           { this.state.lessonid === 'No ID Yet' ? null : 
-            (<div>
-              <div>Lesson Name: {this.state.name}</div>
-              <div>Lesson Description: {this.state.description}</div>
-              <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
-            </div>) 
+            (<ListGroup>
+              <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+              <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+              <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+            </ListGroup>) 
           }
 
           { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
@@ -294,9 +294,11 @@ class LessonCreator extends React.Component {
     } else if (this.state.creatingSlide && !this.state.editingOldSlide) {
       return (
         <div>
-          <div>Lesson Name: {this.state.name}</div>
-          <div>Lesson Description: {this.state.description}</div>
-          <div>Lesson Tags: {this.state.keyWords.join(', ')}</div>
+          <ListGroup>
+            <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+            <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+            <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+          </ListGroup>
           <SlideCreator 
             slide={{}} 
             lessonRef={this.state.lessonid} 
