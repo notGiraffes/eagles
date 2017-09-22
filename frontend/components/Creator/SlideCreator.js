@@ -169,19 +169,22 @@ class SlideCreator extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
-            { this.state.old === '' ? <FormControl type="submit" value='Create The Slide' /> : 
-              (<FormControl type='text' value='Update Slide' onClick={this.updateOldSlide.bind(this)}/>) 
+            { this.state.old === '' ? 
+              (<Button type="submit" bsStyle="primary" bsSize="small">Create The Slide</Button>) : 
+              (<Button onClick={this.updateOldSlide.bind(this)} bsStyle="primary" bsSize="small">
+                Update Slide
+              </Button>) 
             }
           </Col>
         </FormGroup>
         <FormGroup>
           <Col smOffset={2} sm={2}>
             { this.state.old === '' ? 
-              (<Button onClick={this.props.changeCreateState}>
+              (<Button onClick={this.props.changeCreateState} bsStyle="warning" bsSize="small">
                 Go Back
               </Button>)
               :
-              (<Button onClick={this.props.changeEditingOldSlide}>
+              (<Button onClick={this.props.changeEditingOldSlide} bsStyle="warning" bsSize="small">
                 Finish Update
               </Button>)
             }
