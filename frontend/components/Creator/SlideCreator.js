@@ -128,11 +128,8 @@ class SlideCreator extends React.Component {
       <Form horizontal onSubmit={this.onSubmit.bind(this)}>
         <FormGroup>
           <div className='slideCreator'>
-            Slide Creator
+            <ControlLabel>Slide Creator</ControlLabel>
           </div>
-{          // <Col smOffset={2} sm={2}>
-          //   <ControlLabel>Slide Creator</ControlLabel>
-          // </Col>}
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>Slide Name</Col>

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';//use in functions
 import {Link} from 'react-router-dom';
 import SlideCreator from './SlideCreator.js';
-import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Form, FormGroup, Col, FormControl, ControlLabel, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class LessonCreator extends React.Component {
   constructor (props) {
@@ -193,9 +193,9 @@ class LessonCreator extends React.Component {
       return (
         <Form horizontal onSubmit={this.onSubmit.bind(this)}>
           <FormGroup>
-            <Col smOffset={1} sm={2}>
+            <div className='lessonCreator'>
               <ControlLabel>Lesson Creator</ControlLabel>
-            </Col>
+            </div>
           </FormGroup>
 
           { this.state.lessonid === 'No ID Yet' ? null : 

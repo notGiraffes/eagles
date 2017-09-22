@@ -2,6 +2,13 @@ body {
   padding: 5%;
 }
 
+.lessonCreator, .slideCreator{
+  float: none;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 250%;
+}
+
 .index {
   display: inline;
 }
