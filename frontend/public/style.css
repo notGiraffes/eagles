@@ -26,3 +26,54 @@ body {
   color:blue;
   text-decoration:underline;
 }
+
+.chatHide {
+  background-color: lightgrey;
+  height: 30px;
+  width: 250px;
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  text-align: center;
+}
+
+.chatHide:hover {
+  text-decoration: underline;
+}
+
+.chat {
+  background-color: grey;
+  height: 310px;
+  width: 250px;
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+}
+
+.displayChat {
+  height: 260px;
+  margin: 6px;
+  background-color: white;
+  overflow: auto;
+}
+
+.chatLine {
+  line-height: .9;
+  margin-left: 12px;
+
+}
+
+.chatLine h5 {
+  margin-bottom: .1em;
+}
+
+.chatLine p {
+  margin-top: .1em;
+}
+
+.chatInput {
+  margin-left: 6px;
+  margin-right: 8px;
+  height: auto;
+  width: 180px;
+}

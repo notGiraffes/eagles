@@ -83,6 +83,7 @@ router.get('/lesson/:lessonId', function(req, res) {
 router.get('/lessons', function(req, res) {
   Lesson.find({})
   .then(function(lessons) {
+    console.log(lessons);
     res.send(lessons);
   })
   .catch(function(err) {
@@ -173,5 +174,9 @@ router.delete('/lessons/:lessonId', function(req, res) {
     res.send(lesson);
   });
 });
+
+// router.post('/lessons/newChat', function(req, res) {
+//   console.log(req.body);
+// })
 
 module.exports = router;

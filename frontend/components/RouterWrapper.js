@@ -40,6 +40,7 @@ class RouterWrapper extends Component {
     .then((res) => res.json())
     .then((lessons) => {
       this.setState({lessons});
+      console.log(lessons);
       return lessons
     })
     .catch((err) => console.log('Error getting lessons', err));
@@ -146,6 +147,11 @@ class RouterWrapper extends Component {
   }
 
   render() {
+    const LessonPage = (props) => {
+      return (
+        <Lesson user={this.state.user}/>
+        )
+    }
     return (
       <BrowserRouter>
         <App 
@@ -165,6 +171,7 @@ class RouterWrapper extends Component {
               )}
             />
             <Route path='/lesson/:id'
+              // component={ LessonPage }
               component={ Lesson }
             />
             <Route path='/create'

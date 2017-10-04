@@ -3,25 +3,30 @@ import LessonSlideListEntry from './LessonSlideListEntry.js';
 import Slide from './Slide.js';
 import { Button, Grid, Row } from 'react-bootstrap';
 
+import Chat from './Chat.js';
+
 
 class Lesson extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      specificLesson: {},
+      specificLesson: {
+        chat: []
+      },
       slides: [],
       currentSlide: null,
       index: 0,
       videoIdOfClickedOnVideo: '',
       liked: false
     }
+    console.log(this);
   }
 
   componentDidMount() {
     return fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" }) 
       .then((response) => response.json())
       .then((lessonDataJSON) => {
-        // console.log('LESSON DATA', lessonDataJSON); 
+        console.log('LESSON DATA', lessonDataJSON); 
         this.setState({
           specificLesson: lessonDataJSON,
           slides: lessonDataJSON.slides
@@ -123,6 +128,7 @@ class Lesson extends React.Component {
           index={this.state.index}
           />
         ) : (
+        <div>
           <div className="lessonSlideList">
             <div className="lesson">
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
@@ -142,6 +148,9 @@ class Lesson extends React.Component {
             </div>
             <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
           </div>
+          <Chat lesson={this.state.specificLesson}/>
+        </div>
+
         )}
       </div>
     );
