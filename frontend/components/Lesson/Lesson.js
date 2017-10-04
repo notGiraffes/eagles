@@ -2,9 +2,9 @@ import React from 'react';
 import LessonSlideListEntry from './LessonSlideListEntry.js';
 import Slide from './Slide.js';
 import { Button, Grid, Row } from 'react-bootstrap';
-
 import Chat from './Chat.js';
-
+// import Comments from './Comments.js';
+import CommentEntries from './CommentEntries.js';
 
 class Lesson extends React.Component {
   constructor(props) {
@@ -19,24 +19,27 @@ class Lesson extends React.Component {
       videoIdOfClickedOnVideo: '',
       liked: false
     }
-    console.log(this);
+
+    this.addComment = this.addComment.bind(this);
+    this.likeAComment = this.likeAComment.bind(this);
+
   }
 
   componentDidMount() {
-    return fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" }) 
+    return fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" })
       .then((response) => response.json())
       .then((lessonDataJSON) => {
-        console.log('LESSON DATA', lessonDataJSON); 
+
         this.setState({
           specificLesson: lessonDataJSON,
           slides: lessonDataJSON.slides
         });
-        console.log(this.state.specificLesson);
+        console.log('specific lesson', this.state.specificLesson);
       })
   }
 
   onLessonSlideListEntryClick(index) {
-    
+
     var videoIdInUrl = this.state.slides[index].youTubeUrl;
     var sliceFrom = videoIdInUrl.indexOf('=');
     var videoId = videoIdInUrl.slice(sliceFrom + 1);
@@ -46,7 +49,7 @@ class Lesson extends React.Component {
       videoIdOfClickedOnVideo: videoId
     });
   }
-  
+
   exit() {
     this.setState({
       currentSlide: '',
@@ -83,7 +86,7 @@ class Lesson extends React.Component {
   renderVideo(thereIsAVideo) {
     if (thereIsAVideo) {
       return <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={'https://www.youtube.com/embed/' + thereIsAVideo} allowFullScreen></iframe>
-    } 
+    }
   }
 
   likeALesson() {
@@ -114,12 +117,75 @@ class Lesson extends React.Component {
     })
   }
 
+  addComment(e) {
+    e.preventDefault();
+
+    if (this._inputElement.value !== '') {
+      var newComment = {
+        text: this._inputElement.value,
+        key: Date.now(),
+        likes: 0
+      };
+
+      //Save new comment to DB
+      console.log('addComment', this.state.specificLesson);
+      var body = { comment: newComment, lessonid: this.state.specificLesson._id };
+      fetch('/lessons', {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      })
+      .then(function(result) {
+        console.log('returned data', result);
+
+        return result.json();
+      })
+      .then((data) => {
+        this.setState({
+          specificLesson: data
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+
+      this._inputElement.value = '';
+    }
+
+  }
+
+  likeAComment(key) {
+    var body = { lessonid: this.state.specificLesson._id, commentid: key };
+    fetch('/lessons', {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+    .then(function(result) {
+      return result.json();
+    })
+    .then((data) => {
+      this.setState({
+        specificLesson: data
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  }
+
   render() {
     return (
       <div>
         { this.state.currentSlide ? (
-          <Slide 
-          slideData={this.state.currentSlide} 
+          <Slide
+          slideData={this.state.currentSlide}
           videoIdOfClickedOnVideo={this.state.videoIdOfClickedOnVideo}
           renderVideo={this.renderVideo(this.state.videoIdOfClickedOnVideo)}
           previousSlideClick={this.previousSlideClick.bind(this)}
@@ -147,6 +213,15 @@ class Lesson extends React.Component {
               </Grid>
             </div>
             <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
+            <div className="commentsMain">
+              <div className="header">
+                <form onSubmit={this.addComment}>
+                  <input ref={(a) => this._inputElement = a} placeholder="Add a comment" />
+                  <button type="submit">add</button>
+                </form>
+              </div>
+              <CommentEntries entries={this.state.specificLesson.comments || []} onLike={this.likeAComment} />
+            </div>
           </div>
           <Chat lesson={this.state.specificLesson}/>
         </div>
