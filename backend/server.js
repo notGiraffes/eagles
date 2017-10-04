@@ -8,6 +8,9 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const session = require('express-session');
+const io = require('socket.io')();
+const schema = require('./db/schema.js');
+var Lesson = schema.Lesson;
 
 // create express instance
 const app = express();
@@ -42,6 +45,11 @@ app.get('/logout', checkAuth.logout);
 app.post('/users', checkAuth.createAccount);
 app.post('/login', checkAuth.attemptLoggin);
 app.use(checkAuth.checkUser);
+app.get('/currentUser', function(req, res) {
+  var sessData = req.session;
+  console.log('currentUser', sessData.username);
+  res.send(sessData.username);
+})
 // ------------------------------------------------ //
 
 // handle protected routes
@@ -57,8 +65,43 @@ app.all('/query', utilRoutes);
 
 // redirect any uncaught routes 
 app.use((req, res) => {
+	console.log('testing');
   res.redirect('/');
 });
 
 // server listens for requests
 app.listen(process.env.PORT || 3000);
+
+
+
+io.sockets.on('connection', (client) => {
+	client.on('newMessage', (data) => {
+		console.log('newMessage recieved', data.lesson._id);
+
+    Lesson.findOne({_id: data.lesson._id}, function(err, lesson) {
+      var newMessage = {
+        username: data.username,
+        message: data.newMessage
+      }
+      lesson.chat.push(newMessage);
+      console.log(lesson);
+      lesson.save()
+      client.broadcast.in('' + data.lesson._id).emit('updateChat', lesson)
+      client.emit('updateChat', lesson)
+
+    })
+	})
+
+  client.on('renderChat', (data) => {
+    console.log('renderChat data', data.lesson)
+    client.room = '' + data.lesson._id;
+    client.join('' + data.lesson._id);
+    Lesson.findOne({_id: data.lesson._id}, function(err, lesson) {
+      client.emit('updateChat', lesson)
+    })
+  })
+});
+
+io.listen(3001);
+
+

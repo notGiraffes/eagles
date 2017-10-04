@@ -18,7 +18,8 @@ let config = {
     modules: [
       path.join(__dirname, 'node_modules'),
     ],
-  }
+  },
+  watch: true
 }
 
 module.exports = config;
