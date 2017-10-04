@@ -21,6 +21,7 @@ class Chat extends React.Component {
     this.renderChat = this.renderChat.bind(this);
     this.handleHideClick = this.handleHideClick.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.handleHideClick2 = this.handleHideClick2.bind(this);
     io.updateChat((data) => {
       this.setState({
         chat: data.chat
@@ -89,6 +90,12 @@ class Chat extends React.Component {
     io.renderChat(lesson)
   }
 
+  handleHideClick2() {
+    this.setState({
+      show: !this.state.show
+    });
+  }
+
   scrollToBottom() {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
@@ -103,10 +110,16 @@ class Chat extends React.Component {
           </div>
         )
     })
+    const componentClasses = ['chat'];
+    if  (this.state.show) { componentClasses.push('show'); console.log('pushing component class') }
     return (
+
     <div>
       <ToggleDisplay show={this.state.show}>
-        <div className="chat">
+        <div className={componentClasses.join(' ')}>
+          <div className="chatHead">
+            <h5 onClick={this.handleHideClick2}> Chat </h5>
+          </div>
           <div className="displayChat"> 
             <div>
               {chatLines}

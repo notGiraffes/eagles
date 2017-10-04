@@ -5,6 +5,7 @@ import { Button, Grid, Row } from 'react-bootstrap';
 import Chat from './Chat.js';
 // import Comments from './Comments.js';
 import CommentEntries from './CommentEntries.js';
+import axios from "axios";
 
 class Lesson extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Lesson extends React.Component {
 
     this.addComment = this.addComment.bind(this);
     this.likeAComment = this.likeAComment.bind(this);
+    this.sendRead = this.sendRead.bind(this);
 
   }
 
@@ -33,9 +35,20 @@ class Lesson extends React.Component {
         this.setState({
           specificLesson: lessonDataJSON,
           slides: lessonDataJSON.slides
+        }, () => {
+          this.sendRead();
         });
         console.log('specific lesson', this.state.specificLesson);
       })
+
+
+  }
+
+  sendRead() {
+    var data = {
+      specificLesson: this.state.specificLesson
+    }
+    axios.post('/lessons/read', data)
   }
 
   onLessonSlideListEntryClick(index) {

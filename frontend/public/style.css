@@ -43,15 +43,35 @@ body {
 
 .chat {
   background-color: grey;
-  height: 310px;
+  height: 330px;
   width: 250px;
   position: absolute;
   right: 50px;
   bottom: 0;
+  -webkit-transition: 3s;
+  -moz-transition: 3s;
+  -o-transition: 3s;
+  transition: 3s;
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.chat.show {
+  opacity: 1;
+  visibility: visible; 
+}
+
+.chatHead {
+  text-align: center;
+}
+
+.chatHead:hover {
+  text-decoration: underline;
 }
 
 .displayChat {
   height: 260px;
+  margin-top: 20px;
   margin: 6px;
   background-color: white;
   overflow: auto;
@@ -76,4 +96,8 @@ body {
   margin-right: 8px;
   height: auto;
   width: 180px;
+}
+
+.lessonRead {
+  float: right;
 }
