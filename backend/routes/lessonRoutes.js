@@ -204,5 +204,4 @@ router.delete('/lessons/:lessonId', function(req, res) {
   });
 });
 
-
 module.exports = router;
