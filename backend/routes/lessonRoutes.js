@@ -31,7 +31,7 @@ const sendCongad = (userRef, lessonName, numLikes) => {
               pass: "test123test"
             }
           });
-    
+
         let mailOptions ={
             from: "Learning with Lessons", // sender address
             to: user.email, // list of receivers
@@ -39,7 +39,7 @@ const sendCongad = (userRef, lessonName, numLikes) => {
             text: `Your lesson named ${lessonName} just reached ${numLikes} likes!`, // plaintext body
             html: `<p>Your lesson named ${lessonName} just reached ${numLikes} likes!<p>` // html body
         }
-    
+
         smtpTransport.sendMail(mailOptions, function(error, response){
           if(error){
               console.log(error);
@@ -57,7 +57,7 @@ const sendCongad = (userRef, lessonName, numLikes) => {
 //find specific lesson
 router.get('/lesson/:lessonId', function(req, res) {
   Lesson.find({_id: req.params.lessonId})
-  .then(function(lesson) {    
+  .then(function(lesson) {
     return lesson[0];
   })
   .then((specificLesson) => {
@@ -97,10 +97,10 @@ router.post('/lessons', function(req, res) {
   var description = req.body.description;
   var keywords = req.body.keywords;
   var slides = req.body.slides || [];
-  Lesson.create({ 
-    name: name, 
-    userRef: userRef, 
-    description: description, 
+  Lesson.create({
+    name: name,
+    userRef: userRef,
+    description: description,
     keywords: keywords,
     slides: slides ,
     likes: 0,
@@ -151,6 +151,35 @@ router.put('/lessons', function(req, res) {
          if (req.body.likes) lesson.likes = req.body.likes
       }
     }
+    // Add comment to the lesson
+    if (req.body.comment) {
+      req.body.comment.user = req.session.username;
+      lesson.comments.push(req.body.comment);
+    }
+    // Add like to the comment
+    if (req.body.commentid) {
+      Lesson.findOneAndUpdate({
+          _id: req.body.lessonid,
+          'comments.key': req.body.commentid
+        },
+        {
+          $set: {
+            'comments.$.likes': 2
+          }
+        }
+      );
+
+      // var currentComments = lesson.comments.slice();
+      // for (var i = 0; i < currentComments.length; i++) {
+      //   if (req.body.commentid === currentComments[i].key) {
+      //     currentComments[i].likes++;
+      //     break;
+      //   }
+      // }
+      // console.log('currentComments',currentComments);
+      // lesson.set('comments', currentComments );
+      console.log('lesson',lesson);
+    }
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
@@ -174,9 +203,5 @@ router.delete('/lessons/:lessonId', function(req, res) {
     res.send(lesson);
   });
 });
-
-// router.post('/lessons/newChat', function(req, res) {
-//   console.log(req.body);
-// })
 
 module.exports = router;
