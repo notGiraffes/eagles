@@ -30,7 +30,8 @@ var lessonSchema = new Schema({
   likes: Number,
   userLikes: [String],
   chat: [],
-  comments: Array
+  comments: Array,
+  read: Number
 
 });
 var Lesson = mongoose.model('Lesson', lessonSchema);

@@ -158,26 +158,24 @@ router.put('/lessons', function(req, res) {
     }
     // Add like to the comment
     if (req.body.commentid) {
-      Lesson.findOneAndUpdate({
-          _id: req.body.lessonid,
-          'comments.key': req.body.commentid
-        },
-        {
-          $set: {
-            'comments.$.likes': 2
-          }
-        }
-      );
-
-      // var currentComments = lesson.comments.slice();
-      // for (var i = 0; i < currentComments.length; i++) {
-      //   if (req.body.commentid === currentComments[i].key) {
-      //     currentComments[i].likes++;
-      //     break;
+      // Lesson.findOneAndUpdate({
+      //     _id: req.body.lessonid,
+      //     'comments.key': req.body.commentid
+      //   },
+      //   {
+      //     $set: {
+      //       'comments.$.likes': 2
+      //     }
       //   }
-      // }
-      // console.log('currentComments',currentComments);
-      // lesson.set('comments', currentComments );
+      // );
+
+      var currentComments = lesson.comments.slice();
+      for (var i = 0; i < currentComments.length; i++) {
+        if (req.body.commentid === currentComments[i].key) {
+          currentComments[i].likes = currentComments.likes + 1;
+        }
+      }
+      lesson.comments = currentComments;
       console.log('lesson',lesson);
     }
     // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
@@ -203,5 +201,19 @@ router.delete('/lessons/:lessonId', function(req, res) {
     res.send(lesson);
   });
 });
+
+router.post('/lessons/read', (req, res) => {
+  console.log('lesson load', req.body);
+  let lessonId = req.body.specificLesson._id;
+  Lesson.findOne({_id: lessonId}, function(err, lesson) {
+    if (!lesson.read) {
+      lesson.read = 1;
+    } else {
+      lesson.read = lesson.read + 1;
+    }
+    console.log('new lesson', lesson);
+    lesson.save();
+  })
+})
 
 module.exports = router;
