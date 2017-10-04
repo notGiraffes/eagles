@@ -27,7 +27,7 @@ app.use(bodyparser.json());
 // set cookie for auth
 app.use(session({
   secret: 'super secret',
-  cookie: { 
+  cookie: {
     maxAge: 6000000,
     secure: false,
     httpOnly: false
@@ -35,7 +35,7 @@ app.use(session({
 }))
 
 // public file with static routes
-app.use(express.static('../frontend/public'));
+app.use(express.static(path.join(__dirname,'../frontend/public')));
 
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
@@ -55,7 +55,7 @@ app.all('/lesson', lessonRoutes);
 app.all('/lesson/*', lessonRoutes);
 app.all('/query', utilRoutes);
 
-// redirect any uncaught routes 
+// redirect any uncaught routes
 app.use((req, res) => {
   res.redirect('/');
 });
