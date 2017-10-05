@@ -130,7 +130,8 @@ class Lesson extends React.Component {
       var newComment = {
         text: this._inputElement.value,
         key: Date.now(),
-        likes: 0
+        likes: 0,
+        replies: []
       };
 
       //Save new comment to DB
@@ -237,7 +238,7 @@ class Lesson extends React.Component {
                       <option value="Top">Top Comments</option>
                     </select>
                   </div>
-                  <CommentEntries entries={this.state.specificLesson.comments || []}
+                  <CommentEntries lesson={this.state.specificLesson} entries={this.state.specificLesson.comments || []}
                     onLike={this.likeAComment}
                     sortBy={this.state.sortBy}
                   />

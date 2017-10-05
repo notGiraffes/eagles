@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
+import Reply from './Reply.js';
 
 class CommentEntries extends React.Component {
   constructor(props, context) {
@@ -20,7 +21,7 @@ class CommentEntries extends React.Component {
       <a href="#" onClick={(e) => {
         e.preventDefault();
         this.props.onLike(comment.key);
-      }}>like</a>
+      }}>like</a><Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
       </li>
     )
   }
@@ -38,6 +39,7 @@ class CommentEntries extends React.Component {
     } else {
       listComments = sortedByLikes;
     }
+
     return (
       <ul className="theList">
         {listComments}
