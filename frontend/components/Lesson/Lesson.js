@@ -1,10 +1,15 @@
 import React from 'react';
 import LessonSlideListEntry from './LessonSlideListEntry.js';
 import Slide from './Slide.js';
-import { Button, Grid, Row } from 'react-bootstrap';
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 import Chat from './Chat.js';
 // import Comments from './Comments.js';
 import CommentEntries from './CommentEntries.js';
+
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import Panel from 'react-bootstrap/lib/Panel';
 
 class Lesson extends React.Component {
   constructor(props) {
@@ -17,12 +22,13 @@ class Lesson extends React.Component {
       currentSlide: null,
       index: 0,
       videoIdOfClickedOnVideo: '',
-      liked: false
+      liked: false,
+      sortBy: 'Newest'
     }
 
     this.addComment = this.addComment.bind(this);
     this.likeAComment = this.likeAComment.bind(this);
-
+    this.onChangeSortBy = this.onChangeSortBy.bind(this);
   }
 
   componentDidMount() {
@@ -159,7 +165,7 @@ class Lesson extends React.Component {
 
   likeAComment(key) {
     var body = { lessonid: this.state.specificLesson._id, commentid: key };
-    fetch('/lessons', {
+    fetch('/comments', {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
@@ -178,6 +184,11 @@ class Lesson extends React.Component {
     .catch(function(err) {
       console.log(err);
     });
+
+  }
+
+  onChangeSortBy(e) {
+    this.setState({sortBy: e.target.value});
   }
 
   render() {
@@ -213,17 +224,27 @@ class Lesson extends React.Component {
               </Grid>
             </div>
             <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
-            <div className="commentsMain">
-              <div className="header">
-                <form onSubmit={this.addComment}>
-                  <input ref={(a) => this._inputElement = a} placeholder="Add a comment" />
-                  <button type="submit">add</button>
-                </form>
+              <div className="commentsMain">
+                <div className="header">
+                  <form onSubmit={this.addComment}>
+                    <input ref={(a) => this._inputElement = a} placeholder="Add a comment" />
+                    <Button type="submit">post</Button>
+                  </form>
+                  <div>
+                    SORT BY
+                    <select value={this.state.sortBy} onChange={this.onChangeSortBy}>
+                      <option value="Newest">Newest First</option>
+                      <option value="Top">Top Comments</option>
+                    </select>
+                  </div>
+                  <CommentEntries entries={this.state.specificLesson.comments || []}
+                    onLike={this.likeAComment}
+                    sortBy={this.state.sortBy}
+                  />
+                </div>
               </div>
-              <CommentEntries entries={this.state.specificLesson.comments || []} onLike={this.likeAComment} />
-            </div>
+            <Chat lesson={this.state.specificLesson}/>
           </div>
-          <Chat lesson={this.state.specificLesson}/>
         </div>
 
         )}

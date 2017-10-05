@@ -7,12 +7,12 @@ class App extends Component {
     super(props);
   }
 
-  render() {
+  render () {
     return (
       <div>
-        <NavBar 
+        <NavBar
           history= { this.props.history }
-          queryDataBaseWithSearchInput={this.props.queryDataBaseWithSearchInput} 
+          queryDataBaseWithSearchInput={this.props.queryDataBaseWithSearchInput}
           logout={ this.props.logout }
           getLessons={ this.props.getLessons }
         />

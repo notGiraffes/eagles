@@ -157,32 +157,41 @@ router.put('/lessons', function(req, res) {
       lesson.comments.push(req.body.comment);
     }
     // Add like to the comment
-    if (req.body.commentid) {
-      Lesson.findOneAndUpdate({
-          _id: req.body.lessonid,
-          'comments.key': req.body.commentid
-        },
-        {
-          $set: {
-            'comments.$.likes': 2
-          }
-        }
-      );
-
-      // var currentComments = lesson.comments.slice();
-      // for (var i = 0; i < currentComments.length; i++) {
-      //   if (req.body.commentid === currentComments[i].key) {
-      //     currentComments[i].likes++;
-      //     break;
-      //   }
-      // }
-      // console.log('currentComments',currentComments);
-      // lesson.set('comments', currentComments );
-      console.log('lesson',lesson);
-    }
-    // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
+    // if (req.body.commentid) {
+    //   var likeCount;
+    //   for (var i = 0; i < lesson.comments.length; i++) {
+    //     if (req.body.commentid === lesson.comments[i].key) {
+    //       console.log('req.body.commentid',req.body.commentid);
+    //       console.log('lesson comment key', lesson.comments[i].key);
+    //       likeCount = lesson.comments[i].likes + 1;
+    //       console.log(likeCount);
+    //       break;
+    //     }
+    //   }
+    //   Lesson.findOneAndUpdate({
+    //       _id: req.body.lessonid,
+    //       'comments.key': req.body.commentid
+    //     },
+    //     {
+    //       $set: {
+    //         'comments.$.likes': likeCount
+    //       }
+    //     },
+    //     function(err,doc) {
+    //       console.log('doc',doc);
+    //       console.log(likeCount);
+    //
+    //     }
+    //   ).then(function(data) {
+    //     console.log('lesson data',data);
+    //     res.send(data);
+    //   })
+    //
+    // }
+    // // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
+      console.log('result 1st', result);
       res.send(result);
     })
     .catch(function(err) {
@@ -190,6 +199,41 @@ router.put('/lessons', function(req, res) {
       throw err;
       return;
     })
+  })
+})
+
+router.put('/comments', function(req, res) {
+  Lesson.findById(req.body.lessonid, function(err, lesson) {
+    if (err) res.send(err);
+
+    // Add like to the comment
+    if (req.body.commentid) {
+      var likeCount;
+      for (var i = 0; i < lesson.comments.length; i++) {
+        if (req.body.commentid === lesson.comments[i].key) {
+          likeCount = lesson.comments[i].likes + 1;
+          break;
+        }
+      }
+      var options = { new: true };
+      Lesson.findOneAndUpdate({
+          _id: req.body.lessonid,
+          'comments.key': req.body.commentid
+        },
+        {
+          $set: {
+            'comments.$.likes': likeCount
+          }
+        },
+        {new: true},
+        function(err, doc) {
+          console.log('found doc', doc);
+          res.send(doc);
+        }
+      )
+
+    }
+
   })
 })
 
