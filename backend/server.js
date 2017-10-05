@@ -20,6 +20,7 @@ const userRoutes = require('./routes/userRoutes');
 const lessonRoutes = require('./routes/lessonRoutes');
 const slideRoutes = require('./routes/slideRoutes');
 const utilRoutes = require('./routes/utilRoutes');
+const youtubeSearchRoutes = require('./routes/youtubeSearchRoutes');
 const checkAuth = require('./checkAuth');
 
 
@@ -37,8 +38,9 @@ app.use(session({
   }
 }))
 
+
 // public file with static routes
-app.use(express.static(path.join(__dirname,'../frontend/public')));
+app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
@@ -62,6 +64,7 @@ app.all('/lessons/*', lessonRoutes);
 app.all('/lesson', lessonRoutes);
 app.all('/lesson/*', lessonRoutes);
 app.all('/query', utilRoutes);
+app.all('/youtube', youtubeSearchRoutes);
 
 // redirect any uncaught routes
 app.use((req, res) => {

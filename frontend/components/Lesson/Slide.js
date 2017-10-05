@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import SlideVideo from './SlideVideo.js'
+
 
 class Slide extends React.Component { 
   constructor(props) {
@@ -13,7 +15,7 @@ class Slide extends React.Component {
       <h1>{ this.props.slideData.name || 'No Slide Name' }</h1>
       <div className="youtubeVideoContainer">
       { this.props.videoIdOfClickedOnVideo ? (
-        <iframe style={{width: 500, height: 350, float: "left"}} className="youtubeVideo" src={ 'https://www.youtube.com/embed/' + this.props.videoIdOfClickedOnVideo} allowFullScreen></iframe>
+        <SlideVideo currentVideoURL={this.props.videoIdOfClickedOnVideo} annotations={this.props.slideData.annotations}/>
       ) : (
         <div></div>
       )}

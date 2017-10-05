@@ -11,7 +11,7 @@ router.get('/query', function(req, res) {
     params: {
       id: req.query.string,
       part: 'snippet,contentDetails,statistics',
-      key: process.env.KEY
+      key: 'AIzaSyCrcduTSfmMXWq9DSkXS0lQp8LaaiVZQeA'
     }
   })
   .then((response) => {
