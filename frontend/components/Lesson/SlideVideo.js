@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import $ from 'jquery';
-import Annotations from './Annotations.js';
 
 class SlideVideo extends React.Component {
   constructor(props){
