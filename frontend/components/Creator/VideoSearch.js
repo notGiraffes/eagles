@@ -19,19 +19,17 @@ class VideoSearch extends React.Component {
   this.handleSearch = this.handleSearch.bind(this);
   this.handleInput = this.handleInput.bind(this);
   this.handleVideoChange = this.handleVideoChange.bind(this);
-  // this.handleAnnotate = this.handleAnnotate.bind(this);
-  // this.handleSetNote = this.handleSetNote.bind(this);
 }
   componentDidMount(){
+    // Render inital suggestions based on primary tag
     this.handleSearch();
   }
 
-
   handleSearch(){
+    // Get youtube suggestions 
     axios.post('/youtube', {query : this.state.currentQuery})
     .then((data) => {
       console.log('our query', this.state.currentQuery);
-      console.log('axios search data data items?', data.data.items);
       this.setState({suggestions: data.data.items}) // set suggestions to results from youtube search
     })
     .then(() => {
@@ -47,11 +45,12 @@ class VideoSearch extends React.Component {
   }
 
   handleInput(e){
-    console.log('changed query');
+    // Handle search input
     this.setState({currentQuery: e.target.value});
   }
 
   handleVideoChange(e){
+    // Select new video from suggestions
     console.log('newVideo is ', e.target.id);
     this.setState({currentVideoURL: e.target.id, currentThumbnail: e.target.src}, () => {
     this.props.grabYouTubeVideo(this.state.currentVideoURL, this.state.currentThumbnail); 
@@ -64,11 +63,14 @@ class VideoSearch extends React.Component {
         <input onChange={this.handleInput} type="text" className="searchBar" placeholder="Search for videos" />
         <p onClick={this.handleSearch}>Search</p>
         {this.state.currentVideoURL ?
-          <Player currentVideoURL={this.state.currentVideoURL} grabAnnotations={this.props.grabAnnotations}/>
+          <Player resetNotes={this.props.resetNotes} 
+                  currentVideoURL={this.state.currentVideoURL} 
+                  grabAnnotations={this.props.grabAnnotations}
+                  annotations={this.props.annotations}/>
           : null
         }
         {this.state.suggestions.map((items,i) => {
-          return <div>
+          return <div key={i}>
             <img onClick={this.handleVideoChange} id={`${items.id.videoId}`} src={`${items.snippet.thumbnails.default.url}`}/>
             <p>{items.snippet.title}</p>
             <p>{items.snippet.description}</p> 
