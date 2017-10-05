@@ -156,31 +156,11 @@ router.put('/lessons', function(req, res) {
       req.body.comment.user = req.session.username;
       lesson.comments.push(req.body.comment);
     }
-    // Add like to the comment
-    if (req.body.commentid) {
-      // Lesson.findOneAndUpdate({
-      //     _id: req.body.lessonid,
-      //     'comments.key': req.body.commentid
-      //   },
-      //   {
-      //     $set: {
-      //       'comments.$.likes': 2
-      //     }
-      //   }
-      // );
 
-      var currentComments = lesson.comments.slice();
-      for (var i = 0; i < currentComments.length; i++) {
-        if (req.body.commentid === currentComments[i].key) {
-          currentComments[i].likes = currentComments.likes + 1;
-        }
-      }
-      lesson.comments = currentComments;
-      console.log('lesson',lesson);
-    }
-    // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
+    // // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
+      console.log('result 1st', result);
       res.send(result);
     })
     .catch(function(err) {
@@ -188,6 +168,80 @@ router.put('/lessons', function(req, res) {
       throw err;
       return;
     })
+  })
+})
+
+router.put('/comments', function(req, res) {
+  Lesson.findById(req.body.lessonid, function(err, lesson) {
+    if (err) res.send(err);
+
+    // Add like to the comment
+    if (req.body.commentid) {
+      var likeCount;
+      for (var i = 0; i < lesson.comments.length; i++) {
+        if (req.body.commentid === lesson.comments[i].key) {
+          likeCount = lesson.comments[i].likes + 1;
+          break;
+        }
+      }
+      Lesson.findOneAndUpdate({
+          _id: req.body.lessonid,
+          'comments.key': req.body.commentid
+        },
+        {
+          $set: {
+            'comments.$.likes': likeCount
+          }
+        },
+        {new: true},
+        function(err, doc) {
+          console.log('found doc', doc);
+          res.send(doc);
+        }
+      )
+    }
+  })
+})
+
+router.put('/replies', function(req, res) {
+  Lesson.findOne({
+      _id: req.body.lessonid,
+      'comments.key': req.body.commentid
+    }, function(err, lesson) {
+      console.log('lesson', lesson);
+      if (err) res.send(err);
+
+      var replyArr;
+
+      for (var i = 0; i < lesson.comments.length; i++) {
+        if (req.body.commentid === lesson.comments[i].key) {
+          replyArr = lesson.comments[i].replies;
+          break;
+        }
+      }
+
+      var newReply = req.body.reply;
+      newReply.user = req.session.username;
+      replyArr.push(newReply);
+      // Add reply to the comment
+      Lesson.findOneAndUpdate({
+          _id: req.body.lessonid,
+          'comments.key': req.body.commentid
+        },
+        {
+          $set: {
+            'comments.$.replies': replyArr
+          }
+        },
+        {new: true},
+        function(err, doc) {
+          for (var i = 0; i < doc.comments.length; i++) {
+            if (req.body.commentid === doc.comments[i].key) {
+              res.send(doc.comments[i].replies);
+            }
+          }
+        }
+      );
   })
 })
 

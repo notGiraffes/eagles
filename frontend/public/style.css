@@ -53,12 +53,12 @@ body {
   -o-transition: 3s;
   transition: 3s;
   opacity: 0;
-  visibility: hidden; 
+  visibility: hidden;
 }
 
 .chat.show {
   opacity: 1;
-  visibility: visible; 
+  visibility: visible;
 }
 
 .chatHead {
@@ -108,4 +108,24 @@ body {
 
 .showGraph:hover {
   text-decoration: underline;
+}
+
+.commentsMain .header input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #FFF;
+  width: 500px;
+}
+
+.commentsMain .theList {
+  list-style: none;
+  padding-left: 0;
+  width: 500px;
+}
+.commentsMain .theList li {
+  color: #333;
+  background-color: rgba(255,255,255,.5);
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }

@@ -65,6 +65,8 @@ app.all('/lesson', lessonRoutes);
 app.all('/lesson/*', lessonRoutes);
 app.all('/query', utilRoutes);
 app.all('/youtube', youtubeSearchRoutes);
+app.all('/comments', lessonRoutes);
+app.all('/replies', lessonRoutes);
 
 // redirect any uncaught routes
 app.use((req, res) => {
