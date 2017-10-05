@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import VideoSearch from './VideoSearch.js';
 import { Form, FormGroup, Col, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 class SlideCreator extends React.Component {
@@ -9,12 +10,15 @@ class SlideCreator extends React.Component {
       name: props.slide.name || '',
       youTubeUrl: props.slide.youTubeUrl || '',
       youTubeThumbnailUrl: props.slide.youTubeThumbnailUrl || '',
+      annotations: [],
       youTubeTags: props.slide.youTubeTags || '',
       text: props.slide.text || '',
       quizUrl: props.slide.quizUrl || '',
       old: props.slide.old || '',
-      lessonRef: props.lessonRef
+      lessonRef: props.lessonRef,
     }
+    this.grabYouTubeVideo = this.grabYouTubeVideo.bind(this);
+    this.grabAnnotations = this.grabAnnotations.bind(this);
   }
   reset () {
     this.setState({
@@ -29,39 +33,40 @@ class SlideCreator extends React.Component {
   onSubmit (event) {
     event.preventDefault();
     if (this.state.name !== '') {
-      if (this.state.youTubeUrl !== '') {
-        if (this.state.youTubeUrl.includes('https://www.youtube.com/watch?v=')) {
-          var sliceFrom = this.state.youTubeUrl.indexOf('=');
-          var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
-          this.youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
-            this.setState({
-              youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
-              youTubeTags: youTubeDataObj.snippet.tags
-            })
-            // youtubeDataObj.id;
-            // youTubeDataObj.snippet.title
-            fetch('/slides', {
-              method: "POST",
-              body: JSON.stringify(this.state),
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include"
-            })
-            .then((something) => something.json())
-            .then(result => {
-              console.log(result, ' that was result this.state is', this.state);
-              this.props.fetch(result);
-              this.reset();  
-            })
-          });
-        } else {
-          alert('Incorrect YouTube URL input! Please revise Youtube URL input');
-          this.setState({
-            youTubeUrl: ''
-          });
-        }
-      } else {
+      // if (this.state.youTubeUrl !== '') {
+      //   if (this.state.youTubeUrl.includes('https://www.youtube.com/watch?v=')) {
+      //     var sliceFrom = this.state.youTubeUrl.indexOf('=');
+      //     var youTubeUrl = this.state.youTubeUrl.slice(sliceFrom + 1);
+      //     this.youTubeQueryToServer(youTubeUrl, (youTubeDataObj) => {
+      //       this.setState({
+      //         youTubeThumbnailUrl: youTubeDataObj.snippet.thumbnails.default.url,
+      //         youTubeTags: youTubeDataObj.snippet.tags
+      //       })
+      //       // youtubeDataObj.id;
+      //       // youTubeDataObj.snippet.title
+      //       fetch('/slides', {
+      //         method: "POST",
+      //         body: JSON.stringify(this.state),
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         credentials: "include"
+      //       })
+      //       .then((something) => something.json())
+      //       .then(result => {
+      //         console.log(result, ' that was result this.state is', this.state);
+      //         this.props.fetch(result);
+      //         this.reset();  
+      //       })
+      //     });
+      //   } else {
+      //     alert('Incorrect YouTube URL input! Please revise Youtube URL input');
+      //     this.setState({
+      //       youTubeUrl: ''
+      //     });
+      //   }
+      // } 
+      // else {
         fetch('/slides', {
           method: "POST",
           body: JSON.stringify(this.state),
@@ -76,7 +81,6 @@ class SlideCreator extends React.Component {
           this.props.fetch(result);
           this.reset();
         })
-      }
     } else {
         alert('Slide name required. Please enter a slide name.');
     }
@@ -123,9 +127,27 @@ class SlideCreator extends React.Component {
     })
   }
 
+  grabYouTubeVideo(video,thumb){
+    console.log('video', video)
+    this.setState({youTubeUrl: video, youTubeThumbnailUrl: thumb});
+    // this.setState({youTubeUrl: video.id.videoId});
+  }
+
+  grabAnnotations(notes){
+    this.setState({annotations: notes});
+  }
+
+// <Col sm={10}>
+//             <FormControl type='text' placeholder='Slide youTube Url'
+//               value={this.state.youTubeUrl}
+//               onChange={(event) => this.setState({youTubeUrl: event.target.value})}
+//             />
+//           </Col>
+
   render () {
     return (
       <Form horizontal onSubmit={this.onSubmit.bind(this)}>
+        <VideoSearch grabYouTubeVideo={this.grabYouTubeVideo} grabAnnotations={this.grabAnnotations} primaryTag={this.props.primaryTag}/>
         <FormGroup>
           <div className='slideCreator'>
             <ControlLabel>Slide Creator</ControlLabel>
@@ -142,12 +164,11 @@ class SlideCreator extends React.Component {
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>Slide youTubeUrl</Col>
-          <Col sm={10}>
-            <FormControl type='text' placeholder='Slide youTube Url'
-              value={this.state.youTubeUrl}
-              onChange={(event) => this.setState({youTubeUrl: event.target.value})}
-            />
-          </Col>
+           
+
+
+
+
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>Slide Text</Col>

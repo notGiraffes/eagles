@@ -212,6 +212,7 @@ class Lesson extends React.Component {
             <div className="lesson">
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
               <p className="lessonDescription">{this.state.specificLesson.description}</p>
+              <p className="lessonTags">{this.state.specificLesson.keyWords}</p>
               <Grid>
                 <Row>
                 {this.state.slides.map((slide, i) => (

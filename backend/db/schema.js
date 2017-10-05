@@ -43,7 +43,8 @@ let slideSchema = new Schema({
   text: String,
   quizUrl: String,
   youTubeThumbnailUrl: String,
-  youTubeTags: [String]
+  youTubeTags: [String],
+  annotations: []
 });
 let Slide = mongoose.model('Slide', slideSchema);
 

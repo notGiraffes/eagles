@@ -17,6 +17,9 @@ class Slide extends React.Component {
       ) : (
         <div></div>
       )}
+        {this.props.slideData.annotations.map((notes,i) => {
+          return <p className="annotations" key={i}>{notes.time}: {notes.text}</p>
+        })}
         <p className="slideText">{this.props.slideData.text}</p>
       </div>
       <div> 

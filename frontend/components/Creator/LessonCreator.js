@@ -103,24 +103,25 @@ class LessonCreator extends React.Component {
     var keyWords = this.state.clientShownKeyWords.trim();
     this.setState({
       keyWords: [...this.state.keyWords, keyWords]
-    })
-    var body = { keyWords: this.state.keyWords, lessonid: this.state.lessonid };
-    fetch('/lessons', {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include"
-    })
-    .then(function(result) {
-      return result.json();
-    })
-    .then(function(result) {
-      console.log('from line62 lessoncreator result after keyword update is', result);
-    })
-    .catch(function(err) {
-      console.log('line 70 err', err);
+    }, ()=>{
+      var body = { keyWords: this.state.keyWords, lessonid: this.state.lessonid };
+      fetch('/lessons', {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      })
+      .then(function(result) {
+        return result.json();
+      })
+      .then(function(result) {
+        console.log('from line62 lessoncreator result after keyword update is', result);
+      })
+      .catch(function(err) {
+        console.log('line 70 err', err);
+      })
     })
   }
   changeClientKeyWords (event) {
@@ -304,7 +305,8 @@ class LessonCreator extends React.Component {
             lessonRef={this.state.lessonid} 
             fetch={this.fetchSlideFromSlideCreator.bind(this)} 
             changeCreateState={this.changeCreateState.bind(this)} 
-            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}
+            primaryTag={this.state.keyWords[0]}>
           </SlideCreator>
           <div>Lesson Slides: 
             {
@@ -332,7 +334,8 @@ class LessonCreator extends React.Component {
             lessonRef={this.state.lessonid} 
             fetch={this.fetchSlideFromSlideCreator.bind(this)} 
             changeCreateState={this.changeCreateState.bind(this)} 
-            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}>
+            changeEditingOldSlide={this.changeEditingOldSlide.bind(this)}
+            primaryTag={this.state.keyWords[0]}>
           </SlideCreator>
         </div>
       )

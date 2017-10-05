@@ -3,19 +3,22 @@ const axios = require('axios');
 const router = express.Router();
 const dotenv = require('dotenv').config({path: '../.env'})
 
-router.get('/query', function(req, res) {
+router.post('/youtube', function(req, res) {
   // console.log('sending request with query string')
+  console.log(req.body);
   axios({
     method: 'get', 
-    url: 'https://www.googleapis.com/youtube/v3/videos',
-    params: {
-      id: req.query.string,
-      part: 'snippet,contentDetails,statistics',
+    url: 'https://www.googleapis.com/youtube/v3/search',
+    params: { 
+      maxResults: 10,
+      q: req.body.query,
+      part: 'snippet',
       key: 'AIzaSyCrcduTSfmMXWq9DSkXS0lQp8LaaiVZQeA'
     }
   })
   .then((response) => {
-    res.send(response.data.items);
+    console.log('response from youtube server', response.data);
+    res.send(response.data);
   })
   .catch((err) => {
     console.log('Youtube API get request error', err);
