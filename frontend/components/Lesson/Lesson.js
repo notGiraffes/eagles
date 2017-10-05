@@ -210,9 +210,10 @@ class Lesson extends React.Component {
         <div>
           <div className="lessonSlideList">
             <div className="lesson">
+              <a className="twitter" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
               <p className="lessonDescription">{this.state.specificLesson.description}</p>
-              <p className="lessonTags">{this.state.specificLesson.keyWords}</p>
+
               <Grid>
                 <Row>
                 {this.state.slides.map((slide, i) => (
