@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import c3 from 'c3';
 import { ListGroupItem, Header, Button } from 'react-bootstrap';
 import { ListGroup, DropdownButton, ButtonGroup, MenuItem } from 'react-bootstrap';
 import LessonPreviewContainer from './Lesson/LessonPreviewContainer';
 import LessonPreview from './Lesson/LessonPreview';
+import ToggleDisplay from 'react-toggle-display';
 
 class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lessons: [],
-      favoriteLessons: []
+      favoriteLessons: [],
+      read: [],
+      types: {},
+      show: false
     }
     this.deleteLesson = this.deleteLesson.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   deleteLesson(lessonId) {
@@ -41,11 +47,66 @@ class User extends Component {
       }
     })
     .then((lesson) => this.setState({lessons: lesson.lessons, favoriteLessons: lesson.favoriteLessons}))
+    .then(() => {
+      var readCount = [];
+      var newObj = this.state.types;
+      this.state.lessons.forEach( function(lesson) {
+        // console.log('lesson', lesson)
+        // readCount = readCount + (lesson.read || 0);
+        var newArr = [];
+        newArr.push(lesson.name)
+        lesson.read ? newArr.push(lesson.read) : newArr.push(0);
+        readCount.push(newArr);
+        
+        newObj[lesson.name] = 'bar';
+        // console.log('newObj', newObj);
+      })
+      this.setState({
+        read: readCount
+      })
+    })
     .catch((err) => console.log('Error! ', err));
+
+  }
+
+  handleClick() {
+    this.setState({
+      show: !this.state.show
+    })
   }
 
   render() {
+    var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        columns: this.state.read,
+        type: 'bar'
+      },
+      bar: {
+        width: {
+          ratio: .8
+        }
+      },
+      tooltip: {
+        grouped: false
+      },
+      axis: {
+        y: {
+          label: {
+            text: 'Number of times viewed',
+            position: 'outer-middle'
+          }
+        }
+        // x: {
+        //   label: {
+        //     text: 'Lesson Name',
+        //     position: 'outer-center'
+        //   }
+        // }
+      }
+    });
     return (
+      <div>
       <ListGroup>
         <ListGroupItem>Username: { this.props.user.username || 'no username!' }</ListGroupItem>
         <ListGroupItem>
@@ -90,6 +151,12 @@ class User extends Component {
           </ButtonGroup>
         </ListGroupItem>
       </ListGroup>
+      <h3 className="showGraph" onClick={this.handleClick}> My Stats </h3>
+      <ToggleDisplay show={this.state.show}>
+        <div id='chart'>
+        </div>
+      </ToggleDisplay>
+      </div>
     );
   } 
 }

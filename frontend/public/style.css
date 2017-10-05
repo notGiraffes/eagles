@@ -101,3 +101,11 @@ body {
 .lessonRead {
   float: right;
 }
+
+.twitter {
+  float: right;
+}
+
+.showGraph:hover {
+  text-decoration: underline;
+}
