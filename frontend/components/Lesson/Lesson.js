@@ -31,24 +31,27 @@ class Lesson extends React.Component {
     this.likeAComment = this.likeAComment.bind(this);
     this.sendRead = this.sendRead.bind(this);
     this.onChangeSortBy = this.onChangeSortBy.bind(this);
-
+    this.likeALesson = this.likeALesson.bind(this);
   }
 
   componentDidMount() {
-    return fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" })
+    var currentUser = window.localStorage.getItem('username');
+     fetch('/lesson/' + this.props.match.params.id, { method: 'GET', credentials: "include" })
       .then((response) => response.json())
       .then((lessonDataJSON) => {
-
+        var likeStatus;
+        if (lessonDataJSON.userLikes.indexOf(currentUser) != -1) {
+          likeStatus = true;
+        }
         this.setState({
           specificLesson: lessonDataJSON,
-          slides: lessonDataJSON.slides
+          slides: lessonDataJSON.slides,
+          liked: likeStatus
         }, () => {
           this.sendRead();
         });
         console.log('specific lesson', this.state.specificLesson);
       })
-
-
   }
 
   sendRead() {
@@ -110,8 +113,17 @@ class Lesson extends React.Component {
   }
 
   likeALesson() {
-    this.state.specificLesson.likes++;
-    var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id, fromLike: true };
+    this.setState({
+      liked: !this.state.liked,
+    });
+
+    if (this.state.liked === !true) {
+      this.state.specificLesson.likes++;
+    } else {
+      this.state.specificLesson.likes--;
+    }
+    var body = { likes: this.state.specificLesson.likes, lessonid: this.state.specificLesson._id, fromLike: !this.state.liked };
+
     fetch('/lessons', {
       method: "PUT",
       body: JSON.stringify(body),
@@ -124,13 +136,18 @@ class Lesson extends React.Component {
       return result.json();
     })
     .then((likeCheck) => {
-      if (this.state.specificLesson.likes - 1 === likeCheck.likes) {
-        this.state.specificLesson.likes = likeCheck.likes;
-        alert("You've already liked this lesson.");
+      if (this.state.liked === true) {
+        alert("The lesson has been added to your favorites!");
       } else {
-        alert("You've liked this video and it has been added to your favorites!")
-        console.log(this.state.specificLesson);
+        alert("The lesson has been removed from your favorites!");
       }
+      // if (this.state.specificLesson.likes - 1 === likeCheck.likes) {
+      //   this.state.specificLesson.likes = likeCheck.likes;
+      //   alert("You've already liked this lesson.");
+      // } else {
+      //   alert("You've liked this video and it has been added to your favorites!")
+      //   console.log(this.state.specificLesson);
+      // }
     })
     .catch(function(err) {
       console.log(err);
@@ -207,6 +224,7 @@ class Lesson extends React.Component {
   }
 
   render() {
+    const label = this.state.liked ? 'Unlike' : 'Like';
     return (
       <div>
         { this.state.currentSlide ? (
@@ -240,7 +258,7 @@ class Lesson extends React.Component {
                 </Row>
               </Grid>
             </div>
-            <Button type="button" onClick={this.likeALesson.bind(this)}>Like</Button>
+            <Button type="button" onClick={this.likeALesson}>{label}</Button>
               <div className="commentsMain">
                 <div className="header">
                   <form onSubmit={this.addComment}>

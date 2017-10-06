@@ -24,6 +24,7 @@ class Reply extends React.Component {
   }
 
   handleReplyChange(e) {
+    e.preventDefault();
     this.setState({
       text: e.target.value
     });
@@ -81,20 +82,35 @@ class Reply extends React.Component {
       return a.key - b.key
     }).reverse().map(this.createReplies);
 
+    var replyToggle;
+    if (this.state.show === false) {
+      replyToggle = 'Reply';
+    } else {
+      replyToggle = 'Hide Reply';
+    }
+
+    var replyCount;
+    if (this.state.show === false) {
+      replyCount = this.state.replies.length;
+    } else {
+      replyCount = '';
+    }
+
     return(
-      <div className="Reply">
+      <div className="reply">
         <a href="#" onClick={ (e) => {
           e.preventDefault();
-          this.handleClick(e); }}>Reply</a>
+          this.handleClick(); }}>{replyToggle}</a> {replyCount}
         <ToggleDisplay show={this.state.show}>
           <form onSubmit={this.addReply}>
             <input
+              className="replyInput"
               type="text"
               placeholder="Add a reply"
               value={this.state.text}
               onChange={this.handleReplyChange}
             />
-            <Button type="submit">post</Button>
+            <Button className="replyPost" type="submit">post</Button>
           </form>
           <ul className="theReplies">
             {listReplies}

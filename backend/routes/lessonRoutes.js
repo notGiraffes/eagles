@@ -129,6 +129,7 @@ router.post('/lessons', function(req, res) {
 })
 
 router.put('/lessons', function(req, res) {
+  
   Lesson.findById(req.body.lessonid, function(err, lesson) {
     //console.log('lesson is ', lesson, 'err is ', err)
     // console.log('Lesson is ', Lesson, lesson.keyWords)
@@ -139,17 +140,25 @@ router.put('/lessons', function(req, res) {
     if (req.body.description) lesson.description = req.body.description;
     if (req.body.slides) lesson.slides = req.body.slides;
     if (req.body.keyWords) lesson.keyWords = req.body.keyWords;
-    if (req.body.fromLike) { // Therefore likes will not be added on put requests not from lesson.js
+    if (req.body.fromLike === true) { // Therefore likes will not be added on put requests not from lesson.js
       if (lesson.userLikes.length !== 0) {
         if (lesson.userLikes.indexOf(req.session.username) === -1) {
           lesson.userLikes.push(req.session.username);
+            console.log('lesson likes', lesson.likes);
           if (req.body.likes) lesson.likes = req.body.likes; // If they've liked it, good.
           if(shouldEmail(lesson.userLikes.length)) sendCongad(lesson.userRef, lesson.name, lesson.userLikes.length);
         }
       } else {
         lesson.userLikes.push(req.session.username);
-         if (req.body.likes) lesson.likes = req.body.likes
+        if (req.body.likes) lesson.likes = req.body.likes;
       }
+    }
+    // To remove a lesson from favorites list
+    console.log('req.body.fromLike',req.body.fromLike);
+    if (req.body.fromLike === false) {
+      var index = lesson.userLikes.indexOf(req.session.username);
+      lesson.userLikes.splice(index, 1);
+      if (req.body.likes) lesson.likes = req.body.likes;
     }
     // Add comment to the lesson
     if (req.body.comment) {
@@ -160,7 +169,6 @@ router.put('/lessons', function(req, res) {
     // // console.log('lesson.keyWords',lesson.keyWords, req.body.keyWords)
     lesson.save()
     .then(function (result) {
-      console.log('result 1st', result);
       res.send(result);
     })
     .catch(function(err) {
