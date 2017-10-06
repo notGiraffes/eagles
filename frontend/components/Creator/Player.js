@@ -72,10 +72,10 @@ class Player extends React.Component {
         url={`https://www.youtube.com/watch?v=${this.props.currentVideoURL}`}
       />
         <input type="text" onChange={this.handleAnnotate} onClick={this.handleAnnotateTimer} className="annotate" placeholder="Add annotation" />
+        <button onClick={this.handleSetNote} >Add</button>
         {this.props.annotations.map((notes,i) => {
           return <p key={i}>{this.timeConverter(notes.time)}: {notes.text}</p>
         })}
-        <button onClick={this.handleSetNote} >Add</button>
       </div>
     );
   }
