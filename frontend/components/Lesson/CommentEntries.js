@@ -17,11 +17,12 @@ class CommentEntries extends React.Component {
       <br/>
       {comment.text}
       <br/>
-      Likes: {comment.likes} <span />
-      <a href="#" onClick={(e) => {
-        e.preventDefault();
-        this.props.onLike(comment.key);
-      }}>like</a><Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
+      <div className="likeComment">
+        <a href="#" onClick={(e) => {
+          e.preventDefault();
+          this.props.onLike(comment.key);
+        }}>Like</a>  {comment.likes}  <Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
+      </div>
       </li>
     )
   }

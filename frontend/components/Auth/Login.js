@@ -13,11 +13,13 @@ class Login extends Component {
   }
 
   render() {
+    window.localStorage.setItem('username',this.state.username);
+
     return (
         <Form horizontal onSubmit={(e) => e.preventDefault()}>
           <FormGroup>
             {
-              this.props.displayLogginError ? 
+              this.props.displayLogginError ?
               (<Panel header='Login Error!' bsStyle="danger"></Panel>) : ''
             }
           </FormGroup>
