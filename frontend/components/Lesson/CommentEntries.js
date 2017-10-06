@@ -12,6 +12,8 @@ class CommentEntries extends React.Component {
 
   createComments(comment) {
     var day = moment(comment.key);
+    var currentUser = window.localStorage.getItem('username');
+
     return (
       <li key={comment.key}><h4>{comment.user}</h4>{day._d.toString()}
       <br/>
@@ -22,6 +24,12 @@ class CommentEntries extends React.Component {
           e.preventDefault();
           this.props.onLike(comment.key);
         }}>Like</a>  {comment.likes}  <Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
+        &nbsp;{currentUser === comment.user ?
+                (<a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  this.props.onDelete(comment.key);
+                }}>Delete</a>) : null
+              }
       </div>
       </li>
     )
