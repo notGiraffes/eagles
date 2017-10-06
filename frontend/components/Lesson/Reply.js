@@ -15,6 +15,7 @@ class Reply extends React.Component {
     this.handleReplyChange = this.handleReplyChange.bind(this);
     this.addReply = this.addReply.bind(this);
     this.createReplies = this.createReplies.bind(this);
+    this.deleteReply = this.deleteReply.bind(this);
   }
 
   handleClick() {
@@ -66,12 +67,44 @@ class Reply extends React.Component {
 
   }
 
+  deleteReply(key) {
+    //Delete reply from DB
+    var body = { lessonid: this.props.lessonKey, commentid: this.props.commentKey, replyid: key };
+    fetch('/replies', {
+      method: "DELETE",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+    .then(function(result) {
+      return result.json();
+    })
+    .then((data) => {
+      this.setState({
+        replies: data
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  }
+
   createReplies(reply) {
     var day = moment(reply.key);
+    var currentUser = window.localStorage.getItem('username');
+
     return (
       <li key={reply.key}><h4>{reply.user}</h4>{day._d.toString()}
       <br/>
       {reply.text}
+      &emsp;{currentUser === reply.user ?
+              (<a href="#" onClick={(e) => {
+                e.preventDefault();
+                this.deleteReply(reply.key);
+              }}>Delete</a>) : null
+            }
       </li>
     )
   }

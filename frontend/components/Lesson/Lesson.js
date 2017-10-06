@@ -24,7 +24,8 @@ class Lesson extends React.Component {
       index: 0,
       videoIdOfClickedOnVideo: '',
       liked: false,
-      sortBy: 'Newest'
+      sortBy: 'Newest',
+      commentRemoved: false
     }
 
     this.addComment = this.addComment.bind(this);
@@ -32,6 +33,7 @@ class Lesson extends React.Component {
     this.sendRead = this.sendRead.bind(this);
     this.onChangeSortBy = this.onChangeSortBy.bind(this);
     this.likeALesson = this.likeALesson.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentDidMount() {
@@ -219,6 +221,30 @@ class Lesson extends React.Component {
 
   }
 
+  deleteComment(key) {
+    var body = { lessonid: this.state.specificLesson._id, commentid: key };
+    fetch('/comments', {
+      method: "DELETE",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+    .then(function(result) {
+      return result.json();
+    })
+    .then((data) => {
+      this.setState({
+        specificLesson: data
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
+  }
+
   onChangeSortBy(e) {
     this.setState({sortBy: e.target.value});
   }
@@ -275,6 +301,7 @@ class Lesson extends React.Component {
                   <CommentEntries lesson={this.state.specificLesson} entries={this.state.specificLesson.comments || []}
                     onLike={this.likeAComment}
                     sortBy={this.state.sortBy}
+                    onDelete={this.deleteComment}
                   />
                 </div>
               </div>

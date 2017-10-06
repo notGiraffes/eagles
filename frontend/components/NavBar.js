@@ -52,6 +52,9 @@ class NavBar extends Component {
           <Link to='/user'>
             <Button>Your Account</Button>
           </Link>{' '}
+          <Link to='/notification'>
+            <Button>Notifications</Button>
+          </Link>{' '}
           <Button onClick={this.props.logout}>Logout</Button>{' '}
         </span>
         </Form>
