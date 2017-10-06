@@ -79,7 +79,7 @@ class Notification extends React.Component {
 
     return (
       <li key={notification.key}>
-        user {notification.user} commented on your lesson {notification.lesson} on {day._d.toString().slice(0,11)}
+        user <u>{notification.user}</u> commented on your lesson <u>{notification.lesson}</u> on <u>{day._d.toString().slice(0,11)}</u>
         {' '}<Link to={'/lesson/' + notification.lessonId}>
           <Button bsStyle="primary" bsSize="small">View Lesson</Button>
         </Link>
@@ -95,7 +95,7 @@ class Notification extends React.Component {
 
     return(
       <div>
-        <h2>Notification</h2>
+        <h2>Notifications</h2>
         <ul className="theNotifications">
           {listNotifications}
         </ul>
