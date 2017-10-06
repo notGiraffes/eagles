@@ -1,14 +1,19 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import SlideVideo from './SlideVideo.js'
+import SlideVideo from './SlideVideo.js';
 
 
 class Slide extends React.Component { 
   constructor(props) {
   super(props);
   this.state = {
+    editing: false
   }
+  this.editMode = this.editMode.bind(this);
 }
+  editMode(){
+    this.setState({editing : true});
+  }
   render() {
     return (
     <div>
@@ -20,6 +25,13 @@ class Slide extends React.Component {
         <div></div>
       )}
         <p className="slideText">{this.props.slideData.text}</p>
+      </div>
+      <div className="articleSlide"> 
+          <button onClick={this.editMode}>EDIT</button>
+          {this.state.editing ?
+           <iframe height= '1000px' width= '1000px' src={`${this.props.slideData.articleUrl}`} ></iframe> 
+          : <img src={`https://screenshotapi.s3.amazonaws.com/captures/${this.props.slideData.articleImage}.png`}/>
+          }
       </div>
       <div> 
           <p>{this.props.slideData.quizUrl}</p>
