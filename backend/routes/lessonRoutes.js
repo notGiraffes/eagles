@@ -217,7 +217,7 @@ router.delete('/comments', function(req, res) {
     // To remove a comment by the user who created it
     var index = lesson.comments.indexOf(req.body.commentid);
     lesson.comments.splice(index, 1);
-    
+
     lesson.save()
     .then(function (result) {
       res.send(result);
@@ -235,7 +235,6 @@ router.put('/replies', function(req, res) {
       _id: req.body.lessonid,
       'comments.key': req.body.commentid
     }, function(err, lesson) {
-      console.log('lesson', lesson);
       if (err) res.send(err);
 
       var replyArr;
@@ -251,6 +250,46 @@ router.put('/replies', function(req, res) {
       newReply.user = req.session.username;
       replyArr.push(newReply);
       // Add reply to the comment
+      Lesson.findOneAndUpdate({
+          _id: req.body.lessonid,
+          'comments.key': req.body.commentid
+        },
+        {
+          $set: {
+            'comments.$.replies': replyArr
+          }
+        },
+        {new: true},
+        function(err, doc) {
+          for (var i = 0; i < doc.comments.length; i++) {
+            if (req.body.commentid === doc.comments[i].key) {
+              res.send(doc.comments[i].replies);
+            }
+          }
+        }
+      );
+  })
+})
+
+router.delete('/replies', function(req, res) {
+  Lesson.findOne({
+      _id: req.body.lessonid,
+      'comments.key': req.body.commentid
+    }, function(err, lesson) {
+      if (err) res.send(err);
+
+      var replyArr;
+      for (var i = 0; i < lesson.comments.length; i++) {
+        if (req.body.commentid === lesson.comments[i].key) {
+          replyArr = lesson.comments[i].replies;
+          break;
+        }
+      }
+
+      var index = replyArr.indexOf(req.body.replyid);
+      replyArr.splice(index, 1);
+
+      // Delete reply from comment
       Lesson.findOneAndUpdate({
           _id: req.body.lessonid,
           'comments.key': req.body.commentid

@@ -17,19 +17,20 @@ class CommentEntries extends React.Component {
     return (
       <li key={comment.key}><h4>{comment.user}</h4>{day._d.toString()}
       <br/>
-      {comment.text}
+      {comment.text}&emsp;
+      {currentUser === comment.user ?
+        (<a href="#" onClick={(e) => {
+          e.preventDefault();
+          this.props.onDelete(comment.key);
+        }}>Delete</a>) : null
+      }
       <br/>
       <div className="likeComment">
         <a href="#" onClick={(e) => {
           e.preventDefault();
           this.props.onLike(comment.key);
-        }}>Like</a>  {comment.likes}  <Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
-        &nbsp;{currentUser === comment.user ?
-                (<a href="#" onClick={(e) => {
-                  e.preventDefault();
-                  this.props.onDelete(comment.key);
-                }}>Delete</a>) : null
-              }
+        }}>Like</a>  {comment.likes}&emsp;
+        <Reply replies={comment.replies} commentKey={comment.key} lessonKey={this.props.lesson._id}/>
       </div>
       </li>
     )
