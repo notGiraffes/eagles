@@ -4,7 +4,7 @@
   "description": "Greenfield Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack && node ./backend/server.js",
+    "start": "node ./backend/server.js --watch",
     "compile": "webpack --watch"
   },
   "repository": {
@@ -42,18 +42,19 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.1",
     "express-session": "^1.15.5",
-    "moment": "^2.18.1",
     "jquery": "^3.2.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.11.12",
     "morgan": "^1.8.2",
     "nodemailer": "^4.1.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
+    "react-player": "^0.24.6",
     "react-router-dom": "^4.2.2",
     "react-toggle-display": "^2.2.0",
+    "screenshotapi": "^1.1.2",
     "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3",
-    "react-player": "^0.24.6"
+    "socket.io-client": "^2.0.3"
   }
 }

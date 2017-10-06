@@ -133,3 +133,9 @@ body {
 .reply {
   display: inline-block;
 }
+
+.articleSlide {
+  height: 1000px;
+  width: 1000px;
+  overflow: scroll !important;
+}

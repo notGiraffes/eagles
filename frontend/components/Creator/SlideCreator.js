@@ -16,6 +16,9 @@ class SlideCreator extends React.Component {
       quizUrl: props.slide.quizUrl || '',
       old: props.slide.old || '',
       lessonRef: props.lessonRef,
+      articleUrl: props.slide.articleUrl || '',
+      articleImage: '',
+      showVideoSearch: false
     }
     this.grabYouTubeVideo = this.grabYouTubeVideo.bind(this);
     this.grabAnnotations = this.grabAnnotations.bind(this);
@@ -28,27 +31,37 @@ class SlideCreator extends React.Component {
       youTubeTags: '',
       text: '',
       quizUrl: '', 
-      annotations: [] 
+      annotations: [],
+      articleUrl: '' 
     });
   }
 
   onSubmit (event) {
     event.preventDefault();
+    console.log('the article URL', this.state.articleUrl);
+
     if (this.state.name !== '') {
-        fetch('/slides', {
+    axios.post('/screenshot', {url: this.state.articleUrl})
+    .then((response) => {
+      console.log('article response', response.data);
+      this.setState({articleImage: response.data});
+    })
+    .then(() => {
+      fetch('/slides', {
           method: "POST",
           body: JSON.stringify(this.state),
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include"
-        })
+        })  
         .then((something) => something.json())
         .then(result => {
           console.log(result, ' that was result this.state is', this.state);
           this.props.fetch(result);
           this.reset();
         })
+    })
     } else {
         alert('Slide name required. Please enter a slide name.');
     }
@@ -103,14 +116,22 @@ class SlideCreator extends React.Component {
     this.setState({annotations: this.state.annotations.concat(notes)});
   }
 
+  showVideoSearch(){
+    this.setState({showVideoSearch: !this.state.showVideoSearch});
+  }
+
   render () {
     return (
       <Form horizontal onSubmit={this.onSubmit.bind(this)}>
+        {this.state.showVideoSearch ? 
         <VideoSearch resetNotes= {this.resetNotes} 
                      grabYouTubeVideo={this.grabYouTubeVideo} 
                      grabAnnotations={this.grabAnnotations} 
                      primaryTag={this.props.primaryTag}
                      annotations={this.state.annotations}/>
+        : 
+        <button onClick={this.showVideoSearch}>Use a video</button>
+        }
         <FormGroup>
           <div className='slideCreator'>
             <ControlLabel>Slide Creator</ControlLabel>
@@ -140,6 +161,15 @@ class SlideCreator extends React.Component {
             <FormControl type='Quiz Url' placeholder='Quiz Url'
               value={this.state.quizUrl}
               onChange={(event) => this.setState({quizUrl: event.target.value})}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>Slide ArticleUrl</Col>
+          <Col sm={10}>
+            <FormControl type='Article Url' placeholder='Article Url'
+              value={this.state.articleUrl}
+              onChange={(event) => this.setState({articleUrl: event.target.value})}
             />
           </Col>
         </FormGroup>

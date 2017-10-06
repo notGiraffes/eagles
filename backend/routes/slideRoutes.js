@@ -40,6 +40,8 @@ router.post('/slides', function(req, res) {
   var youTubeThumbnailUrl = req.body.youTubeThumbnailUrl;
   var youTubeTags = req.body.youTubeTags;
   var annotations = req.body.annotations;
+  var articleImage = req.body.articleImage;
+  var articleUrl = req.body.articleUrl;
   Slide.create({ 
     name: name,
     lessonRef: lessonRef,
@@ -48,7 +50,9 @@ router.post('/slides', function(req, res) {
     quizUrl: quizUrl,
     youTubeThumbnailUrl: youTubeThumbnailUrl,
     youTubeTags: youTubeTags,
-    annotations: annotations
+    annotations: annotations,
+    articleImage: articleImage,
+    articleUrl: articleUrl
     })
   .then(function(result) {
     Lesson.findById(lessonRef, function(err, lesson) {
