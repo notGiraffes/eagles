@@ -41,18 +41,28 @@ class Notification extends React.Component {
       var notifications = [];
       for (var i = 0; i < this.state.lessons.length; i++) {
         var lesson = this.state.lessons[i];
-        for (var j = 0; j < lesson.comments.length; j++) {
-          var comment = lesson.comments[j];
-          if (comment.user != currentUser) {
-            var notification = {
-              lesson: lesson.name,
-              user: comment.user,
-              key: comment.key,
-              lessonId: lesson._id
-            }
-            notifications.push(notification);
-            break;
+        var lastComment = lesson.comments[lesson.comments.length - 1];
+        if (lastComment.user != currentUser) {
+          var notification = {
+            lesson: lesson.name,
+            user: lastComment.user,
+            key: lastComment.key,
+            lessonId: lesson._id
           }
+          notifications.push(notification);
+        }
+      }
+      for (var i = 0; i < this.state.favoriteLessons.length; i++) {
+        var lesson = this.state.favoriteLessons[i];
+        var lastComment = lesson.comments[lesson.comments.length - 1];
+        if (lastComment.user != currentUser) {
+          var notification = {
+            lesson: lesson.name,
+            user: lastComment.user,
+            key: lastComment.key,
+            lessonId: lesson._id
+          }
+          notifications.push(notification);
         }
       }
       this.setState({
