@@ -10,14 +10,16 @@ class App extends Component {
   render () {
     return (
       <div>
+      <div className="navHolder">
         <NavBar
           history= { this.props.history }
           queryDataBaseWithSearchInput={this.props.queryDataBaseWithSearchInput}
           logout={ this.props.logout }
           getLessons={ this.props.getLessons }
         />
-        { this.props.children || 'no children!' }
       </div>
+        { this.props.children || 'no children!' }
+        </div>
     );
   }
 }

@@ -110,9 +110,8 @@ class User extends Component {
       <ListGroup>
         <ListGroupItem>Username: { this.props.user.username || 'no username!' }</ListGroupItem>
         <ListGroupItem>
-          <ButtonGroup vertical block>
-            <DropdownButton title="Your Favorite Lessons:" id="Your Favorite Lesson">
-              <MenuItem key={ this.props.user._id + 1 }>
+            <Button block>Your Favorite Lessons</Button>
+              <div key={ this.props.user._id + 1 }>
                 { this.state.favoriteLessons.length === 0 ? 'You Have No Favorite Lessons!' :
                   (this.state.favoriteLessons.map((lesson, i) => 
                     <div key={ lesson._id }>
@@ -125,14 +124,11 @@ class User extends Component {
                     </div>
                   )
                 )}
-              </MenuItem> 
-            </DropdownButton>
-          </ButtonGroup>
+              </div> 
         </ListGroupItem>
         <ListGroupItem>
-          <ButtonGroup vertical block>
-            <DropdownButton title="Your Lessons:" id="Your Lessons">
-              <MenuItem key={ this.props.user._id }>
+            <Button block>Your Lessons</Button>
+              <div key={ this.props.user._id }>
                 { this.state.lessons.length === 0 ? 'You Have No Lessons!' :
                   (this.state.lessons.map((lesson, i) => 
                     <div key={ lesson._id }>
@@ -146,12 +142,10 @@ class User extends Component {
                     </div>
                   )
                 )}
-              </MenuItem> 
-            </DropdownButton>
-          </ButtonGroup>
+              </div> 
         </ListGroupItem>
       </ListGroup>
-      <h3 className="showGraph" onClick={this.handleClick}> My Stats </h3>
+      <Button className="showGraph" onClick={this.handleClick}> My Stats </Button>
       <ToggleDisplay show={this.state.show}>
         <div id='chart'>
         </div>
