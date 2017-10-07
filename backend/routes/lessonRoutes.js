@@ -334,6 +334,7 @@ router.post('/lessons/read', (req, res) => {
     console.log('new lesson', lesson);
     lesson.save();
   })
+  res.send('a');
 })
 
 module.exports = router;

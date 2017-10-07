@@ -79,7 +79,7 @@ class Notification extends React.Component {
 
     return (
       <li key={notification.key}>
-        user <u>{notification.user}</u> commented on your lesson <u>{notification.lesson}</u> on <u>{day._d.toString().slice(0,11)}</u>
+        user <strong>{notification.user}</strong> commented on your lesson <strong>{notification.lesson}</strong> on <strong>{day._d.toString().slice(0,11)}</strong>
         {' '}<Link to={'/lesson/' + notification.lessonId}>
           <Button bsStyle="primary" bsSize="small">View Lesson</Button>
         </Link>
