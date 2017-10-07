@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Navbar } from 'react-bootstrap';
+import { InputGroup, Glyphicon, Button, ButtonToolbar, Form, FormGroup, ControlLabel, FormControl, Navbar } from 'react-bootstrap';
 
 class NavBar extends Component {
   constructor(props) {
@@ -25,40 +25,47 @@ class NavBar extends Component {
   render(props) {
     return (
       <Navbar>
-        <Navbar.Form pullLeft>
+        <div>
+        <Navbar.Header>
+            <img className="logo" src="../img/logo.png" height="50px" width="50px"/>
+            <h1 className="title" href="/">Legacy Learning</h1>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        </div>
+        <div >
+        <Navbar.Form pullRight>
           <Form onSubmit={ (e) => {
             e.preventDefault();
             this.retrieveSearchInput.call(this, event);
             this.props.history.push('/');
           }}>
             <FormGroup>
-              <FormControl type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
+              <InputGroup>
+              <FormControl className="formWidth" type='text' placeholder='Enter a search term!' onChange={this.retrieveSearchInput.bind(this)}/>
+                    <InputGroup.Addon className="searchIcon" onClick={ (event) => {
+                    this.handleSearchSubmit(event);
+                    this.props.history.push('/');
+                  }}><Glyphicon glyph="search" /></InputGroup.Addon>
+              </InputGroup>
             </FormGroup>{' '}
-            <Link to='/'>
-              <Button type="submit" onClick={ (event) => {
-                this.handleSearchSubmit(event);
-                this.props.history.push('/');
-              }}>
-                Search
-              </Button>
-            </Link>{' '}
           <span>
-          <Link to='/create'>
-            <Button>Create</Button>
-          </Link>{' '}
           <Link to='/'>
-            <Button onClick={ this.props.getLessons }>Home</Button>
+            <Button className="navButton" onClick={ this.props.getLessons }>Home</Button>
+          </Link>{' '}
+          <Link to='/create'>
+            <Button className="navButton">Create</Button>
           </Link>{' '}
           <Link to='/user'>
-            <Button>Your Account</Button>
+            <Button className="navButton">Your Account</Button>
           </Link>{' '}
           <Link to='/notification'>
-            <Button>Notifications</Button>
+            <Button className="navButton">Notifications</Button>
           </Link>{' '}
-          <Button onClick={this.props.logout}>Logout</Button>{' '}
+          <Button className="navButton" onClick={this.props.logout}>Logout</Button>{' '}
         </span>
         </Form>
         </Navbar.Form>
+        </div>
       </Navbar>
     );
   }

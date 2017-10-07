@@ -8,8 +8,8 @@ const LessonPreview = (props) => {
   return (
     <div className="LessonPreview">
       <ListGroupItem header={props.lesson.name || 'no name'}>
-        <br />
           {props.lesson.description || 'no description'} 
+          <p>{`Tags: ${props.lesson.keyWords}`}</p>
           <br />
         <Link to={'/lesson/' + props.lesson._id}>
           <Button bsStyle="primary" bsSize="small" >View Lesson</Button>

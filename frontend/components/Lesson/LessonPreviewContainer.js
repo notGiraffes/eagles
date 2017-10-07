@@ -13,20 +13,27 @@ class LessonPreviewContainer extends Component {
 
   render() {
     return (
-      <div className="LessonPreviewContainer">
-        Order by:
-        
-        <Button bsStyle="primary" bsSize="small" onClick={this.props.organizeSearchResultsBasedOnMostLikes} >by Likes</Button>
-        <Button bsStyle="primary" bsSize="small" >by Date</Button>
-        <ListGroup>
-        {this.props.lessons.map((lesson, i) => 
-          <LessonPreview 
-            lesson={lesson} 
-            index={i}
-            key={i}
-          /> 
-        )}
-        </ListGroup>
+      <div>
+        <div className="browseLessons">
+          <h1 className="browseTitle">Browse Lessons</h1>
+          <h3 style={{marginBottom: "35px"}}>Sort by:</h3>
+          <div>
+            <Button  className="stdButton" bsStyle="btn-primary" bsSize="small" onClick={this.props.organizeSearchResultsBasedOnMostLikes} >Likes</Button>
+            <Button  className="stdButton" bsStyle="btn-primary" bsSize="small" onClick={this.props.sortByViews} >Views</Button>
+            <Button  className="stdButton" bsStyle="btn-primary" bsSize="small" >Date</Button>
+          </div>
+        </div>
+        <div className="LessonPreviewContainer">
+          <ListGroup>
+          {this.props.lessons.map((lesson, i) => 
+            <LessonPreview 
+              lesson={lesson} 
+              index={i}
+              key={i}
+            /> 
+          )}
+          </ListGroup>
+        </div>
       </div>
     )
   };
