@@ -8,12 +8,14 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const session = require('express-session');
-const io = require('socket.io')();
+
 const schema = require('./db/schema.js');
 var Lesson = schema.Lesson;
 
 // create express instance
 const app = express();
+var http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 // route handlers
 const userRoutes = require('./routes/userRoutes');
@@ -42,6 +44,12 @@ app.use(session({
 
 // public file with static routes
 app.use(express.static(path.join(__dirname, '../frontend/public')));
+
+app.get('/port', (req, res) => {
+  var port = process.env.PORT || 3000;
+  console.log('port', port);
+  res.send("" + port);
+})
 
 // -------------------AUTH------------------------- //
 app.get('/logout', checkAuth.logout);
@@ -77,7 +85,7 @@ app.use((req, res) => {
 });
 
 // server listens for requests
-app.listen(process.env.PORT || 3000);
+// app.listen(process.env.PORT || 3000);
 
 io.sockets.on('connection', (client) => {
 	client.on('newMessage', (data) => {
@@ -107,4 +115,5 @@ io.sockets.on('connection', (client) => {
   })
 });
 
-io.listen(3001);
+// io.listen(3001);
+http.listen(process.env.PORT || 3000);
