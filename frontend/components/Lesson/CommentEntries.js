@@ -11,6 +11,7 @@ class CommentEntries extends React.Component {
   }
 
   createComments(comment) {
+    if (comment) {
     var day = moment(comment.key);
     var currentUser = window.localStorage.getItem('username');
 
@@ -34,6 +35,7 @@ class CommentEntries extends React.Component {
       </div>
       </li>
     )
+    } 
   }
 
   render() {
