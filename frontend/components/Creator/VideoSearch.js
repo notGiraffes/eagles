@@ -4,6 +4,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import ReactPlayer from 'react-player';
 import Player from './Player.js'
+import {Col, Thumbnail, Button, FormControl} from 'react-bootstrap';
 
 class VideoSearch extends React.Component { 
   constructor(props) {
@@ -25,7 +26,10 @@ class VideoSearch extends React.Component {
     this.handleSearch();
   }
 
-  handleSearch(){
+  handleSearch(e){
+    if(e){
+      e.preventDefault();
+    }
     // Get youtube suggestions 
     axios.post('/youtube', {query : this.state.currentQuery})
     .then((data) => {
@@ -59,9 +63,11 @@ class VideoSearch extends React.Component {
 
   render() {
     return (
-      <div>
-        <input onChange={this.handleInput} type="text" className="searchBar" placeholder="Search for videos" />
-        <p onClick={this.handleSearch}>Search</p>
+      <div className="videoPlayer">
+        <div className="searchBar">
+          <FormControl className="formWidth searchBar" onChange={this.handleInput} type="text" placeholder="Search for videos" />
+          <Button bsStyle="primary" onClick={this.handleSearch}>Search</Button>
+        </div>
         {this.state.currentVideoURL ?
           <Player resetNotes={this.props.resetNotes} 
                   currentVideoURL={this.state.currentVideoURL} 
@@ -69,14 +75,16 @@ class VideoSearch extends React.Component {
                   annotations={this.props.annotations}/>
           : null
         }
+        <div className="suggestionsBar">
         {this.state.suggestions.map((items,i) => {
-          return <div key={i}>
-            <img onClick={this.handleVideoChange} id={`${items.id.videoId}`} src={`${items.snippet.thumbnails.default.url}`}/>
-            <p>{items.snippet.title}</p>
+          return <Col xs={6} md={4} onClick={this.handleVideoChange} id={`${items.id.videoId}`} key={i}>
+            <Thumbnail src={`${items.snippet.thumbnails.default.url}`}/>
+            <h3 onClick={this.handleVideoChange} id={`${items.id.videoId}`} >{items.snippet.title}</h3>
             <p>{items.snippet.description}</p> 
-          </div>
+          </Col>
         })
        }
+       </div>
       </div>
     );
   }

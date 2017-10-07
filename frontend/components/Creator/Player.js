@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import $ from 'jquery';
+import { Grid, Row, Col, FormControl, Form, ControlLabel, Button} from 'react-bootstrap';
 
 class Player extends React.Component {
   constructor(props){
@@ -25,7 +26,7 @@ class Player extends React.Component {
     // Reset time stamp of annotation if user chooses to press Enter
     $('.annotate').on('keypress', (e) => {
       if(event.which === 13){
-        this.handleAnnotateTimer();  
+        this.handleAnnotateTimer(); 
       }
     })
   }
@@ -62,20 +63,29 @@ class Player extends React.Component {
   render() {
     return (
       <div>
-      <ReactPlayer
-        ref={this.ref}
-        config={{
-          youtube: {
-            playerVars: { showinfo: 1 , controls: 1}
-          } 
-        }}
-        url={`https://www.youtube.com/watch?v=${this.props.currentVideoURL}`}
-      />
-        <input type="text" onChange={this.handleAnnotate} onClick={this.handleAnnotateTimer} className="annotate" placeholder="Add annotation" />
-        <button onClick={this.handleSetNote} >Add</button>
-        {this.props.annotations.map((notes,i) => {
-          return <p key={i}>{this.timeConverter(notes.time)}: {notes.text}</p>
-        })}
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={8}>
+        <ReactPlayer
+          ref={this.ref}
+          config={{
+            youtube: {
+              playerVars: { showinfo: 1 , controls: 1}
+            } 
+          }}
+          url={`https://www.youtube.com/watch?v=${this.props.currentVideoURL}`}/>
+          </Col>
+          <Col xs={6} md={4} className="sideNotes">
+          {this.props.annotations.map((notes,i) => {
+            return <h4 key={i}>{this.timeConverter(notes.time)}: {notes.text}</h4>
+          })}
+          </Col>
+        </Row>
+        </Grid>
+        <div className="searchBar">
+          <FormControl  className="formWidth" type="text" onChange={this.handleAnnotate} onClick={this.handleAnnotateTimer} className="annotate formWidth" placeholder="Add annotation" />
+          <Button bsStyle="primary" onClick={this.handleSetNote} >Add</Button>
+        </div>
       </div>
     );
   }

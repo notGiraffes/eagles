@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import $ from 'jquery';
-
+import {Grid, Col, Row} from 'react-bootstrap';
 class SlideVideo extends React.Component {
   constructor(props){
     super(props);
@@ -55,23 +55,30 @@ class SlideVideo extends React.Component {
     };
     return (
       <div>
-      <ReactPlayer
-        ref={this.ref}
-        config={{
-          youtube: {
-            playerVars: { showinfo: 1 , controls: 1}
-          } 
-        }}
-        url={`https://www.youtube.com/watch?v=${this.props.currentVideoURL}`}
-      />
-      {this.props.annotations ?
-      this.props.annotations.map((notes,i) => {
-        if(this.state.currentTime > notes.time ){
-        return <p className="annotations" key={i}>{this.timeConverter(notes.time)}: {notes.text}</p>
-        }
-      }) 
-      : null
-      } 
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={8}>
+        <ReactPlayer
+          ref={this.ref}
+          config={{
+            youtube: {
+              playerVars: { showinfo: 1 , controls: 1}
+            } 
+          }}
+          url={`https://www.youtube.com/watch?v=${this.props.currentVideoURL}`}/>
+          </Col>
+          <Col xs={6} md={4}>
+          {this.props.annotations ?
+            this.props.annotations.map((notes,i) => {
+              if(this.state.currentTime > notes.time ){
+              return <h4 className="annotations" key={i}>{this.timeConverter(notes.time)}: {notes.text}</h4>
+              }
+            }) 
+            : null
+            } 
+          </Col>
+        </Row>
+        </Grid>
       </div>
     );
   }

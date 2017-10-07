@@ -227,21 +227,10 @@ class Lesson extends React.Component {
     const label = this.state.liked ? 'Unlike' : 'Like';
     return (
       <div>
-        { this.state.currentSlide ? (
-          <Slide
-          slideData={this.state.currentSlide}
-          videoIdOfClickedOnVideo={this.state.videoIdOfClickedOnVideo}
-          renderVideo={this.renderVideo(this.state.videoIdOfClickedOnVideo)}
-          previousSlideClick={this.previousSlideClick.bind(this)}
-          nextSlideClick={this.nextSlideClick.bind(this)}
-          exitClick={this.exit.bind(this)}
-          index={this.state.index}
-          />
-        ) : (
         <div>
           <div className="lessonSlideList">
             <div className="lesson">
-              <a className="twitter" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+              <a className="twitter" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charSet="utf-8"></script>
               <h1 className="lessonTitle">{this.state.specificLesson.name}</h1>
               <p className="lessonDescription">{this.state.specificLesson.description}</p>
 
@@ -258,6 +247,17 @@ class Lesson extends React.Component {
                 </Row>
               </Grid>
             </div>
+            { this.state.currentSlide ? (
+          <Slide
+          slideData={this.state.currentSlide}
+          videoIdOfClickedOnVideo={this.state.videoIdOfClickedOnVideo}
+          renderVideo={this.renderVideo(this.state.videoIdOfClickedOnVideo)}
+          previousSlideClick={this.previousSlideClick.bind(this)}
+          nextSlideClick={this.nextSlideClick.bind(this)}
+          exitClick={this.exit.bind(this)}
+          index={this.state.index}
+          />
+        ) : null }
             <Button type="button" onClick={this.likeALesson}>{label}</Button>
               <div className="commentsMain">
                 <div className="header">
@@ -278,11 +278,11 @@ class Lesson extends React.Component {
                   />
                 </div>
               </div>
-            <Chat lesson={this.state.specificLesson}/>
           </div>
+                <Chat lesson={this.state.specificLesson}/>
         </div>
+        
 
-        )}
       </div>
     );
   }

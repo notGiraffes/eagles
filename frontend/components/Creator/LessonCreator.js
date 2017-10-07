@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';//use in functions
 import {Link} from 'react-router-dom';
 import SlideCreator from './SlideCreator.js';
-import { Form, FormGroup, Col, FormControl, ControlLabel, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { InputGroup, Form, FormGroup, Col, FormControl, ControlLabel, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class LessonCreator extends React.Component {
   constructor (props) {
@@ -200,65 +200,68 @@ class LessonCreator extends React.Component {
           </FormGroup>
 
           { this.state.lessonid === 'No ID Yet' ? null : 
-            (<ListGroup>
-              <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
-              <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
-              <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
-            </ListGroup>) 
+            ( <div className="creationListHead">
+          <ListGroup className="creationListGroup">
+            <ListGroupItem>Lesson Name: {this.state.name} </ListGroupItem>
+            <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
+            <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
+          </ListGroup>
+          </div>) 
           }
-
-          { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Lesson Name</Col>
-            <Col sm={10}>
-              <FormControl type='text' placeholder='Lesson Name'
+          <div className="lessonInputs">
+          { this.state.lessonid === 'No ID Yet' ? (<FormGroup style={{maxWidth: 240}}>
+            <InputGroup>
+            <ControlLabel>Lesson Name</ControlLabel>
+              <FormControl className="formWidth" type='text' placeholder='Lesson Name'
                 value={this.state.name}
                 onChange={this.changeName.bind(this)}
               />
-            </Col>
+            </InputGroup>
           </FormGroup>) : null }
           
-          { this.state.lessonid === 'No ID Yet' ? (<FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Lesson description</Col>
-            <Col sm={10}>
-              <FormControl type='text' placeholder='Lesson Description'
+          { this.state.lessonid === 'No ID Yet' ? (<FormGroup style={{maxWidth: 240}}>
+            <InputGroup>
+            <Col componentClass={ControlLabel}>Lesson description</Col>
+              <FormControl style={{maxWidth: 240}} className="formWidth" type='text' placeholder='Lesson Description'
                 value={this.state.description}
                 onChange={this.changeDescription.bind(this)}
               />
-            </Col>
+            </InputGroup>
           </FormGroup>) : null }
-          
 
           {this.state.lessonid === 'No ID Yet' ? null : <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Add Tags To Lesson</Col>
-            <Col sm={10}>
-                <FormControl type='text' 
+            <Col componentClass={ControlLabel} style={{marginRight:"10px"}}>Add Tags To Lesson</Col>
+            <Col>
+                <FormControl className="formWidth" type='text' 
                   value={this.state.clientShownKeyWords}
                   onChange={this.changeClientKeyWords.bind(this)}
                 />
                 <Button onClick={this.keyWordSubmit.bind(this)} 
-                  bsStyle="info" 
-                  bsSize="small"> Set Tags </Button>
+                  bsStyle="primary" 
+                  bsSize="small"
+                  style={{margin: "20px"}}> Set Tags </Button>
             </Col>
           </FormGroup>}
+          </div>
 
-          
+          <div className="lessonMakerButtons">
           <FormGroup>
             { 
               this.state.lessonid === 'No ID Yet' ? 
-              (<Col smOffset={1} sm={1}>
-                <Button type="submit" bsStyle="primary" bsSize="small">
+              (<Col >
+                <Button type="submit" bsStyle="warning" bsSize="small">
                   Make Lesson
                 </Button>
               </Col>) :
-              (<Col smOffset={1} sm={1}>
+              (<Col >
                 <Button 
                 onClick={this.changeCreateState.bind(this)}
-                bsStyle="primary" 
+                bsStyle="warning" 
                 bsSize="small">Go To Slide Creator</Button>
               </Col>)
             }
             {this.state.lessonid === 'No ID Yet' ? null :
-              (<Col smOffset={1} sm={1}>
+              (<Col >
                 <Button type="button" 
                   onClick={this.reset.bind(this)} 
                   bsStyle="warning" 
@@ -266,15 +269,16 @@ class LessonCreator extends React.Component {
               </Col>)
             }
             { 
-              <Col smOffset={1} sm={1}>
+              <Col>
                 <Link to='/'>
                   <Button type="button" bsStyle="warning" bsSize="small">Go Home</Button>
                 </Link>
               </Col>
             }
           </FormGroup>
-          {
-            this.state.slides.length === 0 ? 
+          </div>
+          {this.state.creatingSlide ?
+          this.state.slides.length === 0  ? 
             (<div>No Slides Yet</div>) 
             : 
             (<div>Lesson Slides: 
@@ -289,17 +293,25 @@ class LessonCreator extends React.Component {
                 })
               }
             </div>)
+            : null
           }
         </Form>
       )
     } else if (this.state.creatingSlide && !this.state.editingOldSlide) {
       return (
         <div>
-          <ListGroup>
-            <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>
+            <FormGroup>
+          <div className='lessonCreator'>
+              <ControlLabel>Lesson</ControlLabel>
+            </div>
+            </FormGroup>
+          <div className="creationListHead">
+          <ListGroup className="creationListGroup">
+            <ListGroupItem>Lesson Name: {this.state.name} </ListGroupItem>
             <ListGroupItem>Lesson Description: {this.state.description}</ListGroupItem>
             <ListGroupItem>Lesson Tags: {this.state.keyWords.join(', ')}</ListGroupItem>
           </ListGroup>
+          </div>
           <SlideCreator 
             slide={{}} 
             lessonRef={this.state.lessonid} 
@@ -323,6 +335,11 @@ class LessonCreator extends React.Component {
     } else if (this.state.creatingSlide && this.state.editingOldSlide) {
       return (
         <div>
+        <FormGroup>
+          <div className='lessonCreator'>
+              <ControlLabel>Lesson</ControlLabel>
+            </div>
+            </FormGroup>
           <ListGroup>
             <ListGroupItem>Editing An Old Slide</ListGroupItem>
             <ListGroupItem>Lesson Name: {this.state.name}</ListGroupItem>

@@ -6,6 +6,7 @@ import Lesson from './Lesson/Lesson.js';
 import LessonCreator from './Creator/LessonCreator';
 import User from './User';
 import Login from './Auth/Login';
+import { Carousel } from 'react-bootstrap';
 
 
 class RouterWrapper extends Component {
@@ -23,6 +24,7 @@ class RouterWrapper extends Component {
     this.createAccount = this.createAccount.bind(this);
     this.queryDataBaseWithSearchInput = this.queryDataBaseWithSearchInput.bind(this);
     this.organizeSearchResultsBasedOnMostLikes = this.organizeSearchResultsBasedOnMostLikes.bind(this);
+    this.sortByViews = this.sortByViews.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +72,16 @@ class RouterWrapper extends Component {
     this.setState({
       lessons: lessons
     });
+  }
+
+  sortByViews(){
+    var lessons = this.state.lessons;
+    lessons.sort(function(lesson1, lesson2) {
+      return lesson2.read - lesson1.read;
+    })
+    this.setState({
+      lessons: lessons
+    }); 
   }
 
   createAccount(username, password, email) {
@@ -163,11 +175,48 @@ class RouterWrapper extends Component {
          (<Switch>
             <Route exact path='/'
               render={() => (
-                <LessonPreviewContainer 
-                  lessons= { this.state.lessons }
-                  organizeSearchResultsBasedOnMostLikes={ this.organizeSearchResultsBasedOnMostLikes }
-                  getLessons={ this.getLessons }
-                /> 
+                <div>
+                  <Carousel interval="4000">
+                    <Carousel.Item>
+                        <div className="background"></div>
+                      <Carousel.Caption className="captions1">
+                        <h1>Simplify.</h1>
+                        <h4>Make learning simple.</h4>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+
+                    <Carousel.Item >
+                        <div className="background2"></div>
+                      <Carousel.Caption className="captions2">
+                        <h1>Organize.</h1>
+                        <h4>Create lessons with videos, articles, text and more.</h4>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+
+                    <Carousel.Item >
+                        <div className="background3"></div>
+                      <Carousel.Caption className="captions3">
+                        <h1>Collaborate.</h1>
+                        <h4>Find your network. Join open discussions on each lesson.</h4>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+
+                    <Carousel.Item >
+                        <div className="background4"></div>
+                      <Carousel.Caption className="captions4">
+                        <h1>Connect.</h1>
+                        <h4>Skip the classrooms, introducing a real-time chat system</h4>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+
+                    </Carousel>
+                  <LessonPreviewContainer
+                    lessons= { this.state.lessons }
+                    organizeSearchResultsBasedOnMostLikes={ this.organizeSearchResultsBasedOnMostLikes }
+                    sortByViews={this.sortByViews}
+                    getLessons={ this.getLessons }
+                  /> 
+                </div>
               )}
             />
             <Route path='/lesson/:id'

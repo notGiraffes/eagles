@@ -4,7 +4,7 @@
   "description": "Greenfield Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./backend/server.js --watch",
+    "start": "webpack && node ./backend/server.js --watch",
     "compile": "webpack --watch"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "react-toggle-display": "^2.2.0",
     "screenshotapi": "^1.1.2",
     "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3"
+    "socket.io-client": "^2.0.3",
+    "texthighlighter": "^1.2.4"
   }
 }
