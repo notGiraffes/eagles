@@ -39,8 +39,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Usage
 
-![Splash](https://github.com/bryangxyz/eagles/tree/dev/frontend/public/img/login.png)
-![Splash](https://github.com/bryangxyz/eagles/tree/dev/frontend/public/img/dashboard.png)
+![Splash](https://github.com/bryangxyz/eagles/blob/dev/frontend/public/img/login.png)
+![Splash](https://github.com/bryangxyz/eagles/blob/dev/frontend/public/img/dashboard.png)
 
 ### Login
 
