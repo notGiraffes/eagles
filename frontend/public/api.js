@@ -1,5 +1,19 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('http://localhost:3001');
+import axios from 'axios';
+
+let socket = openSocket('http://localhost:3001');
+
+axios.get('/port')
+	.then(data => {
+		console.log('port number is ', data);
+		var url = 'http://localhost:' + data.data;
+		console.log(url);
+		socket = openSocket(url)
+
+
+	})
+
+
 
 
 let io = {
@@ -18,6 +32,8 @@ let io = {
 	}
 
 }
+
+
 
 
 // socket.on('test', function(data) {
